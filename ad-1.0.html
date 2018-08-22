@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<!--
+Arquivo desenvolvido por Felipe Lopes Melo (EID - felipe.lopes.melo) para atender a necessidade do Pool ABAP
+Desenvolvedor - Felipe Lopes
+Solicitante - Lisiane Neri
+Gerente - Juliana Alencar
+-->
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Language" content="pt-br">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="copyright" content="Accenture Brasil">
+        <meta name="author" content="felipe.lopes.melo@accenture.com">
+        <meta name="robots" content="noindex, nofollow">
+
+        <title>Dashboard Trello AD</title>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="https://rentadrone.cl/wp-content/uploads/2016/12/pie-chart-1.png" />
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+        <style type="text/css">
+            * {
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+            }
+            body::-webkit-scrollbar {
+                width: 0px;
+            }
+
+            body {
+                float: left;
+                width: 100%;
+                padding: 0px;
+                background-color: #284c77;
+                opacity: 0.0;
+                -webkit-transition: all 0.5s linear;
+                -moz-transition: all 0.5s linear;
+                -ms-transition: all 0.5s linear;
+                -o-transition: all 0.5s linear;
+                transition: all 0.5s linear;
+            }
+
+            .div-sp {
+                float: left;
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+            }
+
+            .tela-01 {
+                float: left;
+                width: 482px;
+                height: 182px;
+                top: calc(50% - 101px);
+                left: calc(50% - 251px);
+                position: absolute;
+                background-color: #fff;
+                padding: 20px;
+                opacity: 1.0;
+                z-index: 99;
+            }
+            .tela-01 h1 {
+                float: left;
+                width: 100%;
+                color: #284c77;
+                font-size: 1.5em;
+                text-align: center;
+            }
+            .tela-01 select {
+                float: left;
+                width: 100%;
+                margin-top: 10px;
+                text-align: center;
+            }
+            .tela-01 button {
+                float: left;
+                width: 100%;
+                margin-top: 20px;
+                text-align: center;
+            }
+
+            .tela-02 {
+                float: left;
+                width: 100%;
+                height: 800px;
+                opacity: 0.0;
+                padding: 0px;
+            }
+
+            .div-filas {
+                float: left;
+                width: 100%;
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+            }
+
+            .div-filas table {
+                width: 100%;
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+                border-collapse: separate;
+                border-spacing: 20px;
+            }
+            .div-filas table tr {
+                width: 100%;
+            }
+            .div-filas table tr td {
+                background-color: #fff;
+                border-radius: 3px;
+            }
+            #div-impedi {
+                color: #fff;
+                background-color: #E0A800;
+            }
+            #div-pipeline {
+                color: #fff;
+                background-color: #218838;
+            }
+            .fila {
+                padding: 15px;
+                text-align: center;
+            }
+            .fila h5 {
+                float: left;
+                width: 100%;
+                height: 20px;
+                font-size: 20px;
+                margin: 0px;
+                padding: 0px;
+            }
+            .fila h1 {
+                float: left;
+                width: 100%;
+                height: 50px;
+                font-size: 50px;
+                margin: 0px;
+                padding: 0px;
+            }
+            .fila h2 {
+                float: left;
+                width: 100%;
+                height: 70px;
+                font-size: 70px;
+                margin: 0px;
+                padding: 0px;
+            }
+            .fila h3 {
+                float: left;
+                width: 100%;
+                height: 60px;
+                font-size: 50px;
+                margin: 0px;
+                padding: 0px;
+            }
+            .fila h4 {
+                float: left;
+                width: 100%;
+                height: 50px;
+                font-size: 40px;
+                margin: 0px;
+                padding: 0px;
+            }
+            .fila p {
+                float: left;
+                width: 100%;
+                height: 20px;
+                font-size: 20px;
+                margin: 5px;
+                padding: 0px;
+            }
+            .grafs {
+                padding: 15px;
+            }
+            .grafs canvas {
+                float: left;
+                width: 100%;
+                padding: 0px;
+                margin: 0px;
+                border: 0px;
+            }
+            #div-labels h4 {
+                width: 100%;
+                text-align: right;
+                height: 15px;
+                font-size: 15px;
+                margin-top: -20px;
+                font-weight: normal;
+                opacity: 0.8;
+            }
+            .indics {
+                padding: 15px;
+                text-align: center;
+            }
+            .indics h1 {
+                float: left;
+                width: 100%;
+                height: 50px;
+                font-size: 50px;
+                margin: 0px;
+                padding: 0px;
+                opacity: 0.1;
+            }
+            #img-alert {
+                width: 110px;
+                margin-left: 5px;
+                margin-right: 5px;
+                opacity: 0.1;
+            }
+            #img-satis {
+                width: 90px;
+                margin-left: 5px;
+                margin-right: 5px;
+                opacity: 0.1;
+            }
+            .etiq {
+                float: left;
+                position: relative;
+                width: 100%;
+                margin-top: 2px;
+                margin-bottom: 2px;
+            }
+            .etiq p {
+                width: 100%;
+                margin: 0px;
+                padding: 0px;
+            }
+            .logo-marca {
+                float: right;
+                height: 80px;
+                margin-top: -80px;
+            }
+
+            .dump {
+                float: left;
+                position: absolute;
+                top: calc(50% - 200px);
+                left: calc(50% - 150px);
+                width: 300px;
+                height: 400px;
+                background-color: #fff;
+                margin: 0px;
+                padding: 20px;
+                border: 0px;
+                border-radius: 3px;
+                opacity: 0.0;
+                cursor: default;
+            }
+            .dump h1 {
+                float: left;
+                width: 100%;
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+                color: #ed0404;
+            }
+            .dump h2 {
+                float: left;
+                width: 100%;
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+            }
+            .dump h6 {
+                float: left;
+                width: 100%;
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                color: #284c77;
+            }
+            .dump p {
+                float: left;
+                width: 100%;
+                height: 200px;
+                background-color: #E6E6E6;
+                margin: 0px;
+                padding: 10px;
+                text-align: justify;
+                border: 0px;
+                opacity: 0.6;
+            }
+            .dump a {
+                float: left;
+                width: 100%;
+                text-align: center;
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+                margin-top: 2px;
+            }
+
+            .rodape {
+                float: left;
+                width: 100%;
+                margin-top: 50px;
+                margin-bottom: 10px;
+            }
+            .rodape a {
+                text-decoration: none;
+                color: #fff;
+            }
+            .rodape p {
+                float: left;
+                width: 100%;
+                opacity: 0.2;
+                font-size: 0.8em;
+                cursor: default;
+                margin: 0px;
+                padding: 0px;
+                text-align: center;
+                color: #fff;
+            }
+        </style>
+
+        <script type="text/javascript">
+
+            // Obtém a data/hora atual
+            var data = new Date();
+            var meses = new Array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
+            var semana = new Array("Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado");
+            // Guarda cada pedaço em uma variável
+            var dia = data.getDate(); // 1-31
+            var dia_sem = data.getDay(); // 0-6 (zero=domingo)
+            var mes = data.getMonth(); // 0-11 (zero=janeiro)
+            var mes1 = mes + 1; // 1-12 (1=janeiro)
+            var ano2 = data.getYear(); // 2 dígitos
+            var ano4 = data.getFullYear(); // 4 dígitos
+            var hora = data.getHours(); // 0-23
+            var min = data.getMinutes(); // 0-59
+            var seg = data.getSeconds(); // 0-59
+            var mseg = data.getMilliseconds(); // 0-999
+            var tz = data.getTimezoneOffset(); // em minutos
+
+            var datahoje = dia + "/" + mes1 + "/" + ano4; // 1/2/2019
+
+            var dia0;
+            var mes10;
+            if (dia < 10) {
+                dia0 = "0" + dia;
+            } else {
+                dia0 = dia;
+            }
+            if (mes1 < 10) {
+                mes10 = "0" + mes1;
+            } else {
+                mes10 = mes1;
+            }
+            var timestamp = ano4 + "/" + mes10 + "/" + dia0; //2018-08-10
+
+            var strg_mes = meses[mes];
+            console.group("Datas");
+            console.log("Mes - " + strg_mes);
+            console.groupEnd("Datas");
+            var protejos = [];
+
+            var riscos = false;
+            //ALTERE SOMENTE AQUI ----------------------------------------------------------------------------------------------------------
+
+            var configs = {
+                'CFG_NOME': 0, // 0 - Primeiro Nome  1 - Nome Completo
+                'CFG_KEY': '0fa63ab5014f860756dcb239e5b03c96', // Key gerada pelo trello para ixibir boards
+                'CFG_TOK': '8325824adff62c2db66bfd6ab8ee51cff7ceea5f4248c586c7d013a481fe9b7a', //Token gerado pelo trello para acessar a API
+                'CFG_MDC': 10, //Quantidade media IDEAL de chamado por mes - Será usado para os relatorios
+                'CFG_ABR': false //Carrega o mes atual sem escolhe em tela
+            };
+            var dadoprotj = {
+                'NOME': 'BIOSEV', //Nome do projeto
+                'IMG': 'http://www.dausina.com.br/imagens/uploads/conteudos/20140815174318KZkjFeRb.png', //Logo marca
+                'HRSCTR': 175, // Saldos em HORAS
+            };
+            protejos.push(dadoprotj);
+            var dadoprotj = {
+                'NOME': 'NLATAM', //Nome do projeto
+                'IMG': '', //Logo marca
+                'HRSCTR': 175, // Saldos em HORAS
+            };
+            protejos.push(dadoprotj);
+            var dadoprotj = {
+                'NOME': 'SLATAM', //Nome do projeto
+                'IMG': '', //Logo marca
+                'HRSCTR': 175, // Saldos em HORAS
+            };
+            protejos.push(dadoprotj);
+            console.group("PROJETOS");
+            console.log(protejos);
+            console.groupEnd("PPROJETOS");
+            //-------------------------------------------------------------------------------------------------------------------------------
+            if (configs['CFG_NOME'] != 0 && configs['CFG_NOME'] != 1) {
+                throw "configs['CFG_NOME'] - Está com um valor errado";
+            }
+            if (configs['CFG_KEY'] == null || configs['CFG_KEY'] == '') {
+                throw "configs['CFG_KEY'] - Está vazio";
+            }
+            if (configs['CFG_TOK'] == null || configs['CFG_KEY'] == '') {
+                throw "configs['CFG_TOK'] - Está vazio";
+            }
+            if (configs['CFG_MDC'] == null || configs['CFG_MDC'] == '') {
+                throw "configs['CFG_MDC'] - Está vazio";
+            }
+
+            var key = configs['CFG_KEY'];
+            var token = configs['CFG_TOK'];
+            //var cod = "5b3a5ee83bec5319085e12fc"; //Pool AMS Julho
+
+            /*Delações de variaveis*/
+            var url = ""; //Variavel onde vai receber todos os link AJAX
+
+            var boards = []; //Array que receberar todos os boards
+            var cards = []; //Array que vai receber os cards
+            var cardscmplt = []; //Dados completos dos cards
+            var menbros = []; //Array qye receberar os membros
+            var listas = []; //Array que vai receber as listas
+            var labels = []; //Array que vai receber os labels
+            var newfields = []; //Array com todos campos novos criados
+
+            url = "https://api.trello.com/1/members/me/boards?key=" + key + "&token=" + token; //List Bards
+            var ajax1 = $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                beforeSend: function () {
+                    console.log("Buscando Boards...");
+                }
+            })
+                    .done(function (data) {
+                        //Montar Array de boards
+                        for (var i = 0; i < data.length; i++) {
+                            var array = {
+                                'ID': data[i]['id'],
+                                'NAME': data[i]['name']
+                            };
+                            boards.push(array);
+                        }
+                        console.group("Boards");
+                        console.log(boards);
+                        console.groupEnd("Boards");
+                        montarSelect();
+                    })
+                    .fail(function (jqXHR, textStatus, data) {
+                        dump("", "A requisição AJAX para buscar os Boards falhou!.");
+                    });
+            //Se tiver board, montar na tela
+            function montarSelect() {
+                if (boards.length > 0) {
+                    var vldags = false;
+                    var bodid = "";
+                    for (var i = 0; i < boards.length; i++) {
+                        //Verificar se tem com o mes ATUAL para Carregar
+                        if (boards[i]['NAME'].indexOf("AD " + strg_mes) > -1) {
+                            vldags = true;
+                            bodid = boards[i]['ID'];
+                        }
+                        //Montar somente com os nomes AD e AMS
+                        //if (boards[i]['NAME'].match(/AMS/)) {
+                        //    var option = document.createElement("option");
+                        //    option.text = boards[i]['NAME'];
+                        //    option.value = boards[i]['ID'];
+                        //    document.getElementById("inputState").add(option);
+                        //}
+                        //if (boards[i]['NAME'].match(/AD/)) {
+                        var nameptjs;
+                        //for (var y = 0; y < protejos.length; y++) {
+                        //nameptjs = new RegExp(protejos[y]['NOME']);
+                        //if (boards[i]['NAME'].match(nameptjs)) {
+                        var option = document.createElement("option");
+                        option.text = boards[i]['NAME'];
+                        option.value = boards[i]['ID'];
+                        document.getElementById("inputState").add(option);
+                        //}
+                        //}
+                        //}
+                    }
+                    if (configs['CFG_ABR']) {
+                        if (vldags) {
+                            //Mesmo dados da função gerarRelatorio() ajustado para executar para o ID pre escolhido
+                            var e = document.getElementById("inputState");
+                            var value = e.options[e.selectedIndex].value;
+                            var text = e.options[e.selectedIndex].text;
+                            document.getElementById("tela-01").style.opacity = 0.0;
+                            document.getElementById("tela-02").style.opacity = 1.0;
+                            document.getElementById("titulo").innerHTML = text;
+                            carregarInfosAPI(bodid);
+                        }
+                    }
+                } else {
+                    console.log("Vazio");
+                }
+            }
+
+            function gerarRelatorio() {
+                var e = document.getElementById("inputState");
+                var value = e.options[e.selectedIndex].value;
+                var text = e.options[e.selectedIndex].text;
+                console.log(value);
+                console.log(text);
+                document.getElementById("tela-01").style.opacity = 0.0;
+                document.getElementById("tela-01").style.display = "none";
+                document.getElementById("tela-02").style.opacity = 1.0;
+                document.getElementById("titulo").innerHTML = text;
+                carregarInfosAPI(value);
+            }
+
+            //Puxar infos do site
+            function carregarInfosAPI(id) {
+
+                //Buscando todos os CARDS do BOARD
+                url = "https://api.trello.com/1/boards/" + id + "/cards/?key=" + key + "&token=" + token; //List CARDS
+                var ajax2 = $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Buscando Cards...");
+                    }
+                })
+                        .done(function (data) {
+                            cards = data;
+                            console.group("Cards");
+                            console.log(cards);
+                            console.groupEnd("Cards");
+                            processarDados();
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            dump("carregarInfosAPI();", "A requisição AJAX para buscar todos os Cards falhou!.");
+                        });
+                //Buscando todos os MEMBROS do BOARD
+                url = "https://api.trello.com/1/boards/" + id + "/memberships/?key=" + key + "&token=" + token + "&orgMemberType=true&member=true&member_fields=fullName&member_fields=avatarUrl";
+                var ajax3 = $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Buscando Membros...");
+                    }
+                })
+                        .done(function (data) {
+                            for (var i = 0; i < data.length; i++) {
+                                var imggg = "";
+                                if (data[i]['member']['avatarUrl'] == null) {
+                                    imggg = "https://i.imgur.com/LuX2uKH.jpg";
+                                } else {
+                                    imggg = data[i]['member']['avatarUrl'];
+                                }
+                                var array = {
+                                    'ID': data[i]['idMember'],
+                                    'USER': data[i]['member']['fullName'],
+                                    'IMG': imggg
+                                };
+                                menbros.push(array);
+                            }
+                            console.group("Membros");
+                            console.log(menbros);
+                            console.groupEnd("Membros");
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            dump("carregarInfosAPI();", "A requisição AJAX para buscar todos membros falhou!.");
+                        });
+                //Buscando todos os LABEL do BOARD
+                url = "https://api.trello.com/1/boards/" + id + "/labels?fields=all&key=" + key + "&token=" + token; //List Labels
+                var ajax5 = $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Buscando Labels...");
+                    }
+                })
+                        .done(function (data) {
+                            //Montar Labels
+                            for (var i = 0; i < data.length; i++) {
+                                var lb = {
+                                    'ID': data[i]['id'],
+                                    'NAME': data[i]['name'],
+                                    'COR': data[i]['color'],
+                                    'QNT': 0
+                                };
+                                labels.push(lb);
+                            }
+                            console.group("Labels");
+                            console.log(labels);
+                            console.groupEnd("Labels");
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            dump("carregarInfosAPI();", "A requisição AJAX para buscar todas as labels falhou!.");
+                        });
+                //Buscando todos os LISTAS do BOARD
+                url = "https://api.trello.com/1/boards/" + id + "/lists?cards=all&card_fields=all&filter=open&fields=all&key=" + key + "&token=" + token;
+                var ajax4 = $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Buscando Listas...");
+                    }
+                })
+                        .done(function (data) {
+                            for (var i = 0; i < data.length; i++) {
+
+                                var array = {
+                                    'ID': data[i]['id'],
+                                    'NAME': data[i]['name']
+                                };
+                                listas.push(array);
+                            }
+                            console.group("Listas");
+                            console.log(listas);
+                            console.groupEnd("Listas");
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            dump("carregarInfosAPI();", "A requisição AJAX para buscar todas as Listas falhou!.");
+                        });
+            }
+
+            function processarDados() {
+                var ajaxdic = "";
+                var ajaxnewcamp = "";
+                var total = cards.length - 1;
+                for (var i = 0; i < cards.length; i++) {
+
+                    //Buscando todos os CARDS individual
+                    url = "https://api.trello.com/1/cards/" + cards[i][﻿'id'] + "?fields=all&attachments=true&attachment_fields=all&members=true&member_fields=all&membersVoted=true&memberVoted_fields=all&checkItemStates=true&checklists=all&checklist_fields=all&board=true&board_fields=all&list=true&pluginData=true&stickers=true&sticker_fields=all&key=" + key + "&token=" + token;
+                    ajaxdic = $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: 'json',
+                        beforeSend: function () {
+                            console.log("Buscando Lista - " + cards[i][﻿'id']);
+                        }
+                    })
+                            .done(function (data) {
+                                cardscmplt.push(data);
+                            })
+                            .fail(function (jqXHR, textStatus, data) {
+                                dump("processarDados();", "A requisição AJAX para buscar Cards completo, falhou!.");
+                            });
+                    //Buscando todos os campos adicionais individual
+                    url = "https://api.trello.com/1/cards/" + cards[i][﻿'id'] + "/customFieldItems?key=" + key + "&token=" + token;
+                    ajaxnewcamp = $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: 'json',
+                        beforeSend: function () {
+                            console.log("Buscando New Field - " + cards[i][﻿'id']);
+                        }
+                    })
+                            .done(function (data) {
+                                console.log(data);
+                                var cardid = "";
+                                var apuraparc = "";
+                                var hf1 = 0;
+                                var hf2 = 0;
+                                var df1 = "";
+                                var df2 = "";
+                                for (var n = 0; n < data.length; n++) {
+                                    cardid = data[n]['idModel'];
+                                    switch (data[n]['idCustomField']) {
+                                        //Apuraparc
+                                        case "5b74af89b77c4f7c70fed6b6":
+
+                                            switch (data[n]['idValue']) {
+                                                case "5b74af89b77c4f7c70fed6b9":
+                                                    apuraparc = "Nao";
+                                                    break;
+                                                case "5b74af89b77c4f7c70fed6b8":
+                                                    apuraparc = "Sim";
+                                                    break;
+                                            }
+
+                                            break;
+                                            //HF1
+                                        case "5b74af89b77c4f7c70fed6ba":
+                                            hf1 = parseInt(data[n]['value']['number']);
+                                            break;
+                                            //HF2
+                                        case "5b77612c7ace4a71e567aef9":
+                                            hf2 = parseInt(data[n]['value']['number']);
+                                            break;
+                                            //DF1
+                                        case "5b74af89b77c4f7c70fed6bb":
+                                            var ddf = data[n]['value']['date'];
+                                            ddf = ddf.split("T");
+                                            df1 = ddf[0];
+                                            break;
+                                            //DF2
+                                        case "5b77612c7ace4a71e567aefb":
+                                            var ddf = data[n]['value']['date'];
+                                            ddf = ddf.split("T");
+                                            df2 = ddf[0];
+                                            break;
+                                    }
+                                }
+
+                                var arraystemps = {
+                                    'CARDID': cardid, // Id do card
+                                    'APURAPARC': apuraparc, // Sim ou Não
+                                    'HF1': hf1, // Hora 1
+                                    'HF2': hf2, // Hota 2
+                                    'DF1': df1, // Data 1
+                                    'DF2': df2 // Data 2
+                                };
+                                newfields.push(arraystemps);
+                            })
+                            .fail(function (jqXHR, textStatus, data) {
+                                dump("processarDados();", "A requisição AJAX para buscar todos os campos adicionais falhou!.");
+                            });
+                    if (i == total) {
+                        setTimeout(function () {
+                            //console.warn(cardscmplt);
+                            console.group("NewCampos");
+                            console.log(newfields);
+                            console.groupEnd("NewCampos");
+                            //Funções de exibição
+                            ListasXCards();
+                            mntListasLabels();
+                            saldoMes();
+                            calcArrRLT();
+                            calcArrRLTBar();
+                            rltLine();
+                            rltBar();
+                        }, 1000);
+                    }
+                }
+            }
+
+            function ListasXCards() {
+
+                var impedimentos = {
+                    'DONE': 0, // Card Feito
+                    'NDON': 0, // Card Não Feito
+                    'TOTL': 0, // Total de Card
+                    'DPRZ': 0, // Dentro Prazo
+                    'FPRZ': 0, // Dentro Prazo
+                    'THRS': 0, // Total horas
+                };
+                var desenho = {
+                    'DONE': 0, // Card Feito
+                    'NDON': 0, // Card Não Feito
+                    'TOTL': 0, // Total de Card
+                    'DPRZ': 0, // Dentro Prazo
+                    'FPRZ': 0, // Dentro Prazo
+                    'THRS': 0, // Total horas
+                };
+                var aprovdesenho = {
+                    'DONE': 0, // Card Feito
+                    'NDON': 0, // Card Não Feito
+                    'TOTL': 0, // Total de Card
+                    'DPRZ': 0, // Dentro Prazo
+                    'FPRZ': 0, // Dentro Prazo
+                    'THRS': 0, // Total horas
+                };
+                var construcao = {
+                    'DONE': 0, // Card Feito
+                    'NDON': 0, // Card Não Feito
+                    'TOTL': 0, // Total de Card
+                    'DPRZ': 0, // Dentro Prazo
+                    'FPRZ': 0, // Dentro Prazo
+                    'THRS': 0, // Total horas
+                };
+                var testuser = {
+                    'DONE': 0, // Card Feito
+                    'NDON': 0, // Card Não Feito
+                    'TOTL': 0, // Total de Card
+                    'DPRZ': 0, // Dentro Prazo
+                    'FPRZ': 0, // Dentro Prazo
+                    'THRS': 0, // Total horas
+                };
+                var precab = {
+                    'DONE': 0, // Card Feito
+                    'NDON': 0, // Card Não Feito
+                    'TOTL': 0, // Total de Card
+                    'DPRZ': 0, // Dentro Prazo
+                    'FPRZ': 0, // Dentro Prazo
+                    'THRS': 0, // Total horas
+                };
+                var suportgolive = {
+                    'DONE': 0, // Card Feito
+                    'NDON': 0, // Card Não Feito
+                    'TOTL': 0, // Total de Card
+                    'DPRZ': 0, // Dentro Prazo
+                    'FPRZ': 0, // Dentro Prazo
+                    'THRS': 0, // Total horas
+                };
+                var implementado = {
+                    'DONE': 0, // Card Feito
+                    'NDON': 0, // Card Não Feito
+                    'TOTL': 0, // Total de Card
+                    'DPRZ': 0, // Dentro Prazo
+                    'FPRZ': 0, // Dentro Prazo
+                    'THRS': 0, // Total horas
+                };
+                var pipeline = {
+                    'DONE': 0, // Card Feito
+                    'NDON': 0, // Card Não Feito
+                    'TOTL': 0, // Total de Card
+                    'DPRZ': 0, // Dentro Prazo
+                    'FPRZ': 0, // Dentro Prazo
+                    'THRS': 0, // Total horas
+                };
+
+                var reprovs = {
+                    'DONE': 0, // Card Feito
+                    'NDON': 0, // Card Não Feito
+                    'TOTL': 0, // Total de Card
+                    'DPRZ': 0, // Dentro Prazo
+                    'FPRZ': 0, // Dentro Prazo
+                    'THRS': 0, // Total horas
+                };
+
+                for (var i = 0; i < cardscmplt.length; i++) {
+                    for (var y = 0; y < listas.length; y++) {
+                        if (cardscmplt[i]['idList'] == listas[y]['ID']) {
+                            
+                            if(cardscmplt[i]['due'] == null){
+                                dump("ListasXCards();", "O card " + cardscmplt[i]['name'] + " não possui data de entrega.");
+                            }
+                            
+                            switch (listas[y]['NAME']) {
+                                case "Impedimentos":
+                                    if (cardscmplt[i]['dueComplete']) {
+                                        impedimentos['DONE'] = impedimentos['DONE'] + 1;
+                                    } else {
+                                        impedimentos['NDON'] = impedimentos['NDON'] + 1;
+
+                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                            impedimentos['DPRZ'] = impedimentos['DPRZ'] + 1;
+                                        } else {
+                                            impedimentos['FPRZ'] = impedimentos['FPRZ'] + 1;
+                                            riscos = true;
+                                        }
+                                    }
+                                    impedimentos['TOTL'] = impedimentos['TOTL'] + 1;
+
+                                    for (var n = 0; n < newfields.length; n++) {
+                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                            impedimentos['THRS'] = impedimentos['THRS'] + newfields[n]['HF1'];
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                case "Desenho":
+                                    if (cardscmplt[i]['dueComplete']) {
+                                        desenho['DONE'] = desenho['DONE'] + 1;
+                                    } else {
+                                        desenho['NDON'] = desenho['NDON'] + 1;
+
+                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                            desenho['DPRZ'] = desenho['DPRZ'] + 1;
+                                        } else {
+                                            desenho['FPRZ'] = desenho['FPRZ'] + 1;
+                                            riscos = true;
+                                        }
+                                    }
+                                    desenho['TOTL'] = desenho['TOTL'] + 1;
+
+                                    for (var n = 0; n < newfields.length; n++) {
+                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                            desenho['THRS'] = desenho['THRS'] + newfields[n]['HF1'];
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                case "Aprovação da EF (BP/Usuário)":
+                                    if (cardscmplt[i]['dueComplete']) {
+                                        aprovdesenho['DONE'] = aprovdesenho['DONE'] + 1;
+                                    } else {
+                                        aprovdesenho['NDON'] = aprovdesenho['NDON'] + 1;
+
+                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                            aprovdesenho['DPRZ'] = aprovdesenho['DPRZ'] + 1;
+                                        } else {
+                                            aprovdesenho['FPRZ'] = aprovdesenho['FPRZ'] + 1;
+                                            riscos = true;
+                                        }
+                                    }
+                                    aprovdesenho['TOTL'] = aprovdesenho['TOTL'] + 1;
+
+                                    for (var n = 0; n < newfields.length; n++) {
+                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                            aprovdesenho['THRS'] = aprovdesenho['THRS'] + newfields[n]['HF1'];
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                case "Construção Funcional":
+                                    if (cardscmplt[i]['dueComplete']) {
+                                        construcao['DONE'] = construcao['DONE'] + 1;
+                                    } else {
+                                        construcao['NDON'] = construcao['NDON'] + 1;
+
+                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                            construcao['DPRZ'] = construcao['DPRZ'] + 1;
+                                        } else {
+                                            construcao['FPRZ'] = construcao['FPRZ'] + 1;
+                                            riscos = true;
+                                        }
+                                    }
+                                    construcao['TOTL'] = construcao['TOTL'] + 1;
+
+                                    for (var n = 0; n < newfields.length; n++) {
+                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                            construcao['THRS'] = construcao['THRS'] + newfields[n]['HF1'];
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                case "Construção Abap":
+                                    if (cardscmplt[i]['dueComplete']) {
+                                        construcao['DONE'] = construcao['DONE'] + 1;
+                                    } else {
+                                        construcao['NDON'] = construcao['NDON'] + 1;
+
+                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                            construcao['DPRZ'] = construcao['DPRZ'] + 1;
+                                        } else {
+                                            construcao['FPRZ'] = construcao['FPRZ'] + 1;
+                                            riscos = true;
+                                        }
+                                    }
+                                    construcao['TOTL'] = construcao['TOTL'] + 1;
+
+                                    for (var n = 0; n < newfields.length; n++) {
+                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                            construcao['THRS'] = construcao['THRS'] + newfields[n]['HF1'];
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                case "Teste Funcional":
+                                    if (cardscmplt[i]['dueComplete']) {
+                                        construcao['DONE'] = construcao['DONE'] + 1;
+                                    } else {
+                                        construcao['NDON'] = construcao['NDON'] + 1;
+
+                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                            construcao['DPRZ'] = construcao['DPRZ'] + 1;
+                                        } else {
+                                            construcao['FPRZ'] = construcao['FPRZ'] + 1;
+                                            riscos = true;
+                                        }
+                                    }
+                                    construcao['TOTL'] = construcao['TOTL'] + 1;
+
+                                    for (var n = 0; n < newfields.length; n++) {
+                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                            construcao['THRS'] = construcao['THRS'] + newfields[n]['HF1'];
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                case "Liberação de Acesso":
+                                    if (cardscmplt[i]['dueComplete']) {
+                                        construcao['DONE'] = construcao['DONE'] + 1;
+                                    } else {
+                                        construcao['NDON'] = construcao['NDON'] + 1;
+
+                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                            construcao['DPRZ'] = construcao['DPRZ'] + 1;
+                                        } else {
+                                            construcao['FPRZ'] = construcao['FPRZ'] + 1;
+                                            riscos = true;
+                                        }
+                                    }
+                                    construcao['TOTL'] = construcao['TOTL'] + 1;
+
+                                    for (var n = 0; n < newfields.length; n++) {
+                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                            construcao['THRS'] = construcao['THRS'] + newfields[n]['HF1'];
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                case "Teste do Usuário":
+                                    if (cardscmplt[i]['dueComplete']) {
+                                        testuser['DONE'] = testuser['DONE'] + 1;
+                                    } else {
+                                        testuser['NDON'] = testuser['NDON'] + 1;
+
+                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                            testuser['DPRZ'] = testuser['DPRZ'] + 1;
+                                        } else {
+                                            testuser['FPRZ'] = testuser['FPRZ'] + 1;
+                                            riscos = true;
+                                        }
+                                    }
+                                    testuser['TOTL'] = testuser['TOTL'] + 1;
+
+                                    for (var n = 0; n < newfields.length; n++) {
+                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                            testuser['THRS'] = testuser['THRS'] + newfields[n]['HF1'];
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                case "Preparação CAB":
+                                    if (cardscmplt[i]['dueComplete']) {
+                                        precab['DONE'] = precab['DONE'] + 1;
+                                    } else {
+                                        precab['NDON'] = precab['NDON'] + 1;
+
+                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                            precab['DPRZ'] = precab['DPRZ'] + 1;
+                                        } else {
+                                            precab['FPRZ'] = precab['FPRZ'] + 1;
+                                            riscos = true;
+                                        }
+                                    }
+                                    precab['TOTL'] = precab['TOTL'] + 1;
+
+                                    for (var n = 0; n < newfields.length; n++) {
+                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                            precab['THRS'] = precab['THRS'] + newfields[n]['HF1'];
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                case "Pós Implantação":
+                                    if (cardscmplt[i]['dueComplete']) {
+                                        suportgolive['DONE'] = suportgolive['DONE'] + 1;
+                                    } else {
+                                        suportgolive['NDON'] = suportgolive['NDON'] + 1;
+
+                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                            suportgolive['DPRZ'] = suportgolive['DPRZ'] + 1;
+                                        } else {
+                                            suportgolive['FPRZ'] = suportgolive['FPRZ'] + 1;
+                                            riscos = true;
+                                        }
+                                    }
+                                    suportgolive['TOTL'] = suportgolive['TOTL'] + 1;
+
+                                    for (var n = 0; n < newfields.length; n++) {
+                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                            suportgolive['THRS'] = suportgolive['THRS'] + newfields[n]['HF1'];
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                case "Done":
+                                    if (cardscmplt[i]['dueComplete']) {
+                                        implementado['DONE'] = implementado['DONE'] + 1;
+                                    } else {
+                                        implementado['NDON'] = implementado['NDON'] + 1;
+
+                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                            implementado['DPRZ'] = implementado['DPRZ'] + 1;
+                                        } else {
+                                            implementado['FPRZ'] = implementado['FPRZ'] + 1;
+                                            riscos = true;
+                                        }
+                                    }
+                                    implementado['TOTL'] = implementado['TOTL'] + 1;
+
+                                    for (var n = 0; n < newfields.length; n++) {
+                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                            implementado['THRS'] = implementado['THRS'] + newfields[n]['HF1'];
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                case "Estimativas Em execução":
+                                    if (cardscmplt[i]['dueComplete']) {
+                                        pipeline['DONE'] = pipeline['DONE'] + 1;
+                                    } else {
+                                        pipeline['NDON'] = pipeline['NDON'] + 1;
+
+                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                            pipeline['DPRZ'] = pipeline['DPRZ'] + 1;
+                                        } else {
+                                            pipeline['FPRZ'] = pipeline['FPRZ'] + 1;
+                                            riscos = true;
+                                        }
+                                    }
+                                    pipeline['TOTL'] = pipeline['TOTL'] + 1;
+
+                                    for (var n = 0; n < newfields.length; n++) {
+                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                            pipeline['THRS'] = pipeline['THRS'] + newfields[n]['HF1'];
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                case "Estimativas - Aguardando Aprovação":
+                                    if (cardscmplt[i]['dueComplete']) {
+                                        pipeline['DONE'] = pipeline['DONE'] + 1;
+                                    } else {
+                                        pipeline['NDON'] = pipeline['NDON'] + 1;
+
+                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                            pipeline['DPRZ'] = pipeline['DPRZ'] + 1;
+                                        } else {
+                                            pipeline['FPRZ'] = pipeline['FPRZ'] + 1;
+                                            riscos = true;
+                                        }
+                                    }
+                                    pipeline['TOTL'] = pipeline['TOTL'] + 1;
+
+                                    for (var n = 0; n < newfields.length; n++) {
+                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                            pipeline['THRS'] = pipeline['THRS'] + newfields[n]['HF1'];
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                
+                                case "Estimativas Aprovadas":
+                                    if (cardscmplt[i]['dueComplete']) {
+                                        pipeline['DONE'] = pipeline['DONE'] + 1;
+                                    } else {
+                                        pipeline['NDON'] = pipeline['NDON'] + 1;
+
+                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                            pipeline['DPRZ'] = pipeline['DPRZ'] + 1;
+                                        } else {
+                                            pipeline['FPRZ'] = pipeline['FPRZ'] + 1;
+                                            riscos = true;
+                                        }
+                                    }
+                                    pipeline['TOTL'] = pipeline['TOTL'] + 1;
+
+                                    for (var n = 0; n < newfields.length; n++) {
+                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                            pipeline['THRS'] = pipeline['THRS'] + newfields[n]['HF1'];
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                case "Estimativas Reprovadas/Canceladas":
+                                    if (cardscmplt[i]['dueComplete']) {
+                                        reprovs['DONE'] = reprovs['DONE'] + 1;
+                                    } else {
+                                        reprovs['NDON'] = reprovs['NDON'] + 1;
+
+                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                            reprovs['DPRZ'] = reprovs['DPRZ'] + 1;
+                                        } else {
+                                            reprovs['FPRZ'] = reprovs['FPRZ'] + 1;
+                                            riscos = true;
+                                        }
+                                    }
+                                    reprovs['TOTL'] = reprovs['TOTL'] + 1;
+
+                                    for (var n = 0; n < newfields.length; n++) {
+                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                            reprovs['THRS'] = reprovs['THRS'] + newfields[n]['HF1'];
+                                            break;
+                                        }
+                                    }
+                                    break;
+
+                                case "Assessment":
+                                    break;
+                                    
+                                default:
+                                    dump("ListasXCards();", "A lista " + listas[y]['NAME'] + " não foi mapeada na função.");
+                                    break;
+                            }
+                        }
+                    }
+
+
+                }
+                //Impedimentos
+                console.log(impedimentos);
+                if (impedimentos['FPRZ'] > 0) {
+                    document.getElementById("impedimentos-totl").style.color = "#ed0404";
+                    document.getElementById("impedimentos-totl").style.fontWeight = "bold";
+                }
+                document.getElementById("impedimentos-totl").innerHTML = impedimentos['TOTL'];
+                document.getElementById("impedimentos-thrs").innerHTML = impedimentos['THRS'] + "h";
+                //Desenho
+                console.log(desenho);
+                if (desenho['FPRZ'] > 0) {
+                    document.getElementById("desenho-totl").style.color = "#ed0404";
+                    document.getElementById("desenho-totl").style.fontWeight = "bold";
+                }
+                document.getElementById("desenho-totl").innerHTML = desenho['TOTL'];
+                document.getElementById("desenho-thrs").innerHTML = desenho['THRS'] + "h";
+                //Aprv. Desenho
+                console.log(aprovdesenho);
+                if (aprovdesenho['FPRZ'] > 0) {
+                    document.getElementById("aprovdesenho-totl").style.color = "#ed0404";
+                    document.getElementById("aprovdesenho-totl").style.fontWeight = "bold";
+                }
+                document.getElementById("aprovdesenho-totl").innerHTML = aprovdesenho['TOTL'];
+                document.getElementById("aprovdesenho-thrs").innerHTML = aprovdesenho['THRS'] + "h";
+                //Contrução
+                console.log(construcao);
+                if (construcao['FPRZ'] > 0) {
+                    document.getElementById("construcao-totl").style.color = "#ed0404";
+                    document.getElementById("construcao-totl").style.fontWeight = "bold";
+                }
+                document.getElementById("construcao-totl").innerHTML = construcao['TOTL'];
+                document.getElementById("construcao-thrs").innerHTML = construcao['THRS'] + "h";
+                //Teste Usuário
+                console.log(testuser);
+                if (testuser['FPRZ'] > 0) {
+                    document.getElementById("testuser-totl").style.color = "#ed0404";
+                    document.getElementById("testuser-totl").style.fontWeight = "bold";
+                }
+                document.getElementById("testuser-totl").innerHTML = testuser['TOTL'];
+                document.getElementById("testuser-thrs").innerHTML = testuser['THRS'] + "h";
+                //CAB
+                console.log(precab);
+                if (precab['FPRZ'] > 0) {
+                    document.getElementById("precab-totl").style.color = "#ed0404";
+                    document.getElementById("precab-totl").style.fontWeight = "bold";
+                }
+                document.getElementById("precab-totl").innerHTML = precab['TOTL'];
+                document.getElementById("precab-thrs").innerHTML = precab['THRS'] + "h";
+                //Pós GOLIVE
+                console.log(suportgolive);
+                if (suportgolive['FPRZ'] > 0) {
+                    document.getElementById("suportgolive-totl").style.color = "#ed0404";
+                    document.getElementById("suportgolive-totl").style.fontWeight = "bold";
+                }
+                document.getElementById("suportgolive-totl").innerHTML = suportgolive['TOTL'];
+                document.getElementById("suportgolive-thrs").innerHTML = suportgolive['THRS'] + "h";
+                //Implementado
+                console.log(implementado);
+                if (implementado['FPRZ'] > 0) {
+                    document.getElementById("implementado-totl").style.color = "#ed0404";
+                    document.getElementById("implementado-totl").style.fontWeight = "bold";
+                }
+                document.getElementById("implementado-totl").innerHTML = implementado['TOTL'];
+                document.getElementById("implementado-thrs").innerHTML = implementado['THRS'] + "h";
+                //PIPELINE
+                console.log(pipeline);
+                if (pipeline['FPRZ'] > 0) {
+                    document.getElementById("pipeline-totl").style.color = "#ed0404";
+                    document.getElementById("pipeline-totl").style.fontWeight = "bold";
+                }
+                document.getElementById("pipeline-totl").innerHTML = pipeline['TOTL'];
+                document.getElementById("pipeline-thrs").innerHTML = pipeline['THRS'] + "h";
+
+                //Reprovs
+                document.getElementById("reprovs-totl").innerHTML = reprovs['TOTL'] + " tarefa(s)";
+                document.getElementById("reprovs-thrs").innerHTML = reprovs['THRS'] + "h";
+
+                risco();
+            }
+
+            //AAAA-MM-DD
+            function dataNoPrazo(dt1) {
+
+                var dataatual = new Date();
+                var diaatual = dataatual.getDate(); //1-31
+                var mesatual = dataatual.getMonth(); //0-11
+                mesatual++; //1-12 ajustar
+                var anoatual = dataatual.getFullYear(); //4 dígitos
+
+                var datahoje = diaatual + '/' + mesatual + '/' + anoatual;
+
+                var ddt1 = dt1.split("-");
+
+                var newdt1 = ddt1[2] + "/" + ddt1[1] + "/" + ddt1[0] + " 00:00";
+                var ddthjoe = datahoje + " 00:00";
+
+                var data1 = moment(newdt1, "DD/MM/YYYY hh:mm");
+                var data2 = moment(ddthjoe, "DD/MM/YYYY hh:mm");
+                var diferenca = data1.diff(data2, 'days');
+
+                if (diferenca < 0) {
+                    //Se a data 1 for menor que a data de hoje
+                    return false;
+                } else {
+                    //Se a data 1 for maior que a data de hoje
+                    return true;
+                }
+            }
+
+            function mntListasLabels() {
+
+                var tt = 0;
+                for (var i = 0; i < cardscmplt.length; i++) {
+                    for (var z = 0; z < cardscmplt[i]['idLabels'].length; z++) {
+                        for (var y = 0; y < labels.length; y++) {
+                            if (cardscmplt[i]['idLabels'][z] == labels[y]['ID']) {
+                                labels[y]['QNT'] = labels[y]['QNT'] + 1;
+                                tt = tt + 1;
+                            }
+                        }
+                    }
+                }
+
+                for (var i = 0; i < labels.length; i++) {
+                    var porc = (labels[i]['QNT'] / tt) * 100;
+                    labels[i]['QNT'] = leftPad(labels[i]['QNT'], 2);
+                    porc = porc.toFixed(0);
+                    porc = leftPad(porc, 2);
+                    var div = "<div class='etiq'><p>" + labels[i]['NAME'] + "</p><h4>" + labels[i]['QNT'] + " &nbsp; - &nbsp; " + porc + "%</h4><div class='progress'><div class='progress-bar' role='progressbar' style='width:" + porc + "%; background-color: " + labels[i]['COR'] + ";' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'></div></div></div>";
+                    document.getElementById("div-labels").innerHTML += div;
+                }
+            }
+
+            function dump(func, txt) {
+
+                if (document.getElementById("dump").style.opacity == 1.0) {
+                    return;
+                }
+
+                document.getElementById("tela-01").style.opacity = 0.0;
+                document.getElementById("tela-01").style.display = "none";
+                document.getElementById("tela-02").style.opacity = 0.0;
+                document.getElementById("tela-02").style.display = "none";
+                document.getElementById("dump").style.opacity = 1.0;
+                document.getElementById("func-dump").innerHTML = "Função : " + func;
+                document.getElementById("txt-dump").innerHTML = txt;
+                throw new Error(txt);
+            }
+
+            function montarData() {
+                // Obtém a data/hora atual
+                var data = new Date();
+                var meses = new Array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
+                var semana = new Array("Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado");
+                // Guarda cada pedaço em uma variável
+                var dia = data.getDate(); // 1-31
+                var dia_sem = data.getDay(); // 0-6 (zero=domingo)
+                var mes = data.getMonth(); // 0-11 (zero=janeiro)
+                var ano2 = data.getYear(); // 2 dígitos
+                var ano4 = data.getFullYear(); // 4 dígitos
+                var hora = data.getHours(); // 0-23
+                var min = data.getMinutes(); // 0-59
+                var seg = data.getSeconds(); // 0-59
+                var mseg = data.getMilliseconds(); // 0-999
+                var tz = data.getTimezoneOffset(); // em minutos
+
+                dia = leftPad(dia, 2);
+                ano4 = leftPad(ano4, 4);
+                ano2 = leftPad(ano2, 2);
+                hora = leftPad(hora, 2);
+                min = leftPad(min, 2);
+                seg = leftPad(seg, 2);
+                // Formata a data e a hora (note o mês + 1)
+                var str_data = dia + ' ' + meses[mes] + ' ' + ano4;
+                var str_hora = hora + ':' + min + ':' + seg;
+                // Mostra o resultado
+                document.getElementById('data-board').innerHTML = str_data;
+            }
+
+            function leftPad(number, targetLength) {
+                var output = number + '';
+                while (output.length < targetLength) {
+                    output = '0' + output;
+                }
+                return output;
+            }
+
+            function risco() {
+                if (riscos) {
+                    document.getElementById("img-alert").style.opacity = 1.0;
+                }
+            }
+
+            var satisfac = 0; //0-nao tem 1-ruim 2-bom 
+            function satisfac() {
+                document.getElementById("img-satis").style.opacity = 1.0;
+            }
+
+            //Rotinas para quando a tela carregar
+            window.onload = function () {
+                document.body.style.opacity = "1.0";
+                montarData();
+                if (configs['CFG_ABR']) {
+                    console.warn("A página vai atualizar em 60 segundos.");
+                    setTimeout(function () {
+                        location.reload();
+                    }, 60000);
+                }
+            };
+        </script>
+    </head>
+
+    <body>
+        <!-- Tela de inicio -->
+        <div class="tela-01" id="tela-01">
+            <h1>Selecione a board</h1>
+            <select id="inputState" class="form-control">
+            </select>
+            <button type="button" onclick="gerarRelatorio();" class="btn btn-primary">Gerar Relatório</button>
+        </div>
+
+        <div class="tela-02" id="tela-02">
+
+            <div class="div-filas">
+                <table>
+                    <tr>
+                        <td class="fila" width="500">
+                            <h5>Desenho</h5>
+                            <h1 id="desenho-totl"></h1>
+                            <p id="desenho-thrs"></p>
+                        </td>
+
+                        <td class="fila" width="500">
+                            <h5>Aprv. Desenho</h5>
+                            <h1 id="aprovdesenho-totl"></h1>
+                            <p id="aprovdesenho-thrs"></p>
+                        </td>
+
+                        <td class="fila" width="500">
+                            <h5>Construção</h5>
+                            <h1 id="construcao-totl"></h1>
+                            <p id="construcao-thrs"></p>
+                        </td>
+
+                        <td class="fila" width="500">
+                            <h5>Teste User</h5>
+                            <h1 id="testuser-totl"></h1>
+                            <p id="testuser-thrs"></p>
+                        </td>
+
+                        <td class="fila" width="500">
+                            <h5>CAB</h5>
+                            <h1 id="precab-totl"></h1>
+                            <p id="precab-thrs"></p>
+                        </td>
+
+                        <td class="fila" width="500">
+                            <h5>Pós GOLIVE</h5>
+                            <h1 id="suportgolive-totl"></h1>
+                            <p id="suportgolive-thrs"></p>
+                        </td>
+
+                        <td class="fila" width="500">
+                            <h5>Concluídas</h5>
+                            <h1 id="implementado-totl"></h1>
+                            <p id="implementado-thrs"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fila" id="div-impedi" width="500">
+                            <h5>Impedimentos</h5>
+                            <h1 id="impedimentos-totl"></h1>
+                            <p id="impedimentos-thrs"></p>
+                        </td>
+
+                        <td class="fila" id="div-pipeline" width="500">
+                            <h5>PIPELINE</h5>
+                            <h1 id="pipeline-totl"></h1>
+                            <p id="pipeline-thrs"></p>
+                        </td>
+
+                        <td rowspan="2" colspan="3" class="grafs" width="500">
+                            <canvas id="myChart-line"></canvas>
+                        </td>
+
+                        <td colspan="2" class="grafs" width="500">
+                            <h4 id="titulo"></h4>
+                            <h3 id="data-board"></h3>
+                            <img class="logo-marca" id="logo-marca" src="http://www.dausina.com.br/imagens/uploads/conteudos/20140815174318KZkjFeRb.png" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2" colspan="2" class="grafs" width="500" id="div-labels">
+
+                        </td>
+
+                        <td class="fila" width="500">
+                            <h5>Saldo Total</h5>
+                            <h2 id="saldo-atual" style="color: #16ad37;"></h2>
+                        </td>
+
+                        <td class="fila" width="500">
+                            <h5>Saldo prox mês</h5>
+                            <h2 id="saldo-prxmes" style="color: #16ad37;"></h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2" colspan="3" class="grafs" width="500">
+                            <canvas id="myChart-bar"></canvas>
+                        </td>
+
+                        <td class="indics" width="500">
+                            <h5>Risco</h5>
+                            <img id="img-alert" src="https://i.imgur.com/4Rx8HOu.png" />
+                        </td>
+
+                        <td class="indics" width="500">
+                            <h5>Satisfação</h5>
+                            <img id="img-satis" src="https://i.imgur.com/yeBDZft.png" />
+                            <!--                            <img id="img-satis" src="https://i.imgur.com/EjiaFWc.png" />-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="background-color: rgba(0, 0, 0, 0);" width="500">
+                        </td>
+                        <td colspan="2" class="grafs" width="500">
+                            <h5>Demandas retiradas do Pool</h5>
+                            <h1 id="reprovs-thrs" style="float: left; width: 50%; text-align: left; margin: 0px; padding: 0px;"></h1>
+                            <p id="reprovs-totl" style="float: left; width: 50%; text-align: right; margin: 0px; padding: 0px; font-size: 30px;"></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>      
+
+            <footer class="rodape">
+                <p>Powered by <a href="sip:felipe.lopes.melo@accenture.com"><b>felipe.lopes.melo@accenture.com</b></a></p>
+                <!-- <p>© 2004-2018 Accenture Brasil. All Rights Reserved.</p> -->
+                <p>© 2018 Accenture Brasil - All Rights Reserved</p>
+                <p>Page Last Modified : 20/08/2018</p>
+                <p>v1.0.0</p>
+            </footer>
+        </div>
+
+        <div class="dump" id="dump">
+            <h1>DUMP</h1>
+            <h2>Erro de Execução</h2>
+            <h6 id="func-dump"></h6>
+            <p id="txt-dump"></p>
+            <a href="sip:felipe.lopes.melo@accenture.com"><b>suporte</b></a>
+        </div>
+
+        <script type="text/javascript">
+
+            var saldohrmes = 0;
+            var saldohrprxmes = 0;
+
+            var rltline = {
+                'OUT': 0,
+                'NOV': 0,
+                'DEZ': 0,
+                'JAN': 0,
+                'FEV': 0,
+                'MAR': 0,
+                'ABR': 0,
+                'MAI': 0,
+                'JUN': 0,
+                'JUL': 0,
+                'AGO': 0,
+                'SET': 0,
+            };
+            var subArr = {
+                'ANA': 0,
+                'EXE': 0,
+                'ASS': 0,
+            };
+            var rltbar = {
+                'OUT': subArr,
+                'NOV': subArr,
+                'DEZ': subArr,
+                'JAN': subArr,
+                'FEV': subArr,
+                'MAR': subArr,
+                'ABR': subArr,
+                'MAI': subArr,
+                'JUN': subArr,
+                'JUL': subArr,
+                'AGO': subArr,
+                'SET': subArr,
+            };
+
+            function saldoMes() {
+                var data = new Date();
+                var mes = data.getMonth(); //0-11
+                mes++; //Para ajustar pas 1-12
+
+                var prxmes = 0;
+
+                if (mes >= 12) {
+                    prxmes = 0;
+                } else {
+                    prxmes = mes + 1;
+                }
+
+                for (var z = 0; z < newfields.length; z++) {
+                    var datatemp = newfields[z]['DF1'];
+                    var datemp2 = datatemp.split("-");
+                    var mesproc = datemp2[1];
+
+                    if (mes == mesproc) {
+                        saldohrmes = saldohrmes + newfields[z]['HF1'];
+                        saldohrmes = saldohrmes + newfields[z]['HF2'];
+                    }
+
+                    if (prxmes == mesproc) {
+                        saldohrprxmes = saldohrprxmes + newfields[z]['HF1'];
+                        saldohrprxmes = saldohrprxmes + newfields[z]['HF2'];
+                    }
+                }
+
+                document.getElementById("saldo-atual").innerHTML = saldohrmes + "h";
+                document.getElementById("saldo-prxmes").innerHTML = saldohrprxmes + "h";
+            }
+
+            function calcArrRLT() {
+
+                for (var i = 0; i < cardscmplt.length; i++) {
+                    for (var y = 0; y < listas.length; y++) {
+                        for (var z = 0; z < newfields.length; z++) {
+
+                            if (cardscmplt[i]['idList'] == listas[y]['ID'] &&
+                                    listas[y]['NAME'] == "Done" &&
+                                    cardscmplt[i]['id'] == newfields[z]['CARDID']) {
+
+                                var rltdata = newfields[z]['DF1'];
+                                var datasplit = rltdata.split("-");
+                                var mes = parseInt(datasplit[1]);
+
+                                switch (mes) {
+                                    case 1:
+                                        rltline['JAN'] = rltline['JAN'] + newfields[z]['HF1'];
+                                        break;
+                                    case 2:
+                                        rltline['FEV'] = rltline['FEV'] + newfields[z]['HF1'];
+                                        break;
+                                    case 3:
+                                        rltline['MAR'] = rltline['MAR'] + newfields[z]['HF1'];
+                                        break;
+                                    case 4:
+                                        rltline['ABR'] = rltline['ABR'] + newfields[z]['HF1'];
+                                        break;
+                                    case 5:
+                                        rltline['MAI'] = rltline['MAI'] + newfields[z]['HF1'];
+                                        break;
+                                    case 6:
+                                        rltline['JUN'] = rltline['JUN'] + newfields[z]['HF1'];
+                                        break;
+                                    case 7:
+                                        rltline['JUL'] = rltline['JUL'] + newfields[z]['HF1'];
+                                        break;
+                                    case 8:
+                                        rltline['AGO'] = rltline['AGO'] + newfields[z]['HF1'];
+                                        break;
+                                    case 9:
+                                        rltline['SET'] = rltline['SET'] + newfields[z]['HF1'];
+                                        break;
+                                    case 10:
+                                        rltline['OUT'] = rltline['OUT'] + newfields[z]['HF1'];
+                                        break;
+                                    case 11:
+                                        rltline['NOV'] = rltline['NOV'] + newfields[z]['HF1'];
+                                        break;
+                                    case 12:
+                                        rltline['DEZ'] = rltline['DEZ'] + newfields[z]['HF1'];
+                                        break;
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+                return;
+            }
+
+            function calcArrRLTBar() {
+
+            }
+
+            function rltLine() {
+
+                var ctx1 = document.getElementById('myChart-line').getContext('2d');
+                var chart = new Chart(ctx1, {
+                    // The type of chart we want to create
+                    type: 'line',
+                    // The data for our dataset
+                    data: {
+                        labels: ["Out", "Nov", "Dez", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set"],
+                        datasets: [{
+                                label: "Consumo Mensal (H%)",
+                                backgroundColor: 'rgb(54, 162, 235)',
+                                borderColor: 'rgb(54, 162, 235)',
+                                fill: false,
+                                responsive: false,
+                                maintainAspectRatio: false,
+                                data: [rltline['OUT'], rltline['NOV'], rltline['DEZ'], rltline['JAN'], rltline['FEV'], rltline['MAR'], rltline['ABR'], rltline['MAI'], rltline['JUN'], rltline['JUL'], rltline['AGO'], rltline['SET']],
+                            }]
+                    },
+                    // Configuration options go here
+                    options: {}
+                });
+            }
+
+            function rltBar() {
+
+                var ctx2 = document.getElementById('myChart-bar').getContext('2d');
+                var chart = new Chart(ctx2, {
+                    // The type of chart we want to create
+                    type: 'bar',
+                    // The data for our dataset
+                    data: {
+                        labels: ["Out", "Nov", "Dez", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set"],
+                        datasets: [{
+                                label: "Análise",
+                                backgroundColor: 'rgb(54, 162, 235)',
+                                borderColor: 'rgb(54, 162, 235)',
+                                fill: false,
+                                responsive: true,
+                                maintainAspectRatio: true,
+                                data: [rltbar['OUT']['ANA'], rltbar['NOV']['ANA'], rltbar['DEZ']['ANA'], rltbar['JAN']['ANA'], rltbar['FEV']['ANA'], rltbar['MAR']['ANA'], rltbar['ABR']['ANA'], rltbar['MAI']['ANA'], rltbar['JUN']['ANA'], rltbar['JUL']['ANA'], rltbar['AGO']['ANA'], rltbar['SET']['ANA']],
+                            },
+                            {
+                                label: "Execução",
+                                backgroundColor: 'rgb(33, 136, 56)',
+                                borderColor: 'rgb(33, 136, 56)',
+                                fill: false,
+                                responsive: true,
+                                maintainAspectRatio: true,
+                                data: [rltbar['OUT']['EXE'], rltbar['NOV']['EXE'], rltbar['DEZ']['EXE'], rltbar['JAN']['EXE'], rltbar['FEV']['EXE'], rltbar['MAR']['EXE'], rltbar['ABR']['EXE'], rltbar['MAI']['EXE'], rltbar['JUN']['EXE'], rltbar['JUL']['EXE'], rltbar['AGO']['EXE'], rltbar['SET']['EXE']],
+                            },
+                            {
+                                label: "Assessment",
+                                backgroundColor: 'rgb(200, 35, 51)',
+                                borderColor: 'rgb(200, 35, 51)',
+                                fill: false,
+                                responsive: true,
+                                maintainAspectRatio: true,
+                                data: [rltbar['OUT']['ASS'], rltbar['NOV']['ASS'], rltbar['DEZ']['ASS'], rltbar['JAN']['ASS'], rltbar['FEV']['ASS'], rltbar['MAR']['ASS'], rltbar['ABR']['ASS'], rltbar['MAI']['ASS'], rltbar['JUN']['ASS'], rltbar['JUL']['ASS'], rltbar['AGO']['ASS'], rltbar['SET']['ASS']],
+                            }]
+                    },
+                    // Configuration options go here
+                    options: {
+                        tooltips: {
+                            mode: 'index',
+                            axis: 'y'
+                        }}
+                }
+                );
+            }
+
+        </script>
+    </body>
+</html>
