@@ -421,10 +421,11 @@ Gerente - Juliana Alencar
 
             var boards = []; //Array que receberar todos os boards
             var cards = []; //Array que vai receber os cards
-            var cardscmplt = []; //Dados completos dos cards
+            var cards = []; //Dados completos dos cards
             var menbros = []; //Array qye receberar os membros
             var listas = []; //Array que vai receber as listas
             var labels = []; //Array que vai receber os labels
+            var tempfield = [];
             var newfields = []; //Array com todos campos novos criados
 
             url = "https://api.trello.com/1/members/me/boards?key=" + key + "&token=" + token; //List Bards
@@ -631,22 +632,6 @@ Gerente - Juliana Alencar
                 var total = cards.length - 1;
                 for (var i = 0; i < cards.length; i++) {
 
-                    //Buscando todos os CARDS individual
-                    url = "https://api.trello.com/1/cards/" + cards[i][﻿'id'] + "?fields=all&attachments=true&attachment_fields=all&members=true&member_fields=all&membersVoted=true&memberVoted_fields=all&checkItemStates=true&checklists=all&checklist_fields=all&board=true&board_fields=all&list=true&pluginData=true&stickers=true&sticker_fields=all&key=" + key + "&token=" + token;
-                    ajaxdic = $.ajax({
-                        url: url,
-                        type: 'GET',
-                        dataType: 'json',
-                        beforeSend: function () {
-                            console.log("Buscando Lista - " + cards[i][﻿'id']);
-                        }
-                    })
-                            .done(function (data) {
-                                cardscmplt.push(data);
-                            })
-                            .fail(function (jqXHR, textStatus, data) {
-                                dump("processarDados();", "A requisição AJAX para buscar Cards completo, falhou!.");
-                            });
                     //Buscando todos os campos adicionais individual
                     url = "https://api.trello.com/1/cards/" + cards[i][﻿'id'] + "/customFieldItems?key=" + key + "&token=" + token;
                     ajaxnewcamp = $.ajax({
@@ -658,72 +643,18 @@ Gerente - Juliana Alencar
                         }
                     })
                             .done(function (data) {
-                                console.log(data);
-                                var cardid = "";
-                                var apuraparc = "";
-                                var hf1 = 0;
-                                var hf2 = 0;
-                                var df1 = "";
-                                var df2 = "";
-                                for (var n = 0; n < data.length; n++) {
-                                    cardid = data[n]['idModel'];
-                                    switch (data[n]['idCustomField']) {
-                                        //Apuraparc
-                                        case "5b74af89b77c4f7c70fed6b6":
-
-                                            switch (data[n]['idValue']) {
-                                                case "5b74af89b77c4f7c70fed6b9":
-                                                    apuraparc = "Nao";
-                                                    break;
-                                                case "5b74af89b77c4f7c70fed6b8":
-                                                    apuraparc = "Sim";
-                                                    break;
-                                            }
-
-                                            break;
-                                            //HF1
-                                        case "5b74af89b77c4f7c70fed6ba":
-                                            hf1 = parseInt(data[n]['value']['number']);
-                                            break;
-                                            //HF2
-                                        case "5b77612c7ace4a71e567aef9":
-                                            hf2 = parseInt(data[n]['value']['number']);
-                                            break;
-                                            //DF1
-                                        case "5b74af89b77c4f7c70fed6bb":
-                                            var ddf = data[n]['value']['date'];
-                                            ddf = ddf.split("T");
-                                            df1 = ddf[0];
-                                            break;
-                                            //DF2
-                                        case "5b77612c7ace4a71e567aefb":
-                                            var ddf = data[n]['value']['date'];
-                                            ddf = ddf.split("T");
-                                            df2 = ddf[0];
-                                            break;
-                                    }
+                                for (var y = 0; y < data.length; y++) {
+                                    tempfield.push(data[y]);
                                 }
-
-                                var arraystemps = {
-                                    'CARDID': cardid, // Id do card
-                                    'APURAPARC': apuraparc, // Sim ou Não
-                                    'HF1': hf1, // Hora 1
-                                    'HF2': hf2, // Hota 2
-                                    'DF1': df1, // Data 1
-                                    'DF2': df2 // Data 2
-                                };
-                                newfields.push(arraystemps);
                             })
                             .fail(function (jqXHR, textStatus, data) {
                                 dump("processarDados();", "A requisição AJAX para buscar todos os campos adicionais falhou!.");
                             });
                     if (i == total) {
                         setTimeout(function () {
-                            //console.warn(cardscmplt);
-                            console.group("NewCampos");
-                            console.log(newfields);
-                            console.groupEnd("NewCampos");
                             //Funções de exibição
+                            console.error(tempfield);
+                            orgNewFields();
                             ListasXCards();
                             mntListasLabels();
                             saldoMes();
@@ -732,6 +663,90 @@ Gerente - Juliana Alencar
                             rltLine();
                             rltBar();
                         }, 1000);
+                    }
+                }
+            }
+
+            function orgNewFields() {
+
+                var cardid = "";
+                var carproc = "";
+                var apuraparc = "";
+                var hf1 = 0;
+                var hf2 = 0;
+                var df1 = "";
+                var df2 = "";
+                var mesmocard = false;
+                var total = tempfield.length - 1;
+
+                for (var n = 0; n < tempfield.length; n++) {
+
+                    cardid = tempfield[n]['idModel'];
+                    if (carproc == "") {
+                        carproc == tempfield[n]['idModel'];
+                    }
+
+                    switch (tempfield[n]['idCustomField']) {
+                        //Apuraparc
+                        case "5b74af89b77c4f7c70fed6b6":
+
+                            switch (tempfield[n]['idValue']) {
+                                case "5b74af89b77c4f7c70fed6b9":
+                                    apuraparc = "Nao";
+                                    break;
+                                case "5b74af89b77c4f7c70fed6b8":
+                                    apuraparc = "Sim";
+                                    break;
+                            }
+
+                            break;
+                            //HF1
+                        case "5b74af89b77c4f7c70fed6ba":
+                            hf1 = hf1 + parseInt(tempfield[n]['value']['number']);
+                            break;
+                            //HF2
+                        case "5b77612c7ace4a71e567aef9":
+                            hf2 = hf2 + parseInt(tempfield[n]['value']['number']);
+                            break;
+                            //DF1
+                        case "5b74af89b77c4f7c70fed6bb":
+                            var ddf = tempfield[n]['value']['date'];
+                            ddf = ddf.split("T");
+                            df1 = ddf[0];
+                            break;
+                            //DF2
+                        case "5b77612c7ace4a71e567aefb":
+                            var ddf = tempfield[n]['value']['date'];
+                            ddf = ddf.split("T");
+                            df2 = ddf[0];
+                            break;
+                    }
+
+                    if (carproc != cardid) {
+                        if (mesmocard == false) {
+                            var arraystemps = {
+                                'CARDID': cardid, // Id do card
+                                'APURAPARC': apuraparc, // Sim ou Não
+                                'HF1': hf1, // Hora 1
+                                'HF2': hf2, // Hota 2
+                                'DF1': df1, // Data 1
+                                'DF2': df2 // Data 2
+                            };
+                            newfields.push(arraystemps);
+
+                            cardid = "";
+                            apuraparc = "";
+                            hf1 = 0;
+                            hf2 = 0;
+                            df1 = "";
+                            df2 = "";
+                        }
+                    }
+
+                    if (n == total) {
+                        console.group("NewCampos");
+                        console.log(newfields);
+                        console.groupEnd("NewCampos");
                     }
                 }
             }
@@ -820,22 +835,22 @@ Gerente - Juliana Alencar
                     'THRS': 0, // Total horas
                 };
 
-                for (var i = 0; i < cardscmplt.length; i++) {
+                for (var i = 0; i < cards.length; i++) {
                     for (var y = 0; y < listas.length; y++) {
-                        if (cardscmplt[i]['idList'] == listas[y]['ID']) {
-                            
-                            if(cardscmplt[i]['due'] == null){
-                                dump("ListasXCards();", "O card " + cardscmplt[i]['name'] + " não possui data de entrega.");
+                        if (cards[i]['idList'] == listas[y]['ID']) {
+
+                            if (cards[i]['due'] == null) {
+                                dump("ListasXCards();", "O card " + cards[i]['name'] + " não possui data de entrega.");
                             }
-                            
+
                             switch (listas[y]['NAME']) {
                                 case "Impedimentos":
-                                    if (cardscmplt[i]['dueComplete']) {
+                                    if (cards[i]['dueComplete']) {
                                         impedimentos['DONE'] = impedimentos['DONE'] + 1;
                                     } else {
                                         impedimentos['NDON'] = impedimentos['NDON'] + 1;
 
-                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                        if (dataNoPrazo(cards[i]['due'])) {
                                             impedimentos['DPRZ'] = impedimentos['DPRZ'] + 1;
                                         } else {
                                             impedimentos['FPRZ'] = impedimentos['FPRZ'] + 1;
@@ -845,7 +860,7 @@ Gerente - Juliana Alencar
                                     impedimentos['TOTL'] = impedimentos['TOTL'] + 1;
 
                                     for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
                                             impedimentos['THRS'] = impedimentos['THRS'] + newfields[n]['HF1'];
                                             break;
                                         }
@@ -853,12 +868,12 @@ Gerente - Juliana Alencar
                                     break;
 
                                 case "Desenho":
-                                    if (cardscmplt[i]['dueComplete']) {
+                                    if (cards[i]['dueComplete']) {
                                         desenho['DONE'] = desenho['DONE'] + 1;
                                     } else {
                                         desenho['NDON'] = desenho['NDON'] + 1;
 
-                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                        if (dataNoPrazo(cards[i]['due'])) {
                                             desenho['DPRZ'] = desenho['DPRZ'] + 1;
                                         } else {
                                             desenho['FPRZ'] = desenho['FPRZ'] + 1;
@@ -868,7 +883,7 @@ Gerente - Juliana Alencar
                                     desenho['TOTL'] = desenho['TOTL'] + 1;
 
                                     for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
                                             desenho['THRS'] = desenho['THRS'] + newfields[n]['HF1'];
                                             break;
                                         }
@@ -876,12 +891,12 @@ Gerente - Juliana Alencar
                                     break;
 
                                 case "Aprovação da EF (BP/Usuário)":
-                                    if (cardscmplt[i]['dueComplete']) {
+                                    if (cards[i]['dueComplete']) {
                                         aprovdesenho['DONE'] = aprovdesenho['DONE'] + 1;
                                     } else {
                                         aprovdesenho['NDON'] = aprovdesenho['NDON'] + 1;
 
-                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                        if (dataNoPrazo(cards[i]['due'])) {
                                             aprovdesenho['DPRZ'] = aprovdesenho['DPRZ'] + 1;
                                         } else {
                                             aprovdesenho['FPRZ'] = aprovdesenho['FPRZ'] + 1;
@@ -891,7 +906,7 @@ Gerente - Juliana Alencar
                                     aprovdesenho['TOTL'] = aprovdesenho['TOTL'] + 1;
 
                                     for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
                                             aprovdesenho['THRS'] = aprovdesenho['THRS'] + newfields[n]['HF1'];
                                             break;
                                         }
@@ -899,12 +914,12 @@ Gerente - Juliana Alencar
                                     break;
 
                                 case "Construção Funcional":
-                                    if (cardscmplt[i]['dueComplete']) {
+                                    if (cards[i]['dueComplete']) {
                                         construcao['DONE'] = construcao['DONE'] + 1;
                                     } else {
                                         construcao['NDON'] = construcao['NDON'] + 1;
 
-                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                        if (dataNoPrazo(cards[i]['due'])) {
                                             construcao['DPRZ'] = construcao['DPRZ'] + 1;
                                         } else {
                                             construcao['FPRZ'] = construcao['FPRZ'] + 1;
@@ -914,7 +929,7 @@ Gerente - Juliana Alencar
                                     construcao['TOTL'] = construcao['TOTL'] + 1;
 
                                     for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
                                             construcao['THRS'] = construcao['THRS'] + newfields[n]['HF1'];
                                             break;
                                         }
@@ -922,12 +937,12 @@ Gerente - Juliana Alencar
                                     break;
 
                                 case "Construção Abap":
-                                    if (cardscmplt[i]['dueComplete']) {
+                                    if (cards[i]['dueComplete']) {
                                         construcao['DONE'] = construcao['DONE'] + 1;
                                     } else {
                                         construcao['NDON'] = construcao['NDON'] + 1;
 
-                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                        if (dataNoPrazo(cards[i]['due'])) {
                                             construcao['DPRZ'] = construcao['DPRZ'] + 1;
                                         } else {
                                             construcao['FPRZ'] = construcao['FPRZ'] + 1;
@@ -937,7 +952,7 @@ Gerente - Juliana Alencar
                                     construcao['TOTL'] = construcao['TOTL'] + 1;
 
                                     for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
                                             construcao['THRS'] = construcao['THRS'] + newfields[n]['HF1'];
                                             break;
                                         }
@@ -945,12 +960,12 @@ Gerente - Juliana Alencar
                                     break;
 
                                 case "Teste Funcional":
-                                    if (cardscmplt[i]['dueComplete']) {
+                                    if (cards[i]['dueComplete']) {
                                         construcao['DONE'] = construcao['DONE'] + 1;
                                     } else {
                                         construcao['NDON'] = construcao['NDON'] + 1;
 
-                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                        if (dataNoPrazo(cards[i]['due'])) {
                                             construcao['DPRZ'] = construcao['DPRZ'] + 1;
                                         } else {
                                             construcao['FPRZ'] = construcao['FPRZ'] + 1;
@@ -960,7 +975,7 @@ Gerente - Juliana Alencar
                                     construcao['TOTL'] = construcao['TOTL'] + 1;
 
                                     for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
                                             construcao['THRS'] = construcao['THRS'] + newfields[n]['HF1'];
                                             break;
                                         }
@@ -968,12 +983,12 @@ Gerente - Juliana Alencar
                                     break;
 
                                 case "Liberação de Acesso":
-                                    if (cardscmplt[i]['dueComplete']) {
+                                    if (cards[i]['dueComplete']) {
                                         construcao['DONE'] = construcao['DONE'] + 1;
                                     } else {
                                         construcao['NDON'] = construcao['NDON'] + 1;
 
-                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                        if (dataNoPrazo(cards[i]['due'])) {
                                             construcao['DPRZ'] = construcao['DPRZ'] + 1;
                                         } else {
                                             construcao['FPRZ'] = construcao['FPRZ'] + 1;
@@ -983,7 +998,7 @@ Gerente - Juliana Alencar
                                     construcao['TOTL'] = construcao['TOTL'] + 1;
 
                                     for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
                                             construcao['THRS'] = construcao['THRS'] + newfields[n]['HF1'];
                                             break;
                                         }
@@ -991,12 +1006,12 @@ Gerente - Juliana Alencar
                                     break;
 
                                 case "Teste do Usuário":
-                                    if (cardscmplt[i]['dueComplete']) {
+                                    if (cards[i]['dueComplete']) {
                                         testuser['DONE'] = testuser['DONE'] + 1;
                                     } else {
                                         testuser['NDON'] = testuser['NDON'] + 1;
 
-                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                        if (dataNoPrazo(cards[i]['due'])) {
                                             testuser['DPRZ'] = testuser['DPRZ'] + 1;
                                         } else {
                                             testuser['FPRZ'] = testuser['FPRZ'] + 1;
@@ -1006,7 +1021,7 @@ Gerente - Juliana Alencar
                                     testuser['TOTL'] = testuser['TOTL'] + 1;
 
                                     for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
                                             testuser['THRS'] = testuser['THRS'] + newfields[n]['HF1'];
                                             break;
                                         }
@@ -1014,12 +1029,12 @@ Gerente - Juliana Alencar
                                     break;
 
                                 case "Preparação CAB":
-                                    if (cardscmplt[i]['dueComplete']) {
+                                    if (cards[i]['dueComplete']) {
                                         precab['DONE'] = precab['DONE'] + 1;
                                     } else {
                                         precab['NDON'] = precab['NDON'] + 1;
 
-                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                        if (dataNoPrazo(cards[i]['due'])) {
                                             precab['DPRZ'] = precab['DPRZ'] + 1;
                                         } else {
                                             precab['FPRZ'] = precab['FPRZ'] + 1;
@@ -1029,7 +1044,7 @@ Gerente - Juliana Alencar
                                     precab['TOTL'] = precab['TOTL'] + 1;
 
                                     for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
                                             precab['THRS'] = precab['THRS'] + newfields[n]['HF1'];
                                             break;
                                         }
@@ -1037,12 +1052,12 @@ Gerente - Juliana Alencar
                                     break;
 
                                 case "Pós Implantação":
-                                    if (cardscmplt[i]['dueComplete']) {
+                                    if (cards[i]['dueComplete']) {
                                         suportgolive['DONE'] = suportgolive['DONE'] + 1;
                                     } else {
                                         suportgolive['NDON'] = suportgolive['NDON'] + 1;
 
-                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                        if (dataNoPrazo(cards[i]['due'])) {
                                             suportgolive['DPRZ'] = suportgolive['DPRZ'] + 1;
                                         } else {
                                             suportgolive['FPRZ'] = suportgolive['FPRZ'] + 1;
@@ -1052,7 +1067,7 @@ Gerente - Juliana Alencar
                                     suportgolive['TOTL'] = suportgolive['TOTL'] + 1;
 
                                     for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
                                             suportgolive['THRS'] = suportgolive['THRS'] + newfields[n]['HF1'];
                                             break;
                                         }
@@ -1060,12 +1075,12 @@ Gerente - Juliana Alencar
                                     break;
 
                                 case "Done":
-                                    if (cardscmplt[i]['dueComplete']) {
+                                    if (cards[i]['dueComplete']) {
                                         implementado['DONE'] = implementado['DONE'] + 1;
                                     } else {
                                         implementado['NDON'] = implementado['NDON'] + 1;
 
-                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                        if (dataNoPrazo(cards[i]['due'])) {
                                             implementado['DPRZ'] = implementado['DPRZ'] + 1;
                                         } else {
                                             implementado['FPRZ'] = implementado['FPRZ'] + 1;
@@ -1075,7 +1090,7 @@ Gerente - Juliana Alencar
                                     implementado['TOTL'] = implementado['TOTL'] + 1;
 
                                     for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
                                             implementado['THRS'] = implementado['THRS'] + newfields[n]['HF1'];
                                             break;
                                         }
@@ -1083,12 +1098,12 @@ Gerente - Juliana Alencar
                                     break;
 
                                 case "Estimativas Em execução":
-                                    if (cardscmplt[i]['dueComplete']) {
+                                    if (cards[i]['dueComplete']) {
                                         pipeline['DONE'] = pipeline['DONE'] + 1;
                                     } else {
                                         pipeline['NDON'] = pipeline['NDON'] + 1;
 
-                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                        if (dataNoPrazo(cards[i]['due'])) {
                                             pipeline['DPRZ'] = pipeline['DPRZ'] + 1;
                                         } else {
                                             pipeline['FPRZ'] = pipeline['FPRZ'] + 1;
@@ -1098,7 +1113,7 @@ Gerente - Juliana Alencar
                                     pipeline['TOTL'] = pipeline['TOTL'] + 1;
 
                                     for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
                                             pipeline['THRS'] = pipeline['THRS'] + newfields[n]['HF1'];
                                             break;
                                         }
@@ -1106,12 +1121,12 @@ Gerente - Juliana Alencar
                                     break;
 
                                 case "Estimativas - Aguardando Aprovação":
-                                    if (cardscmplt[i]['dueComplete']) {
+                                    if (cards[i]['dueComplete']) {
                                         pipeline['DONE'] = pipeline['DONE'] + 1;
                                     } else {
                                         pipeline['NDON'] = pipeline['NDON'] + 1;
 
-                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                        if (dataNoPrazo(cards[i]['due'])) {
                                             pipeline['DPRZ'] = pipeline['DPRZ'] + 1;
                                         } else {
                                             pipeline['FPRZ'] = pipeline['FPRZ'] + 1;
@@ -1121,20 +1136,20 @@ Gerente - Juliana Alencar
                                     pipeline['TOTL'] = pipeline['TOTL'] + 1;
 
                                     for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
                                             pipeline['THRS'] = pipeline['THRS'] + newfields[n]['HF1'];
                                             break;
                                         }
                                     }
                                     break;
-                                
+
                                 case "Estimativas Aprovadas":
-                                    if (cardscmplt[i]['dueComplete']) {
+                                    if (cards[i]['dueComplete']) {
                                         pipeline['DONE'] = pipeline['DONE'] + 1;
                                     } else {
                                         pipeline['NDON'] = pipeline['NDON'] + 1;
 
-                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                        if (dataNoPrazo(cards[i]['due'])) {
                                             pipeline['DPRZ'] = pipeline['DPRZ'] + 1;
                                         } else {
                                             pipeline['FPRZ'] = pipeline['FPRZ'] + 1;
@@ -1144,7 +1159,7 @@ Gerente - Juliana Alencar
                                     pipeline['TOTL'] = pipeline['TOTL'] + 1;
 
                                     for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
                                             pipeline['THRS'] = pipeline['THRS'] + newfields[n]['HF1'];
                                             break;
                                         }
@@ -1152,12 +1167,12 @@ Gerente - Juliana Alencar
                                     break;
 
                                 case "Estimativas Reprovadas/Canceladas":
-                                    if (cardscmplt[i]['dueComplete']) {
+                                    if (cards[i]['dueComplete']) {
                                         reprovs['DONE'] = reprovs['DONE'] + 1;
                                     } else {
                                         reprovs['NDON'] = reprovs['NDON'] + 1;
 
-                                        if (dataNoPrazo(cardscmplt[i]['due'])) {
+                                        if (dataNoPrazo(cards[i]['due'])) {
                                             reprovs['DPRZ'] = reprovs['DPRZ'] + 1;
                                         } else {
                                             reprovs['FPRZ'] = reprovs['FPRZ'] + 1;
@@ -1167,7 +1182,7 @@ Gerente - Juliana Alencar
                                     reprovs['TOTL'] = reprovs['TOTL'] + 1;
 
                                     for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cardscmplt[i]['id']) {
+                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
                                             reprovs['THRS'] = reprovs['THRS'] + newfields[n]['HF1'];
                                             break;
                                         }
@@ -1176,7 +1191,7 @@ Gerente - Juliana Alencar
 
                                 case "Assessment":
                                     break;
-                                    
+
                                 default:
                                     dump("ListasXCards();", "A lista " + listas[y]['NAME'] + " não foi mapeada na função.");
                                     break;
@@ -1298,10 +1313,10 @@ Gerente - Juliana Alencar
             function mntListasLabels() {
 
                 var tt = 0;
-                for (var i = 0; i < cardscmplt.length; i++) {
-                    for (var z = 0; z < cardscmplt[i]['idLabels'].length; z++) {
+                for (var i = 0; i < cards.length; i++) {
+                    for (var z = 0; z < cards[i]['idLabels'].length; z++) {
                         for (var y = 0; y < labels.length; y++) {
-                            if (cardscmplt[i]['idLabels'][z] == labels[y]['ID']) {
+                            if (cards[i]['idLabels'][z] == labels[y]['ID']) {
                                 labels[y]['QNT'] = labels[y]['QNT'] + 1;
                                 tt = tt + 1;
                             }
@@ -1611,13 +1626,13 @@ Gerente - Juliana Alencar
 
             function calcArrRLT() {
 
-                for (var i = 0; i < cardscmplt.length; i++) {
+                for (var i = 0; i < cards.length; i++) {
                     for (var y = 0; y < listas.length; y++) {
                         for (var z = 0; z < newfields.length; z++) {
 
-                            if (cardscmplt[i]['idList'] == listas[y]['ID'] &&
+                            if (cards[i]['idList'] == listas[y]['ID'] &&
                                     listas[y]['NAME'] == "Done" &&
-                                    cardscmplt[i]['id'] == newfields[z]['CARDID']) {
+                                    cards[i]['id'] == newfields[z]['CARDID']) {
 
                                 var rltdata = newfields[z]['DF1'];
                                 var datasplit = rltdata.split("-");
