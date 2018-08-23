@@ -427,6 +427,7 @@ Gerente - Juliana Alencar
             var labels = []; //Array que vai receber os labels
             var tempfield = [];
             var newfields = []; //Array com todos campos novos criados
+            var custfields = []; //Parametrizações dos custons
 
             url = "https://api.trello.com/1/members/me/boards?key=" + key + "&token=" + token; //List Bards
             var ajax1 = $.ajax({
@@ -517,6 +518,10 @@ Gerente - Juliana Alencar
 
             //Puxar infos do site
             function carregarInfosAPI(id) {
+
+                console.group("Board");
+                console.log(id);
+                console.groupEnd("Board");
 
                 //Buscando todos os CARDS do BOARD
                 url = "https://api.trello.com/1/boards/" + id + "/cards/?key=" + key + "&token=" + token; //List CARDS
@@ -624,6 +629,24 @@ Gerente - Juliana Alencar
                         .fail(function (jqXHR, textStatus, data) {
                             dump("carregarInfosAPI();", "A requisição AJAX para buscar todas as Listas falhou!.");
                         });
+                //Buscando parametrizações Custom fields
+                url = "https://api.trello.com/1/boards/" + id + "/customFields?key=" + key + "&token=" + token; //List Labels
+                var ajax6 = $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Buscando custom fields...");
+                    }
+                })
+                        .done(function (data) {
+                            for (var y = 0; y < data.length; y++) {
+                                custfields.push(data[y]);
+                            }
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            dump("carregarInfosAPI();", "A requisição AJAX para buscar todas os Custom fields falhou!.");
+                        });
             }
 
             function processarDados() {
@@ -639,7 +662,7 @@ Gerente - Juliana Alencar
                         type: 'GET',
                         dataType: 'json',
                         beforeSend: function () {
-                            console.log("Buscando New Field - " + cards[i][﻿'id']);
+                            //console.log("Buscando New Field - " + cards[i][﻿'id']);
                         }
                     })
                             .done(function (data) {
@@ -653,7 +676,6 @@ Gerente - Juliana Alencar
                     if (i == total) {
                         setTimeout(function () {
                             //Funções de exibição
-                            console.error(tempfield);
                             orgNewFields();
                             ListasXCards();
                             mntListasLabels();
@@ -669,81 +691,137 @@ Gerente - Juliana Alencar
 
             function orgNewFields() {
 
-                var cardid = "";
-                var carproc = "";
-                var apuraparc = "";
-                var hf1 = 0;
-                var hf2 = 0;
-                var df1 = "";
-                var df2 = "";
-                var mesmocard = false;
-                var total = tempfield.length - 1;
+                var arraystemps = {
+                    'CARDID': "", // Id do card
+                    'APURAPARC': "", // Sim ou Não
+                    'HF1': 0, // Hora 1
+                    'HF2': 0, // Hota 2
+                    'DF1': "", // Data 1
+                    'DF2': "" // Data 2
+                };
 
                 for (var n = 0; n < tempfield.length; n++) {
 
-                    cardid = tempfield[n]['idModel'];
-                    if (carproc == "") {
-                        carproc == tempfield[n]['idModel'];
-                    }
+                    arraystemps['CARDID'] = tempfield[n]['idModel'];
 
-                    switch (tempfield[n]['idCustomField']) {
-                        //Apuraparc
-                        case "5b74af89b77c4f7c70fed6b6":
+                    for (var t = 0; t < custfields.length; t++) {
 
-                            switch (tempfield[n]['idValue']) {
-                                case "5b74af89b77c4f7c70fed6b9":
-                                    apuraparc = "Nao";
+                        if (tempfield[n]['idCustomField'] == custfields[t]['id']) {
+                            switch (custfields[t]['name']) {
+                                case "F%":
+                                    switch (tempfield[n]['idValue']) {
+                                        case "5b74af89b77c4f7c70fed6b9":
+                                            arraystemps['APURAPARC'] = "Nao";
+                                            break;
+                                        case "5b74af89b77c4f7c70fed6b8":
+                                            arraystemps['APURAPARC'] = "Sim";
+                                            break;
+                                    }
                                     break;
-                                case "5b74af89b77c4f7c70fed6b8":
-                                    apuraparc = "Sim";
+
+                                case "H.F.1":
+                                    arraystemps['HF1'] = parseInt(tempfield[n]['value']['number']);
+                                    break;
+
+                                case "H.F.2":
+                                    arraystemps['HF2'] = parseInt(tempfield[n]['value']['number']);
+                                    break;
+
+                                case "D.F.1":
+                                    var ddf = tempfield[n]['value']['date'];
+                                    ddf = ddf.split("T");
+                                    arraystemps['DF1'] = ddf[0];
+                                    break;
+
+                                case "D.F.2":
+                                    var ddf = tempfield[n]['value']['date'];
+                                    ddf = ddf.split("T");
+                                    arraystemps['DF2'] = ddf[0];
                                     break;
                             }
-
-                            break;
-                            //HF1
-                        case "5b74af89b77c4f7c70fed6ba":
-                            hf1 = hf1 + parseInt(tempfield[n]['value']['number']);
-                            break;
-                            //HF2
-                        case "5b77612c7ace4a71e567aef9":
-                            hf2 = hf2 + parseInt(tempfield[n]['value']['number']);
-                            break;
-                            //DF1
-                        case "5b74af89b77c4f7c70fed6bb":
-                            var ddf = tempfield[n]['value']['date'];
-                            ddf = ddf.split("T");
-                            df1 = ddf[0];
-                            break;
-                            //DF2
-                        case "5b77612c7ace4a71e567aefb":
-                            var ddf = tempfield[n]['value']['date'];
-                            ddf = ddf.split("T");
-                            df2 = ddf[0];
-                            break;
-                    }
-
-                    if (carproc != cardid) {
-                        if (mesmocard == false) {
-                            var arraystemps = {
-                                'CARDID': cardid, // Id do card
-                                'APURAPARC': apuraparc, // Sim ou Não
-                                'HF1': hf1, // Hora 1
-                                'HF2': hf2, // Hota 2
-                                'DF1': df1, // Data 1
-                                'DF2': df2 // Data 2
-                            };
-                            newfields.push(arraystemps);
-
-                            cardid = "";
-                            apuraparc = "";
-                            hf1 = 0;
-                            hf2 = 0;
-                            df1 = "";
-                            df2 = "";
                         }
                     }
 
-                    if (n == total) {
+                    newfields.push(arraystemps);
+
+                    arraystemps = {
+                        'CARDID': "", // Id do card
+                        'APURAPARC': "", // Sim ou Não
+                        'HF1': 0, // Hora 1
+                        'HF2': 0, // Hota 2
+                        'DF1': "", // Data 1
+                        'DF2': "" // Data 2
+                    };
+                }
+
+                var corg = newfields;
+                newfields = [];
+                var total = corg.length - 1;
+
+                var card1 = "";
+                var cardpr = "";
+
+                var shf1 = 0;
+                var shf2 = 0;
+                var df1 = "";
+                var df2 = "";
+
+                for (var a = 0; a < corg.length; a++) {
+
+                    cardpr = corg[a]['CARDID'];
+
+                    if (card1 == "") {
+                        card1 = corg[a]['CARDID'];
+                    }
+
+                    if (card1 != cardpr) {
+
+                        var arraystemps = {
+                            'CARDID': card1, // Id do card
+                            'APURAPARC': "", // Sim ou Não
+                            'HF1': shf1, // Hora 1
+                            'HF2': shf2, // Hota 2
+                            'DF1': df1, // Data 1
+                            'DF2': df2 // Data 2
+                        };
+                        newfields.push(arraystemps);
+                        
+                        card1 = corg[a]['CARDID'];
+                        
+                        shf1 = corg[a]['HF1'];
+                        shf2 = corg[a]['HF2'];
+
+                        if (corg[a]['DF1'] != "") {
+                            df1 = corg[a]['DF1'];
+                        }
+                        if (corg[a]['DF2'] != "") {
+                            df2 = corg[a]['DF2'];
+                        }
+
+                    } else {
+                        shf1 = shf1 + corg[a]['HF1'];
+                        shf2 = shf2 + corg[a]['HF2'];
+
+                        if (corg[a]['DF1'] != "") {
+                            df1 = corg[a]['DF1'];
+                        }
+                        if (corg[a]['DF2'] != "") {
+                            df2 = corg[a]['DF2'];
+                        }
+                    }
+
+                    if (a == total) {
+
+                        var arraystemps = {
+                            'CARDID': corg[a]['CARDID'], // Id do card
+                            'APURAPARC': "", // Sim ou Não
+                            'HF1': shf1, // Hora 1
+                            'HF2': shf2, // Hota 2
+                            'DF1': df1, // Data 1
+                            'DF2': df2 // Data 2
+                        };
+                        newfields.push(arraystemps);
+                        
                         console.group("NewCampos");
                         console.log(newfields);
                         console.groupEnd("NewCampos");
