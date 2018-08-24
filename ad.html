@@ -1801,60 +1801,18 @@ Gerente - Juliana Alencar
                     }
                 }
                 
-                for (var i = 0; i < rltlist.length; i++) {
-                    
-                    var mes1 = "";
-                    var mes2 = "";
-                    var dat = "";
-                    
-                    if(rltlist[i]['DF1'] != ""){
-                        dat = rltlist[i]['DF1'];
-                        dat = dat.split("-");
-                        dat = parseInt(dat[1]);
-                    
-                    if(rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
-                       rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
-                       rltlist[i]['LIS'] == "Estimativas Aprovadas"){
-                            
-                        switch(dat){
-                                    case 1:
-                            rltbar['JAN']['ANA'] = rltbar['JAN']['ANA'] + 1;
-                            break;
-                            
-                        case 2:
-                            rltbar['FEV']['ANA'] = rltbar['FEV']['ANA'] + 1;
-                            break;
-                        case 3:
-                            break;
-                        case 4:
-                            break;
-                        case 5:
-                            break;
-                        case 6:
-                            break;
-                        case 7:
-                            break;
-                        case 8:
-                            break;
-                        case 9:
-                            break;
-                        case 10:
-                            break;
-                        case 11:
-                            break;
-                        case 12:
-                            break;
-                        default:
-                            var txt =  "Data " + dat + " invalida.";
-                            dump("calcArrRLTBar();", txt);
-                        }
-                        }
-                    }
-                }
-                
                 console.group("Relatorio-2");
                 console.log(rltlist);
                 console.groupEnd("Relatorio-2");
+                
+                for (var i = 0; i < rltlist.length; i++) {
+                    rltbar['JAN']['ANA'] = 1;
+                    rltbar['FEV']['ANA'] = 2;
+                    rltbar['MAR']['ANA'] = 3;
+                    rltbar['ABR']['ANA'] = 4;
+                    rltbar['MAI']['ANA'] = 5;
+                    rltbar['JUN']['ANA'] = 6;
+                }
             }
             
             function mes(i) {
