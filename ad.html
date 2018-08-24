@@ -1765,8 +1765,6 @@ Gerente - Juliana Alencar
 
             function calcArrRLTBar() {
                 
-                var fruits = ["Banana", "Orange", "Apple", "Mango"];
-                
                 for (var i = 0; i < cards.length; i++) {
                     for (var y = 0; y < listas.length; y++) {
                         for (var z = 0; z < newfields.length; z++) {
@@ -1781,6 +1779,18 @@ Gerente - Juliana Alencar
                         }
                     }
                 }
+            }
+            
+            function mes(i) {
+                var indx = 0;
+                if(i <= 0){
+                    indx = 0;
+                } else {
+                    indx = i - 1;
+                }
+                var arrmeses = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEV"];
+                
+                return arrmeses[indx];
             }
 
             function rltLine() {
