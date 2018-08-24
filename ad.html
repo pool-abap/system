@@ -1703,7 +1703,7 @@ Gerente - Juliana Alencar
             }
 
             function calcArrRLT() {
-
+                
                 for (var i = 0; i < cards.length; i++) {
                     for (var y = 0; y < listas.length; y++) {
                         for (var z = 0; z < newfields.length; z++) {
@@ -1765,6 +1765,8 @@ Gerente - Juliana Alencar
 
             function calcArrRLTBar() {
                 
+                var rltlist = [];
+                
                 for (var i = 0; i < cards.length; i++) {
                     for (var y = 0; y < listas.length; y++) {
                         for (var z = 0; z < newfields.length; z++) {
@@ -1786,10 +1788,17 @@ Gerente - Juliana Alencar
                                     mes2 = parseInt(datasplit2[1]);
                                 }
                                 
-                                console.group(cards[i]['name']);
-                                console.log("DF1 - " + newfields[z]['DF1']);
-                                console.log("DF2 - " + newfields[z]['DF2']);
-                                console.groupEnd(cards[i]['name']);
+                                var arrays = {
+                                    'CDID': "",
+                                    'NOME': cards[i]['name'],
+                                    'HF1': newfields[z]['HF1'],
+                                    'HF2': newfields[z]['HF2'],
+                                    'DF1': newfields[z]['DF1'],
+                                    'DF2': newfields[z]['DF2'],
+                                };
+                                rltlist.push(arrays);
+                                
+                                
                                 
                                 /*switch(cards[]) {
                                 }*/
@@ -1798,6 +1807,10 @@ Gerente - Juliana Alencar
                         }
                     }
                 }
+                
+                console.group("Relatorio-2");
+                console.log(rltlist);
+                console.groupEnd("Relatorio-2");
             }
             
             function mes(i) {
