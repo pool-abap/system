@@ -1814,8 +1814,31 @@ Gerente - Juliana Alencar
                     }
                     switch(dat){
                         case 1:
+                            switch(rltlist[i]['NOM']) {
+                                case "Estimativas - Aguardando Aprovação":
+                                    rltbar['JAN']['ANA'] = rltbar['JAN']['ANA'] + 1;
+                                    break;
+                                 case "Estimativas Reprovadas/Canceladas":
+                                    rltbar['JAN']['ANA'] = rltbar['JAN']['ANA'] + 1;
+                                    break;
+                                 case "Estimativas Aprovadas":
+                                    rltbar['JAN']['ANA'] = rltbar['JAN']['ANA'] + 1;
+                                    break;
+                            }
                             break;
+                            
                         case 2:
+                            switch(rltlist[i]['NOM']) {
+                                case "Estimativas - Aguardando Aprovação":
+                                    rltbar['FEV']['ANA'] = rltbar['JAN']['ANA'] + 1;
+                                    break;
+                                 case "Estimativas Reprovadas/Canceladas":
+                                    rltbar['FEV']['ANA'] = rltbar['JAN']['ANA'] + 1;
+                                    break;
+                                 case "Estimativas Aprovadas":
+                                    rltbar['FEV']['ANA'] = rltbar['JAN']['ANA'] + 1;
+                                    break;
+                            }
                             break;
                         case 3:
                             break;
@@ -1840,21 +1863,6 @@ Gerente - Juliana Alencar
                         default:
                             var txt =  "Data " + dat + " invalida.";
                             dump("calcArrRLTBar();", txt);
-                    }
-                    switch(rltlist[i]['NOM']) {
-                            
-                         case "Estimativas - Aguardando Aprovação":
-                            
-                            break;
-                         
-                         case "Estimativas Reprovadas/Canceladas":
-                            
-                            break;
-                          
-                         case "Estimativas Aprovadas":
-                            
-                            break;
-                            
                     }
                 }
                 
