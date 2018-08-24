@@ -1649,24 +1649,77 @@ Gerente - Juliana Alencar
                 'AGO': 0,
                 'SET': 0,
             };
-            var subArr = {
-                'ANA': 0,
-                'EXE': 0,
-                'ASS': 0,
+            
+            var janrlt = {
+                'ANA': 1,
+                'EXE': 2,
+                'ASS': 3,
             };
-            var rltbar = {
-                'OUT': subArr,
-                'NOV': subArr,
-                'DEZ': subArr,
-                'JAN': subArr,
-                'FEV': subArr,
-                'MAR': subArr,
-                'ABR': subArr,
-                'MAI': subArr,
-                'JUN': subArr,
-                'JUL': subArr,
-                'AGO': subArr,
-                'SET': subArr,
+            
+            var fevrlt = {
+                'ANA': 4,
+                'EXE': 5,
+                'ASS': 6,
+            };
+            
+            var marrlt = {
+                'ANA': 1,
+                'EXE': 1,
+                'ASS': 6,
+            };
+            
+            var abrrlt = {
+                'ANA': 4,
+                'EXE': 1,
+                'ASS': 5,
+            };
+            
+            var mairlt = {
+                'ANA': 6,
+                'EXE': 8,
+                'ASS': 1,
+            };
+            
+            var junrlt = {
+                'ANA': 4,
+                'EXE': 1,
+                'ASS': 1,
+            };
+            
+            var julrlt = {
+                'ANA': 1,
+                'EXE': 1,
+                'ASS': 1,
+            };
+            
+            var agorlt = {
+                'ANA': 9,
+                'EXE': 5,
+                'ASS': 2,
+            };
+            
+            var setrlt = {
+                'ANA': 4,
+                'EXE': 1,
+                'ASS': 4,
+            };
+            
+            var outrlt = {
+                'ANA': 1,
+                'EXE': 1,
+                'ASS': 9,
+            };
+            
+            var novrlt = {
+                'ANA': 1,
+                'EXE': 5,
+                'ASS': 3,
+            };
+            
+            var dezrlt = {
+                'ANA': 9,
+                'EXE': 8,
+                'ASS': 7,
             };
 
             function saldoMes() {
@@ -1806,12 +1859,13 @@ Gerente - Juliana Alencar
                 console.groupEnd("Relatorio-2.1");
                                 
                 for (var i = 0; i < rltlist.length; i++) {
-                    rltbar['JAN']['ANA'] = 1;
-                    rltbar['FEV']['ANA'] = 2;
-                    rltbar['MAR']['ANA'] = 3;
-                    rltbar['ABR']['ANA'] = 4;
-                    rltbar['MAI']['ANA'] = 5;
-                    rltbar['JUN']['ANA'] = 6;
+                    
+                    var arrmes = {
+                        'ANA': 1,
+                        'EXE': 2,
+                        'ASS': 3,
+                    };
+                    rltbar.push(arrmes);
                 }
                 
                 console.group("Relatorio-2.1");
@@ -1871,7 +1925,7 @@ Gerente - Juliana Alencar
                                 fill: false,
                                 responsive: true,
                                 maintainAspectRatio: true,
-                                data: [rltbar['OUT']['ANA'], rltbar['NOV']['ANA'], rltbar['DEZ']['ANA'], rltbar['JAN']['ANA'], rltbar['FEV']['ANA'], rltbar['MAR']['ANA'], rltbar['ABR']['ANA'], rltbar['MAI']['ANA'], rltbar['JUN']['ANA'], rltbar['JUL']['ANA'], rltbar['AGO']['ANA'], rltbar['SET']['ANA']],
+                                data: [outrlt['ANA'], novrlt['ANA'], dezrlt['ANA'], janrlt['ANA'], fevrlt['ANA'], marrlt['ANA'], abrrlt['ANA'], mairlt['ANA'], junrlt['ANA'], julrlt['ANA'], agorlt['ANA'], setrlt['ANA']],
                             },
                             {
                                 label: "Execução",
@@ -1880,7 +1934,7 @@ Gerente - Juliana Alencar
                                 fill: false,
                                 responsive: true,
                                 maintainAspectRatio: true,
-                                data: [rltbar['OUT']['EXE'], rltbar['NOV']['EXE'], rltbar['DEZ']['EXE'], rltbar['JAN']['EXE'], rltbar['FEV']['EXE'], rltbar['MAR']['EXE'], rltbar['ABR']['EXE'], rltbar['MAI']['EXE'], rltbar['JUN']['EXE'], rltbar['JUL']['EXE'], rltbar['AGO']['EXE'], rltbar['SET']['EXE']],
+                                data: [outrlt['EXE'], novrlt['EXE'], dezrlt['EXE'], janrlt['EXE'], fevrlt['EXE'], marrlt['EXE'], abrrlt['EXE'], mairlt['EXE'], junrlt['EXE'], julrlt['EXE'], agorlt['EXE'], setrlt['EXE']],
                             },
                             {
                                 label: "Assessment",
@@ -1889,7 +1943,7 @@ Gerente - Juliana Alencar
                                 fill: false,
                                 responsive: true,
                                 maintainAspectRatio: true,
-                                data: [rltbar['OUT']['ASS'], rltbar['NOV']['ASS'], rltbar['DEZ']['ASS'], rltbar['JAN']['ASS'], rltbar['FEV']['ASS'], rltbar['MAR']['ASS'], rltbar['ABR']['ASS'], rltbar['MAI']['ASS'], rltbar['JUN']['ASS'], rltbar['JUL']['ASS'], rltbar['AGO']['ASS'], rltbar['SET']['ASS']],
+                                data: [outrlt['ASS'], novrlt['ASS'], dezrlt['ASS'], janrlt['ASS'], fevrlt['ASS'], marrlt['ASS'], abrrlt['ASS'], mairlt['ASS'], junrlt['ASS'], julrlt['ASS'], agorlt['ASS'], setrlt['ASS']],
                             }]
                     },
                     // Configuration options go here
