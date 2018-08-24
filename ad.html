@@ -1815,30 +1815,18 @@ Gerente - Juliana Alencar
                     
                     switch(dat){
                         case 1:
-                            switch(rltlist[i]['LIS']) {
-                                case "Estimativas - Aguardando Aprovação":
+                            if(rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
+                               rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
+                               rltlist[i]['LIS'] == "Estimativas Aprovadas"){
                                     rltbar['JAN']['ANA'] = rltbar['JAN']['ANA'] + 1;
-                                    break;
-                                 case "Estimativas Reprovadas/Canceladas":
-                                    rltbar['JAN']['ANA'] = rltbar['JAN']['ANA'] + 1;
-                                    break;
-                                 case "Estimativas Aprovadas":
-                                    rltbar['JAN']['ANA'] = rltbar['JAN']['ANA'] + 1;
-                                    break;
                             }
                             break;
                             
                         case 2:
-                            switch(rltlist[i]['LIS']) {
-                                case "Estimativas - Aguardando Aprovação":
+                            if(rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
+                               rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
+                               rltlist[i]['LIS'] == "Estimativas Aprovadas"){
                                     rltbar['FEV']['ANA'] = rltbar['FEV']['ANA'] + 1;
-                                    break;
-                                 case "Estimativas Reprovadas/Canceladas":
-                                    rltbar['FEV']['ANA'] = rltbar['FEV']['ANA'] + 1;
-                                    break;
-                                 case "Estimativas Aprovadas":
-                                    rltbar['FEV']['ANA'] = rltbar['FEV']['ANA'] + 1;
-                                    break;
                             }
                             break;
                         case 3:
