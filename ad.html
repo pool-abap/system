@@ -1946,10 +1946,24 @@ Gerente - Juliana Alencar
                     },
                     // Configuration options go here
                     options: {
+                        title: {
+                            display: true,
+                            text: 'Chart.js Bar Chart - Stacked'
+                        },
                         tooltips: {
                             mode: 'index',
-                            axis: 'y'
-                        }}
+                            intersect: false
+                        },
+                        responsive: true,
+                        scales: {
+                            xAxes: [{
+                                stacked: true,
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        }
+                    }
                 }
                 );
             }
