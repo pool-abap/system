@@ -1817,7 +1817,7 @@ Gerente - Juliana Alencar
                         case 1:
                             switch(rltlist[i]['LIS']) {
                                 case "Estimativas - Aguardando Aprovação":
-                                    rltbar['JAN']['ANA'] = rltbar['JAN']['ANA'] + 2;
+                                    rltbar['JAN']['ANA'] = rltbar['JAN']['ANA'] + 1;
                                     break;
                                  case "Estimativas Reprovadas/Canceladas":
                                     rltbar['JAN']['ANA'] = rltbar['JAN']['ANA'] + 1;
@@ -1831,13 +1831,13 @@ Gerente - Juliana Alencar
                         case 2:
                             switch(rltlist[i]['LIS']) {
                                 case "Estimativas - Aguardando Aprovação":
-                                    rltbar['FEV']['ANA'] = rltbar['JAN']['ANA'] + 1;
+                                    rltbar['FEV']['ANA'] = rltbar['FEV']['ANA'] + 1;
                                     break;
                                  case "Estimativas Reprovadas/Canceladas":
-                                    rltbar['FEV']['ANA'] = rltbar['JAN']['ANA'] + 1;
+                                    rltbar['FEV']['ANA'] = rltbar['FEV']['ANA'] + 1;
                                     break;
                                  case "Estimativas Aprovadas":
-                                    rltbar['FEV']['ANA'] = rltbar['JAN']['ANA'] + 1;
+                                    rltbar['FEV']['ANA'] = rltbar['FEV']['ANA'] + 1;
                                     break;
                             }
                             break;
