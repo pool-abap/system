@@ -1811,11 +1811,12 @@ Gerente - Juliana Alencar
                         dat = rltlist[i]['DF1'];
                         dat = dat.split("-");
                         dat = parseInt(dat[1]);
-                    }
+                    } else {
                     if(rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
                        rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
                        rltlist[i]['LIS'] == "Estimativas Aprovadas"){
-                            switch(dat){
+                            
+                        switch(dat){
                                     case 1:
                             rltbar['JAN']['ANA'] = rltbar['JAN']['ANA'] + 1;
                             break;
@@ -1846,6 +1847,7 @@ Gerente - Juliana Alencar
                         default:
                             var txt =  "Data " + dat + " invalida.";
                             dump("calcArrRLTBar();", txt);
+                        }
                         }
                     }
                 }
