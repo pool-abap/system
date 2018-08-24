@@ -1805,29 +1805,23 @@ Gerente - Juliana Alencar
                     
                     var mes1 = "";
                     var mes2 = "";
-                    var dat;
+                    var dat = "";
                     
                     if(rltlist[i]['DF1'] != ""){
                         dat = rltlist[i]['DF1'];
                         dat = dat.split("-");
                         dat = parseInt(dat[1]);
                     }
-                    
-                    switch(dat){
-                        case 1:
-                            if(rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
-                               rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
-                               rltlist[i]['LIS'] == "Estimativas Aprovadas"){
-                                    rltbar['JAN']['ANA'] = rltbar['JAN']['ANA'] + 1;
-                            }
+                    if(rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
+                       rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
+                       rltlist[i]['LIS'] == "Estimativas Aprovadas"){
+                            switch(dat){
+                                    case 1:
+                            rltbar['JAN']['ANA'] = rltbar['JAN']['ANA'] + 1;
                             break;
                             
                         case 2:
-                            if(rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
-                               rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
-                               rltlist[i]['LIS'] == "Estimativas Aprovadas"){
-                                    rltbar['FEV']['ANA'] = rltbar['FEV']['ANA'] + 1;
-                            }
+                            rltbar['FEV']['ANA'] = rltbar['FEV']['ANA'] + 1;
                             break;
                         case 3:
                             break;
@@ -1852,6 +1846,8 @@ Gerente - Juliana Alencar
                         default:
                             var txt =  "Data " + dat + " invalida.";
                             dump("calcArrRLTBar();", txt);
+                        }
+                    }
                     }
                 }
                 
