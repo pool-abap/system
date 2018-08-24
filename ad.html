@@ -1772,8 +1772,23 @@ Gerente - Juliana Alencar
                             if (cards[i]['idList'] == listas[y]['ID'] &&
                                     cards[i]['id'] == newfields[z]['CARDID']) {
                                 
-                                 
+                                var rltdata1 = newfields[z]['DF1'];
+                                var rltdata2 = newfields[z]['DF2'];
+                                var datasplit1 = rltdata1.split("-");
+                                var datasplit2 = rltdata2.split("-");
+                                var mes1 = "";
+                                var mes2 = "";
                                 
+                                if(newfields[z]['DF1'] != ""){
+                                    mes1 = parseInt(datasplit1[1]);
+                                }
+                                if(newfields[z]['DF2'] != ""){
+                                    mes2 = parseInt(datasplit2[1]);
+                                }
+                                
+                                console.log("Chamado - " + cards[i]['name'] + " DF1 - " + newfields[z]['DF1'] + " DF2 - " + newfields[z]['DF2']);
+                                switch(cards[]) {
+                                }
                             }
                             
                         }
