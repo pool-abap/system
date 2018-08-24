@@ -1812,13 +1812,11 @@ Gerente - Juliana Alencar
                         dat = dat.split("-");
                         dat = parseInt(dat[1]);
                     }
-                    console.warn("Testeeeee 1");
+                    
                     switch(dat){
                         case 1:
-                            console.warn("Testeeeee 2");
-                            switch(rltlist[i]['NOM']) {
+                            switch(rltlist[i]['LIS']) {
                                 case "Estimativas - Aguardando Aprovação":
-                                    console.warn("Testeeeee 3");
                                     rltbar['JAN']['ANA'] = rltbar['JAN']['ANA'] + 1;
                                     break;
                                  case "Estimativas Reprovadas/Canceladas":
@@ -1831,7 +1829,7 @@ Gerente - Juliana Alencar
                             break;
                             
                         case 2:
-                            switch(rltlist[i]['NOM']) {
+                            switch(rltlist[i]['LIS']) {
                                 case "Estimativas - Aguardando Aprovação":
                                     rltbar['FEV']['ANA'] = rltbar['JAN']['ANA'] + 1;
                                     break;
