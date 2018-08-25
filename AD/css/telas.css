@@ -1,0 +1,39 @@
+.tela-01 {
+    float: left;
+    width: 482px;
+    height: 182px;
+    top: calc(50% - 101px);
+    left: calc(50% - 251px);
+    position: absolute;
+    background-color: #fff;
+    padding: 20px;
+    opacity: 1.0;
+    z-index: 99;
+}
+.tela-01 h1 {
+    float: left;
+    width: 100%;
+    color: #284c77;
+    font-size: 1.5em;
+    text-align: center;
+}
+.tela-01 select {
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+}
+.tela-01 button {
+    float: left;
+    width: 100%;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.tela-02 {
+    float: left;
+    width: 100%;
+    height: 800px;
+    opacity: 0.0;
+    padding: 0px;
+}
