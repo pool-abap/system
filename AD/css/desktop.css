@@ -1,0 +1,152 @@
+/* Desktops and laptops ----------- */
+@media only screen  and (min-width : 1224px) {
+    .lns1 {
+        float: left;
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .lns2 {
+        float: left;
+        width: 50%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .lns3 {
+        float: left;
+        width: 25%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .div-indcs1 {
+        float: left;
+        width: calc(12.5% - 20px);
+        min-height: 130px;
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 8px 11px 5px 11px;
+    }
+    .div-indcs1 h1 {
+        float: left;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        text-align: center;
+        font-size: 1.3em;
+    }
+    .div-indcs1 h2 {
+        float: left;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        text-align: center;
+        font-size: 3.0em;
+    }
+    .div-indcs1 h3 {
+        float: left;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        text-align: center;
+        font-size: 3.5em;
+    }
+    .div-indcs1 h4 {
+        float: left;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        text-align: center;
+        font-size: 1.0em;
+    }
+    .div-indcs1 p {
+        float: left;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        text-align: center;
+        font-size: 1.5em;
+    }
+    .div-indcs2 {
+        float: left;
+        width: calc(25% - 20px);
+        min-height: 130px;
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 5px;
+    }
+    .div-indcs3 {
+        float: left;
+        width: calc(50% - 20px);
+        min-height: 130px;
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 5px;
+        margin-bottom: 20px;
+    }
+    .div-indcs3 h1 {
+        float: left;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        text-align: center;
+        font-size: 1.3em;
+    }
+    .div-indcs3 h2 {
+        float: left;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        text-align: center;
+        font-size: 3.0em;
+    }
+    .div-indcs3 h3 {
+        float: left;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        text-align: center;
+        font-size: 3.5em;
+    }
+    .div-indcs3 h4 {
+        float: left;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        text-align: center;
+        font-size: 1.0em;
+    }
+    .div-indcs3 p {
+        float: left;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        text-align: center;
+        font-size: 1.5em;
+    }
+    
+    .div-indcs4 {
+        float: left;
+        min-height: 130px;
+        width: calc(100% - 20px);
+        margin-bottom: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 5px;
+    }
+    
+    #div-saldo {
+        background-color: #218838;
+        color: #fff;
+        text-shadow: 1px 1px #494949;
+    }
+    #div-impedi {
+        background-color: #E0A800;
+        color: #fff;
+        text-shadow: 1px 1px #494949;
+    }
+    #div-pipeline {
+        background-color: #218838;
+        color: #fff;
+        text-shadow: 1px 1px #494949;
+    }
+}

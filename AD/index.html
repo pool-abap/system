@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!--
+Arquivo desenvolvido por Felipe Lopes Melo (EID - felipe.lopes.melo) para atender a necessidade do Pool ABAP
+Desenvolvedor - Felipe Lopes
+Solicitante - Lisiane Neri
+Gerente - Juliana Alencar
+-->
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Language" content="pt-br">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="copyright" content="Accenture Brasil">
+        <meta name="author" content="felipe.lopes.melo@accenture.com">
+        <meta name="robots" content="noindex, nofollow">
+
+        <title>Dashboard Trello AD</title>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="https://rentadrone.cl/wp-content/uploads/2016/12/pie-chart-1.png" />
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+        <!--Links CSS-->
+        <link href="css/reset.css" type="text/css" rel="stylesheet" />
+        <link href="css/body.css" type="text/css" rel="stylesheet" />
+        <link href="css/smartf.css" type="text/css" rel="stylesheet" />
+        <link href="css/tablet.css" type="text/css" rel="stylesheet" />
+        <link href="css/desktop.css" type="text/css" rel="stylesheet" />
+
+
+        <script type="text/javascript" src="js/onload.js"></script>
+    </head>
+    <body>
+
+        <div class="lns1" style="margin-top: 10px;">
+            <div class="div-indcs1" style="margin-left: 10px; margin-right: 10px;">
+                <h1>Desenho</h1>
+                <h2>0</h2>
+                <p>2hr</p>
+            </div>
+            <div class="div-indcs1" style="margin-left: 10px; margin-right: 10px;">
+                <h1>Aprovação</h1>
+                <h2>0</h2>
+                <p>2hr</p>
+            </div>
+            <div class="div-indcs1" style="margin-left: 10px; margin-right: 10px;">
+                <h1>Construção</h1>
+                <h2>0</h2>
+                <p>2hr</p>
+            </div>
+            <div class="div-indcs1" style="margin-left: 10px; margin-right: 10px;">
+                <h1>Teste User</h1>
+                <h2>0</h2>
+                <p>2hr</p>
+            </div>
+            <div class="div-indcs1" style="margin-left: 10px; margin-right: 10px;">
+                <h1>CAB</h1>
+                <h2>0</h2>
+                <p>2hr</p>
+            </div>
+            <div class="div-indcs1" style="margin-left: 10px; margin-right: 10px;">
+                <h1>Pós GOLIVE</h1>
+                <h2>0</h2>
+                <p>2hr</p>
+            </div>
+            <div class="div-indcs1" style="margin-left: 10px; margin-right: 10px;">
+                <h1>Concluídas</h1>
+                <h2>0</h2>
+                <p>2hr</p>
+            </div>
+            <div class="div-indcs1" id="div-saldo" style="margin-left: 10px; margin-right: 10px;">
+                <h1>Saldo</h1>
+                <h3>350</h3>
+                <h4>Horas</h4>
+            </div>
+        </div>
+
+        <div class="lns3">
+            <div class="div-indcs3" id="div-impedi" style="margin-left: 10px; margin-right: 10px;">
+                <h1>Impedimentos</h1>
+                <h2>0</h2>
+                <p>2hr</p>
+            </div>
+            <div class="div-indcs3" id="div-pipeline" style="margin-left: 10px; margin-right: 10px;">
+                <h1>PIPELINE</h1>
+                <h2>0</h2>
+                <p>2hr</p>
+            </div>
+
+            <div class="div-indcs4" style="margin-left: 10px; margin-right: 20px;">
+            </div>
+        </div>
+
+        <div class="lns2">
+            <div class="div-indcs4" style="margin-left: 10px; margin-right: 20px;">
+                <h1>TESS</h1>
+                <h1>TESS</h1>
+                <h1>TESS</h1>
+                <h1>TESS</h1>
+                <h1>TESS</h1>
+            </div>
+            <div class="div-indcs4" style="margin-left: 10px; margin-right: 20px;">
+                <h1>TESS</h1>
+                <h1>TESS</h1>
+                <h1>TESS</h1>
+                <h1>TESS</h1>
+                <h1>TESS</h1>
+            </div>
+        </div>
+
+        <div class="lns3">
+             <div class="div-indcs4" style="margin-left: 10px; margin-right: 20px;">
+                <h1>Pool AD - BIOSEV</h1>
+                <h2>25 Agosto 2018</h2>
+            </div>
+
+            <div class="div-indcs3" style="margin-left: 10px; margin-right: 10px;">
+                <h1>Aprovado Mês</h1>
+                <h3>350</h3>
+                <h4>Horas</h4>
+            </div>
+
+            <div class="div-indcs3" style="margin-left: 10px; margin-right: 10px;">
+                <h1>Previsão</h1>
+                <h3>100</h3>
+                <h4>Horas</h4>
+            </div>
+        </div>
+    </body>
+</html>
