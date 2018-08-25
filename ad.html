@@ -785,9 +785,9 @@ Gerente - Juliana Alencar
                             'DF2': df2 // Data 2
                         };
                         newfields.push(arraystemps);
-                        
+
                         card1 = corg[a]['CARDID'];
-                        
+
                         shf1 = corg[a]['HF1'];
                         shf2 = corg[a]['HF2'];
 
@@ -821,7 +821,7 @@ Gerente - Juliana Alencar
                             'DF2': df2 // Data 2
                         };
                         newfields.push(arraystemps);
-                        
+
                         console.group("NewCampos");
                         console.log(newfields);
                         console.groupEnd("NewCampos");
@@ -1177,25 +1177,25 @@ Gerente - Juliana Alencar
 
                                 case "Estimativas Em execução":
                                     /*if (cards[i]['dueComplete']) {
-                                        pipeline['DONE'] = pipeline['DONE'] + 1;
-                                    } else {
-                                        pipeline['NDON'] = pipeline['NDON'] + 1;
-
-                                        if (dataNoPrazo(cards[i]['due'])) {
-                                            pipeline['DPRZ'] = pipeline['DPRZ'] + 1;
-                                        } else {
-                                            pipeline['FPRZ'] = pipeline['FPRZ'] + 1;
-                                            riscos = true;
-                                        }
-                                    }
-                                    pipeline['TOTL'] = pipeline['TOTL'] + 1;
-
-                                    for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
-                                            pipeline['THRS'] = pipeline['THRS'] + newfields[n]['HF1'];
-                                            break;
-                                        }
-                                    }*/
+                                     pipeline['DONE'] = pipeline['DONE'] + 1;
+                                     } else {
+                                     pipeline['NDON'] = pipeline['NDON'] + 1;
+                                     
+                                     if (dataNoPrazo(cards[i]['due'])) {
+                                     pipeline['DPRZ'] = pipeline['DPRZ'] + 1;
+                                     } else {
+                                     pipeline['FPRZ'] = pipeline['FPRZ'] + 1;
+                                     riscos = true;
+                                     }
+                                     }
+                                     pipeline['TOTL'] = pipeline['TOTL'] + 1;
+                                     
+                                     for (var n = 0; n < newfields.length; n++) {
+                                     if (newfields[n]['CARDID'] == cards[i]['id']) {
+                                     pipeline['THRS'] = pipeline['THRS'] + newfields[n]['HF1'];
+                                     break;
+                                     }
+                                     }*/
                                     break;
 
                                 case "Estimativas - Aguardando Aprovação":
@@ -1223,25 +1223,25 @@ Gerente - Juliana Alencar
 
                                 case "Estimativas Aprovadas":
                                     /*if (cards[i]['dueComplete']) {
-                                        pipeline['DONE'] = pipeline['DONE'] + 1;
-                                    } else {
-                                        pipeline['NDON'] = pipeline['NDON'] + 1;
-
-                                        if (dataNoPrazo(cards[i]['due'])) {
-                                            pipeline['DPRZ'] = pipeline['DPRZ'] + 1;
-                                        } else {
-                                            pipeline['FPRZ'] = pipeline['FPRZ'] + 1;
-                                            riscos = true;
-                                        }
-                                    }
-                                    pipeline['TOTL'] = pipeline['TOTL'] + 1;
-
-                                    for (var n = 0; n < newfields.length; n++) {
-                                        if (newfields[n]['CARDID'] == cards[i]['id']) {
-                                            pipeline['THRS'] = pipeline['THRS'] + newfields[n]['HF1'];
-                                            break;
-                                        }
-                                    }*/
+                                     pipeline['DONE'] = pipeline['DONE'] + 1;
+                                     } else {
+                                     pipeline['NDON'] = pipeline['NDON'] + 1;
+                                     
+                                     if (dataNoPrazo(cards[i]['due'])) {
+                                     pipeline['DPRZ'] = pipeline['DPRZ'] + 1;
+                                     } else {
+                                     pipeline['FPRZ'] = pipeline['FPRZ'] + 1;
+                                     riscos = true;
+                                     }
+                                     }
+                                     pipeline['TOTL'] = pipeline['TOTL'] + 1;
+                                     
+                                     for (var n = 0; n < newfields.length; n++) {
+                                     if (newfields[n]['CARDID'] == cards[i]['id']) {
+                                     pipeline['THRS'] = pipeline['THRS'] + newfields[n]['HF1'];
+                                     break;
+                                     }
+                                     }*/
                                     break;
 
                                 case "Estimativas Reprovadas/Canceladas":
@@ -1649,77 +1649,77 @@ Gerente - Juliana Alencar
                 'AGO': 0,
                 'SET': 0,
             };
-            
+
             var janrlt = {
-                'ANA': 1,
-                'EXE': 2,
-                'ASS': 3,
+                'ANA': 0,
+                'EXE': 0,
+                'ASS': 0,
             };
-            
+
             var fevrlt = {
-                'ANA': 4,
-                'EXE': 5,
-                'ASS': 6,
+                'ANA': 0,
+                'EXE': 0,
+                'ASS': 0,
             };
-            
+
             var marrlt = {
-                'ANA': 1,
-                'EXE': 1,
-                'ASS': 6,
+                'ANA': 0,
+                'EXE': 0,
+                'ASS': 0,
             };
-            
+
             var abrrlt = {
-                'ANA': 4,
-                'EXE': 1,
-                'ASS': 5,
+                'ANA': 0,
+                'EXE': 0,
+                'ASS': 0,
             };
-            
+
             var mairlt = {
-                'ANA': 6,
-                'EXE': 8,
-                'ASS': 1,
+                'ANA': 0,
+                'EXE': 0,
+                'ASS': 0,
             };
-            
+
             var junrlt = {
-                'ANA': 4,
-                'EXE': 1,
-                'ASS': 1,
+                'ANA': 0,
+                'EXE': 0,
+                'ASS': 0,
             };
-            
+
             var julrlt = {
-                'ANA': 1,
-                'EXE': 1,
-                'ASS': 1,
+                'ANA': 0,
+                'EXE': 0,
+                'ASS': 0,
             };
-            
+
             var agorlt = {
-                'ANA': 9,
-                'EXE': 5,
-                'ASS': 2,
+                'ANA': 0,
+                'EXE': 0,
+                'ASS': 0,
             };
-            
+
             var setrlt = {
-                'ANA': 4,
-                'EXE': 1,
-                'ASS': 4,
+                'ANA': 0,
+                'EXE': 0,
+                'ASS': 0,
             };
-            
+
             var outrlt = {
-                'ANA': 1,
-                'EXE': 1,
-                'ASS': 9,
+                'ANA': 0,
+                'EXE': 0,
+                'ASS': 0,
             };
-            
+
             var novrlt = {
-                'ANA': 1,
-                'EXE': 5,
-                'ASS': 3,
+                'ANA': 0,
+                'EXE': 0,
+                'ASS': 0,
             };
-            
+
             var dezrlt = {
-                'ANA': 9,
-                'EXE': 8,
-                'ASS': 7,
+                'ANA': 0,
+                'EXE': 0,
+                'ASS': 0,
             };
 
             function saldoMes() {
@@ -1756,7 +1756,7 @@ Gerente - Juliana Alencar
             }
 
             function calcArrRLT() {
-                
+
                 for (var i = 0; i < cards.length; i++) {
                     for (var y = 0; y < listas.length; y++) {
                         for (var z = 0; z < newfields.length; z++) {
@@ -1817,30 +1817,30 @@ Gerente - Juliana Alencar
             }
 
             function calcArrRLTBar() {
-                
+
                 var rltlist = [];
-                
+
                 for (var i = 0; i < cards.length; i++) {
                     for (var y = 0; y < listas.length; y++) {
                         for (var z = 0; z < newfields.length; z++) {
-                            
+
                             if (cards[i]['idList'] == listas[y]['ID'] &&
                                     cards[i]['id'] == newfields[z]['CARDID']) {
-                                
+
                                 var rltdata1 = newfields[z]['DF1'];
                                 var rltdata2 = newfields[z]['DF2'];
                                 var datasplit1 = rltdata1.split("-");
                                 var datasplit2 = rltdata2.split("-");
                                 var mes1 = "";
                                 var mes2 = "";
-                                
-                                if(newfields[z]['DF1'] != ""){
+
+                                if (newfields[z]['DF1'] != "") {
                                     mes1 = parseInt(datasplit1[1]);
                                 }
-                                if(newfields[z]['DF2'] != ""){
+                                if (newfields[z]['DF2'] != "") {
                                     mes2 = parseInt(datasplit2[1]);
                                 }
-                                
+
                                 var arrays = {
                                     'CID': cards[i]['id'],
                                     'NOM': cards[i]['name'],
@@ -1853,30 +1853,362 @@ Gerente - Juliana Alencar
                         }
                     }
                 }
-                
+
                 console.group("Relatorio-2.1");
                 console.log(rltlist);
                 console.groupEnd("Relatorio-2.1");
-                                
+
                 for (var i = 0; i < rltlist.length; i++) {
-                    
-                    
+
+                    var dat = rltlist[i]['DF1'];
+                    dat = dat.split("-");
+                    dat = parseInt(dat[1]);
+
+                    switch (dat) {
+                        case 1:
+                            if (rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
+                                    rltlist[i]['LIS'] == "Estimativas Em execução" ||
+                                    rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
+                                    rltlist[i]['LIS'] == "Estimativas Aprovadas") {
+                                janrlt['ANA'] = janrlt['ANA'] + 1;
+                            } else if (rltlist[i]['LIS'] == "Impedimentos" ||
+                                    rltlist[i]['LIS'] == "Desenho" ||
+                                    rltlist[i]['LIS'] == "Aprv. Desenho" ||
+                                    rltlist[i]['LIS'] == "Construção Funcional" ||
+                                    rltlist[i]['LIS'] == "Construção Abap" ||
+                                    rltlist[i]['LIS'] == "Liberação de Acesso" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário" ||
+                                    rltlist[i]['LIS'] == "Preparação CAB" ||
+                                    rltlist[i]['LIS'] == "Pós Implantação" ||
+                                    rltlist[i]['LIS'] == "Done" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário") {
+                                janrlt['EXE'] = janrlt['EXE'] + 1;
+                            } else if (rltlist[i]['LIS'] == "") {
+                                janrlt['ASS'] = janrlt['ASS'] + 1;
+                            } else {
+                                dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                            }
+                            break;
+
+                        case 2:
+                            if (rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
+                                    rltlist[i]['LIS'] == "Estimativas Em execução" ||
+                                    rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
+                                    rltlist[i]['LIS'] == "Estimativas Aprovadas") {
+                                fevrlt['ANA'] = fevrlt['ANA'] + 1;
+                            } else if (rltlist[i]['LIS'] == "Impedimentos" ||
+                                    rltlist[i]['LIS'] == "Desenho" ||
+                                    rltlist[i]['LIS'] == "Aprv. Desenho" ||
+                                    rltlist[i]['LIS'] == "Construção Funcional" ||
+                                    rltlist[i]['LIS'] == "Construção Abap" ||
+                                    rltlist[i]['LIS'] == "Liberação de Acesso" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário" ||
+                                    rltlist[i]['LIS'] == "Preparação CAB" ||
+                                    rltlist[i]['LIS'] == "Pós Implantação" ||
+                                    rltlist[i]['LIS'] == "Done" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário") {
+                                fevrlt['EXE'] = fevrlt['EXE'] + 1;
+                            } else if (rltlist[i]['LIS'] == "") {
+                                fevrlt['ASS'] = fevrlt['ASS'] + 1;
+                            } else {
+                                dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                            }
+                            break;
+
+                        case 3:
+                            if (rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
+                                    rltlist[i]['LIS'] == "Estimativas Em execução" ||
+                                    rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
+                                    rltlist[i]['LIS'] == "Estimativas Aprovadas") {
+                                marrlt['ANA'] = marrlt['ANA'] + 1;
+                            } else if (rltlist[i]['LIS'] == "Impedimentos" ||
+                                    rltlist[i]['LIS'] == "Desenho" ||
+                                    rltlist[i]['LIS'] == "Aprv. Desenho" ||
+                                    rltlist[i]['LIS'] == "Construção Funcional" ||
+                                    rltlist[i]['LIS'] == "Construção Abap" ||
+                                    rltlist[i]['LIS'] == "Liberação de Acesso" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário" ||
+                                    rltlist[i]['LIS'] == "Preparação CAB" ||
+                                    rltlist[i]['LIS'] == "Pós Implantação" ||
+                                    rltlist[i]['LIS'] == "Done" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário") {
+                                marrlt['EXE'] = marrlt['EXE'] + 1;
+                            } else if (rltlist[i]['LIS'] == "") {
+                                marrlt['ASS'] = marrlt['ASS'] + 1;
+                            } else {
+                                dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                            }
+                            break;
+
+                        case 4:
+                            if (rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
+                                    rltlist[i]['LIS'] == "Estimativas Em execução" ||
+                                    rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
+                                    rltlist[i]['LIS'] == "Estimativas Aprovadas") {
+                                abrrlt['ANA'] = abrrlt['ANA'] + 1;
+                            } else if (rltlist[i]['LIS'] == "Impedimentos" ||
+                                    rltlist[i]['LIS'] == "Desenho" ||
+                                    rltlist[i]['LIS'] == "Aprv. Desenho" ||
+                                    rltlist[i]['LIS'] == "Construção Funcional" ||
+                                    rltlist[i]['LIS'] == "Construção Abap" ||
+                                    rltlist[i]['LIS'] == "Liberação de Acesso" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário" ||
+                                    rltlist[i]['LIS'] == "Preparação CAB" ||
+                                    rltlist[i]['LIS'] == "Pós Implantação" ||
+                                    rltlist[i]['LIS'] == "Done" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário") {
+                                abrrlt['EXE'] = abrrlt['EXE'] + 1;
+                            } else if (rltlist[i]['LIS'] == "") {
+                                abrrlt['ASS'] = abrrlt['ASS'] + 1;
+                            } else {
+                                dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                            }
+                            break;
+
+                        case 5:
+                            if (rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
+                                    rltlist[i]['LIS'] == "Estimativas Em execução" ||
+                                    rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
+                                    rltlist[i]['LIS'] == "Estimativas Aprovadas") {
+                                mairlt['ANA'] = mairlt['ANA'] + 1;
+                            } else if (rltlist[i]['LIS'] == "Impedimentos" ||
+                                    rltlist[i]['LIS'] == "Desenho" ||
+                                    rltlist[i]['LIS'] == "Aprv. Desenho" ||
+                                    rltlist[i]['LIS'] == "Construção Funcional" ||
+                                    rltlist[i]['LIS'] == "Construção Abap" ||
+                                    rltlist[i]['LIS'] == "Liberação de Acesso" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário" ||
+                                    rltlist[i]['LIS'] == "Preparação CAB" ||
+                                    rltlist[i]['LIS'] == "Pós Implantação" ||
+                                    rltlist[i]['LIS'] == "Done" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário") {
+                                mairlt['EXE'] = mairlt['EXE'] + 1;
+                            } else if (rltlist[i]['LIS'] == "") {
+                                mairlt['ASS'] = mairlt['ASS'] + 1;
+                            } else {
+                                dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                            }
+                            break;
+
+                        case 6:
+                            if (rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
+                                    rltlist[i]['LIS'] == "Estimativas Em execução" ||
+                                    rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
+                                    rltlist[i]['LIS'] == "Estimativas Aprovadas") {
+                                junrlt['ANA'] = junrlt['ANA'] + 1;
+                            } else if (rltlist[i]['LIS'] == "Impedimentos" ||
+                                    rltlist[i]['LIS'] == "Desenho" ||
+                                    rltlist[i]['LIS'] == "Aprv. Desenho" ||
+                                    rltlist[i]['LIS'] == "Construção Funcional" ||
+                                    rltlist[i]['LIS'] == "Construção Abap" ||
+                                    rltlist[i]['LIS'] == "Liberação de Acesso" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário" ||
+                                    rltlist[i]['LIS'] == "Preparação CAB" ||
+                                    rltlist[i]['LIS'] == "Pós Implantação" ||
+                                    rltlist[i]['LIS'] == "Done" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário") {
+                                junrlt['EXE'] = junrlt['EXE'] + 1;
+                            } else if (rltlist[i]['LIS'] == "") {
+                                junrlt['ASS'] = junrlt['ASS'] + 1;
+                            } else {
+                                dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                            }
+                            break;
+
+                        case 7:
+                            if (rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
+                                    rltlist[i]['LIS'] == "Estimativas Em execução" ||
+                                    rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
+                                    rltlist[i]['LIS'] == "Estimativas Aprovadas") {
+                                julrlt['ANA'] = julrlt['ANA'] + 1;
+                            } else if (rltlist[i]['LIS'] == "Impedimentos" ||
+                                    rltlist[i]['LIS'] == "Desenho" ||
+                                    rltlist[i]['LIS'] == "Aprv. Desenho" ||
+                                    rltlist[i]['LIS'] == "Construção Funcional" ||
+                                    rltlist[i]['LIS'] == "Construção Abap" ||
+                                    rltlist[i]['LIS'] == "Liberação de Acesso" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário" ||
+                                    rltlist[i]['LIS'] == "Preparação CAB" ||
+                                    rltlist[i]['LIS'] == "Pós Implantação" ||
+                                    rltlist[i]['LIS'] == "Done" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário") {
+                                julrlt['EXE'] = julrlt['EXE'] + 1;
+                            } else if (rltlist[i]['LIS'] == "") {
+                                julrlt['ASS'] = julrlt['ASS'] + 1;
+                            } else {
+                                dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                            }
+                            break;
+
+                        case 8:
+                            if (rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
+                                    rltlist[i]['LIS'] == "Estimativas Em execução" ||
+                                    rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
+                                    rltlist[i]['LIS'] == "Estimativas Aprovadas") {
+                                agorlt['ANA'] = agorlt['ANA'] + 1;
+                            } else if (rltlist[i]['LIS'] == "Impedimentos" ||
+                                    rltlist[i]['LIS'] == "Desenho" ||
+                                    rltlist[i]['LIS'] == "Aprv. Desenho" ||
+                                    rltlist[i]['LIS'] == "Construção Funcional" ||
+                                    rltlist[i]['LIS'] == "Construção Abap" ||
+                                    rltlist[i]['LIS'] == "Liberação de Acesso" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário" ||
+                                    rltlist[i]['LIS'] == "Preparação CAB" ||
+                                    rltlist[i]['LIS'] == "Pós Implantação" ||
+                                    rltlist[i]['LIS'] == "Done" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário") {
+                                agorlt['EXE'] = agorlt['EXE'] + 1;
+                            } else if (rltlist[i]['LIS'] == "") {
+                                agorlt['ASS'] = agorlt['ASS'] + 1;
+                            } else {
+                                dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                            }
+                            break;
+
+                        case 9:
+                            if (rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
+                                    rltlist[i]['LIS'] == "Estimativas Em execução" ||
+                                    rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
+                                    rltlist[i]['LIS'] == "Estimativas Aprovadas") {
+                                setrlt['ANA'] = setrlt['ANA'] + 1;
+                            } else if (rltlist[i]['LIS'] == "Impedimentos" ||
+                                    rltlist[i]['LIS'] == "Desenho" ||
+                                    rltlist[i]['LIS'] == "Aprv. Desenho" ||
+                                    rltlist[i]['LIS'] == "Construção Funcional" ||
+                                    rltlist[i]['LIS'] == "Construção Abap" ||
+                                    rltlist[i]['LIS'] == "Liberação de Acesso" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário" ||
+                                    rltlist[i]['LIS'] == "Preparação CAB" ||
+                                    rltlist[i]['LIS'] == "Pós Implantação" ||
+                                    rltlist[i]['LIS'] == "Done" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário") {
+                                setrlt['EXE'] = setrlt['EXE'] + 1;
+                            } else if (rltlist[i]['LIS'] == "") {
+                                setrlt['ASS'] = setrlt['ASS'] + 1;
+                            } else {
+                                dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                            }
+                            break;
+
+                        case 10:
+                            if (rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
+                                    rltlist[i]['LIS'] == "Estimativas Em execução" ||
+                                    rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
+                                    rltlist[i]['LIS'] == "Estimativas Aprovadas") {
+                                outrlt['ANA'] = outrlt['ANA'] + 1;
+                            } else if (rltlist[i]['LIS'] == "Impedimentos" ||
+                                    rltlist[i]['LIS'] == "Desenho" ||
+                                    rltlist[i]['LIS'] == "Aprv. Desenho" ||
+                                    rltlist[i]['LIS'] == "Construção Funcional" ||
+                                    rltlist[i]['LIS'] == "Construção Abap" ||
+                                    rltlist[i]['LIS'] == "Liberação de Acesso" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário" ||
+                                    rltlist[i]['LIS'] == "Preparação CAB" ||
+                                    rltlist[i]['LIS'] == "Pós Implantação" ||
+                                    rltlist[i]['LIS'] == "Done" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário") {
+                                outrlt['EXE'] = outrlt['EXE'] + 1;
+                            } else if (rltlist[i]['LIS'] == "") {
+                                outrlt['ASS'] = outrlt['ASS'] + 1;
+                            } else {
+                                dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                            }
+                            break;
+
+                        case 11:
+                            if (rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
+                                    rltlist[i]['LIS'] == "Estimativas Em execução" ||
+                                    rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
+                                    rltlist[i]['LIS'] == "Estimativas Aprovadas") {
+                                novrlt['ANA'] = novrlt['ANA'] + 1;
+                            } else if (rltlist[i]['LIS'] == "Impedimentos" ||
+                                    rltlist[i]['LIS'] == "Desenho" ||
+                                    rltlist[i]['LIS'] == "Aprv. Desenho" ||
+                                    rltlist[i]['LIS'] == "Construção Funcional" ||
+                                    rltlist[i]['LIS'] == "Construção Abap" ||
+                                    rltlist[i]['LIS'] == "Liberação de Acesso" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário" ||
+                                    rltlist[i]['LIS'] == "Preparação CAB" ||
+                                    rltlist[i]['LIS'] == "Pós Implantação" ||
+                                    rltlist[i]['LIS'] == "Done" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário") {
+                                novrlt['EXE'] = novrlt['EXE'] + 1;
+                            } else if (rltlist[i]['LIS'] == "") {
+                                novrlt['ASS'] = novrlt['ASS'] + 1;
+                            } else {
+                                dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                            }
+                            break;
+
+                        case 12:
+                            if (rltlist[i]['LIS'] == "Estimativas Reprovadas/Canceladas" ||
+                                    rltlist[i]['LIS'] == "Estimativas Em execução" ||
+                                    rltlist[i]['LIS'] == "Estimativas - Aguardando Aprovação" ||
+                                    rltlist[i]['LIS'] == "Estimativas Aprovadas") {
+                                dezrlt['ANA'] = dezrlt['ANA'] + 1;
+                            } else if (rltlist[i]['LIS'] == "Impedimentos" ||
+                                    rltlist[i]['LIS'] == "Desenho" ||
+                                    rltlist[i]['LIS'] == "Aprv. Desenho" ||
+                                    rltlist[i]['LIS'] == "Construção Funcional" ||
+                                    rltlist[i]['LIS'] == "Construção Abap" ||
+                                    rltlist[i]['LIS'] == "Liberação de Acesso" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário" ||
+                                    rltlist[i]['LIS'] == "Preparação CAB" ||
+                                    rltlist[i]['LIS'] == "Pós Implantação" ||
+                                    rltlist[i]['LIS'] == "Done" ||
+                                    rltlist[i]['LIS'] == "Teste Funcional" ||
+                                    rltlist[i]['LIS'] == "Teste do Usuário") {
+                                dezrlt['EXE'] = dezrlt['EXE'] + 1;
+                            } else if (rltlist[i]['LIS'] == "") {
+                                dezrlt['ASS'] = dezrlt['ASS'] + 1;
+                            } else {
+                                dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                            }
+                            break;
+
+                        default:
+                            dump("calcArrRLTBar();", "Data " + dat + " não foi mapeada na função.");
+                            break;
+                    }
                 }
-                
+
                 console.group("Relatorio-2.2");
                 console.log();
                 console.groupEnd("Relatorio-2.2");
             }
-            
+
             function mes(i) {
                 var indx = 0;
-                if(i <= 0){
+                if (i <= 0) {
                     indx = 0;
                 } else {
                     indx = i - 1;
                 }
                 var arrmeses = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEV"];
-                
+
                 return arrmeses[indx];
             }
 
@@ -1956,11 +2288,11 @@ Gerente - Juliana Alencar
                         responsive: true,
                         scales: {
                             xAxes: [{
-                                stacked: true,
-                            }],
+                                    stacked: true,
+                                }],
                             yAxes: [{
-                                stacked: true
-                            }]
+                                    stacked: true
+                                }]
                         }
                     }
                 }
