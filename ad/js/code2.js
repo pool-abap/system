@@ -120,6 +120,35 @@ function saldoMes() {
     document.getElementById("saldo-atual").innerHTML = saldohrmes + "h";
     document.getElementById("saldo-prxmes").innerHTML = saldohrprxmes + "h";
 	
+	//for (var pj = 0; pj < dadoprotj.length; pj++) {
+		
+		//if(dadoprotj[pj]['NOME'] == "BIO"){
+			
+			var dtnow = new Date();
+			var d = dtnow.getDate(); //1-31
+			var m = dtnow.getMonth(); //0-11
+			var a = dtnow.getFullYear(); //4 dígitos
+			m++; //1-12 ajustar
+			var dthoje = d + '/' + m + '/' + a;
+			var dthoje = dthoje + " 00:00";
+			//DD-MM-AAA HH:MM
+
+			var totalms = dadoprotj[pj]['HRSCTR'] * 10;
+			
+			for (var i = 0; i < cards.length; i++) {
+				var ddts = cards[i]['due'].split("T");
+				var ddt = ddts.split("-");
+				var dtch = ddt[2] + "/" + ddt[1] + "/" + ddt[0] + " 00:00";
+				
+				
+				var data1 = moment(dtch, "DD/MM/YYYY hh:mm");
+				var data2 = moment(dthoje, "DD/MM/YYYY hh:mm");
+				var diferenca = data1.diff(data2, 'months');
+				
+				console.log("Diferencia do mes é " diferenca);
+			}
+		//}
+	//}
 	
 }
 
