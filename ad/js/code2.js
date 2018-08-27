@@ -160,11 +160,10 @@ function saldoMes() {
 function calcArrRLT() {
 
     for (var i = 0; i < cards.length; i++) {
-        for (var y = 0; y < listas.length; y++) {
+        //for (var y = 0; y < listas.length; y++) {
             for (var z = 0; z < newfields.length; z++) {
 
-                if (cards[i]['idList'] == listas[y]['ID'] &&
-                        listas[y]['NAME'] == "Done" &&
+                if (cards[i]['dueComplete'] == true &&
                         cards[i]['id'] == newfields[z]['CARDID']) {
 
                     var rltdata = newfields[z]['DF1'];
@@ -212,7 +211,7 @@ function calcArrRLT() {
                 }
 
             }
-        }
+        //}
     }
 
     return;
