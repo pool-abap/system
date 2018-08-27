@@ -119,6 +119,8 @@ function saldoMes() {
 
     document.getElementById("saldo-atual").innerHTML = saldohrmes + "h";
     document.getElementById("saldo-prxmes").innerHTML = saldohrprxmes + "h";
+	
+	
 }
 
 function calcArrRLT() {
