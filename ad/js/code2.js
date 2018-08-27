@@ -120,9 +120,10 @@ function saldoMes() {
     document.getElementById("saldo-atual").innerHTML = saldohrmes + "h";
     document.getElementById("saldo-prxmes").innerHTML = saldohrprxmes + "h";
 	
-	for (var pj = 0; pj < dadoprotj.length; pj++) {
+	
+	for (var pj = 0; pj < protejos.length; pj++) {
 		
-		if(dadoprotj[pj]['NOME'] == "BIOSEV"){
+		if(protejos[pj]['NOME'] == "BIOSEV"){
 			
 			var dtnow = new Date();
 			var d = dtnow.getDate(); //1-31
@@ -132,24 +133,29 @@ function saldoMes() {
 			var dthoje = d + '/' + m + '/' + a;
 			var dthoje = dthoje + " 00:00";
 			//DD-MM-AAA HH:MM
+			
+			var dtch = d + '/08/' + a + " 00:00";
+			var data1 = moment(dtch, "DD/MM/YYYY hh:mm");
+			var data2 = moment(dthoje, "DD/MM/YYYY hh:mm");
+			var dif = data1.diff(data2, 'months');
+			dif = Math.abs(dif);
+			dif++;
 
-			var totalms = dadoprotj[pj]['HRSCTR'] * 10;
+			var ttlms = protejos[pj]['HRSCTR'] * dif;
+			var ttlcard = 0;
 			
 			for (var i = 0; i < cards.length; i++) {
-				var ddts = cards[i]['due'].split("T");
-				var ddt = ddts.split("-");
-				var dtch = ddt[2] + "/" + ddt[1] + "/" + ddt[0] + " 00:00";
-				
-				
-				var data1 = moment(dtch, "DD/MM/YYYY hh:mm");
-				var data2 = moment(dthoje, "DD/MM/YYYY hh:mm");
-				var diferenca = data1.diff(data2, 'months');
-				
-				console.log("Diferencia do mes é " + diferenca);
+				for (var z = 0; z < newfields.length; z++) {
+					if (newfields[z]['CARDID'] == cards[i]['id']) {
+						ttlcard = ttlcard - newfields[z]['HF1'];
+						ttlcard = ttlcard - newfields[z]['HF2'];
+					}
+				}
 			}
 		}
 	}
 	
+	document.getElementById("saldott").innerHTML = ttlcard;
 }
 
 function calcArrRLT() {

@@ -50,18 +50,21 @@ var configs = {
 var dadoprotj = {
     'NOME': 'BIOSEV', //Nome do projeto
     'IMG': 'http://www.dausina.com.br/imagens/uploads/conteudos/20140815174318KZkjFeRb.png', //Logo marca
+	'DATA' : '01/08/2017 00:00',
     'HRSCTR': 175, // Saldos em HORAS
 };
 protejos.push(dadoprotj);
 var dadoprotj = {
     'NOME': 'NLATAM', //Nome do projeto
     'IMG': '', //Logo marca
+	'DATA' : '01/08/2017 00:00',
     'HRSCTR': 175, // Saldos em HORAS
 };
 protejos.push(dadoprotj);
 var dadoprotj = {
     'NOME': 'SLATAM', //Nome do projeto
     'IMG': '', //Logo marca
+	'DATA' : '01/08/2017 00:00',
     'HRSCTR': 175, // Saldos em HORAS
 };
 protejos.push(dadoprotj);
