@@ -146,18 +146,18 @@ function montarSelect() {
             //    option.value = boards[i]['ID'];
             //    document.getElementById("inputState").add(option);
             //}
-            //if (boards[i]['NAME'].match(/AD/)) {
+            if (boards[i]['NAME'].match(/AD/)) {
             var nameptjs;
-            //for (var y = 0; y < protejos.length; y++) {
-            //nameptjs = new RegExp(protejos[y]['NOME']);
-            //if (boards[i]['NAME'].match(nameptjs)) {
+            for (var y = 0; y < protejos.length; y++) {
+            nameptjs = new RegExp(protejos[y]['NOME']);
+            if (boards[i]['NAME'].match(nameptjs)) {
             var option = document.createElement("option");
             option.text = boards[i]['NAME'];
             option.value = boards[i]['ID'];
             document.getElementById("inputState").add(option);
-            //}
-            //}
-            //}
+            }
+            }
+            }
         }
         if (configs['CFG_ABR']) {
             if (vldags) {
