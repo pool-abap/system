@@ -120,9 +120,9 @@ function saldoMes() {
     document.getElementById("saldo-atual").innerHTML = saldohrmes + "h";
     document.getElementById("saldo-prxmes").innerHTML = saldohrprxmes + "h";
 	
-	//for (var pj = 0; pj < dadoprotj.length; pj++) {
+	for (var pj = 0; pj < dadoprotj.length; pj++) {
 		
-		//if(dadoprotj[pj]['NOME'] == "BIO"){
+		if(dadoprotj[pj]['NOME'] == "BIOSEV"){
 			
 			var dtnow = new Date();
 			var d = dtnow.getDate(); //1-31
@@ -147,8 +147,8 @@ function saldoMes() {
 				
 				console.log("Diferencia do mes é " diferenca);
 			}
-		//}
-	//}
+		}
+	}
 	
 }
 
