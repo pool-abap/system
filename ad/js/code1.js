@@ -502,6 +502,7 @@ function orgNewFields() {
     }
 }
 
+var tlpipeline = 0;
 function ListasXCards() {
 
     var impedimentos = {
@@ -1018,7 +1019,8 @@ function ListasXCards() {
     document.getElementById("implementado-thrs").innerHTML = implementado['THRS'] + "h";
     //PIPELINE
     console.log(pipeline);
-    if (pipeline['FPRZ'] > 0) {
+	tlpipeline = pipeline['TOTL'];
+    if (pipeline['FPRZ'] == 0) {
         document.getElementById("pipeline-totl").style.color = "#ed0404";
         document.getElementById("pipeline-totl").style.fontWeight = "bold";
     }
@@ -1063,20 +1065,26 @@ function dataNoPrazo(dt1) {
 
 function mntListasLabels() {
 
-    var tt = 0;
     for (var i = 0; i < cards.length; i++) {
         for (var z = 0; z < cards[i]['idLabels'].length; z++) {
             for (var y = 0; y < labels.length; y++) {
-                if (cards[i]['idLabels'][z] == labels[y]['ID']) {
-                    labels[y]['QNT'] = labels[y]['QNT'] + 1;
-                    tt = tt + 1;
-                }
+				for (var x = 0; x < listas.length; x++) {
+					if (cards[i]['idLabels'][z] == labels[y]['ID'] &&
+						cards[i]['idList'] == listas[x]['ID']){
+							
+						if (listas[x]['NAME'] == "Estimativas - Aguardando Aprovação") {
+								
+							labels[y]['QNT'] = labels[y]['QNT'] + 1;
+						
+						}
+					}
+				}
             }
         }
     }
 
     for (var i = 0; i < labels.length; i++) {
-        var porc = (labels[i]['QNT'] / tt) * 100;
+        var porc = (labels[i]['QNT'] / tlpipeline) * 100;
         labels[i]['QNT'] = leftPad(labels[i]['QNT'], 2);
         porc = porc.toFixed(0);
         porc = leftPad(porc, 2);
