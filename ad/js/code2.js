@@ -145,7 +145,7 @@ function saldoMes() {
 				var data2 = moment(dthoje, "DD/MM/YYYY hh:mm");
 				var diferenca = data1.diff(data2, 'months');
 				
-				console.log("Diferencia do mes é " diferenca);
+				console.log("Diferencia do mes é " + diferenca);
 			}
 		}
 	}
