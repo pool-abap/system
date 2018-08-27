@@ -134,28 +134,27 @@ function saldoMes() {
 			var dthoje = dthoje + " 00:00";
 			//DD-MM-AAA HH:MM
 			
-			var dtch = d + '/08/' + a + " 00:00";
+			var dtch = protejos[pj]['DATA'];
 			var data1 = moment(dtch, "DD/MM/YYYY hh:mm");
 			var data2 = moment(dthoje, "DD/MM/YYYY hh:mm");
 			var dif = data1.diff(data2, 'months');
 			dif = Math.abs(dif);
 			dif++;
-
+			
 			var ttlms = protejos[pj]['HRSCTR'] * dif;
-			var ttlcard = 0;
 			
 			for (var i = 0; i < cards.length; i++) {
 				for (var z = 0; z < newfields.length; z++) {
 					if (newfields[z]['CARDID'] == cards[i]['id']) {
-						ttlcard = ttlcard - newfields[z]['HF1'];
-						ttlcard = ttlcard - newfields[z]['HF2'];
+						ttlms = ttlms - newfields[z]['HF1'];
+						ttlms = ttlms - newfields[z]['HF2'];
 					}
 				}
 			}
 		}
 	}
 	
-	document.getElementById("saldott").innerHTML = ttlcard;
+	document.getElementById("saldott").innerHTML = ttlms;
 }
 
 function calcArrRLT() {
