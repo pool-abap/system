@@ -180,14 +180,15 @@
         width: 100%;
         margin-top: 5px;
         margin-bottom: 5px;
-        padding: 3px;
+        padding: 8px;
     }
     .etiq p {
         float: left;
         width: 50%;
         margin: 0px;
         padding: 0px;
-        font-size: 0.9em;
+		margin-bottom: 3px;
+        font-size: 1.3em;
     }
     .etiq h4 {
         float: left;
@@ -195,10 +196,11 @@
         text-align: right;
         margin: 0px;
         padding: 0px;
-        font-size: 0.9em;
+        font-size: 1.3em;
     }
     .progress {
         float: left;
         width: 100%;
+		height: 10px;
     }
 }
