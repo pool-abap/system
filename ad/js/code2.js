@@ -427,7 +427,7 @@ function calcArrRLTBar() {
                     junrlt['ANA'] = junrlt['ANA'] + 1;
                 } else if (rltlist[i]['LIS'] == "Impedimentos" ||
                         rltlist[i]['LIS'] == "Desenho" ||
-                        rltlist[i]['LIS'] == "Aprovação da EF BP/Usuário" ||
+                        rltlist[i]['LIS'] == "Aprovação da EF (BP/Usuário)" ||
                         rltlist[i]['LIS'] == "Construção Funcional" ||
                         rltlist[i]['LIS'] == "Construção Abap" ||
                         rltlist[i]['LIS'] == "Liberação de Acesso" ||
@@ -454,7 +454,7 @@ function calcArrRLTBar() {
                     julrlt['ANA'] = julrlt['ANA'] + 1;
                 } else if (rltlist[i]['LIS'] == "Impedimentos" ||
                         rltlist[i]['LIS'] == "Desenho" ||
-                        rltlist[i]['LIS'] == "Aprovação da EF BP/Usuário" ||
+                        rltlist[i]['LIS'] == "Aprovação da EF (BP/Usuário)" ||
                         rltlist[i]['LIS'] == "Construção Funcional" ||
                         rltlist[i]['LIS'] == "Construção Abap" ||
                         rltlist[i]['LIS'] == "Liberação de Acesso" ||
@@ -481,7 +481,7 @@ function calcArrRLTBar() {
                     agorlt['ANA'] = agorlt['ANA'] + 1;
                 } else if (rltlist[i]['LIS'] == "Impedimentos" ||
                         rltlist[i]['LIS'] == "Desenho" ||
-                        rltlist[i]['LIS'] == "Aprovação da EF BP/Usuário" ||
+                        rltlist[i]['LIS'] == "Aprovação da EF (BP/Usuário)" ||
                         rltlist[i]['LIS'] == "Construção Funcional" ||
                         rltlist[i]['LIS'] == "Construção Abap" ||
                         rltlist[i]['LIS'] == "Liberação de Acesso" ||
@@ -508,7 +508,7 @@ function calcArrRLTBar() {
                     setrlt['ANA'] = setrlt['ANA'] + 1;
                 } else if (rltlist[i]['LIS'] == "Impedimentos" ||
                         rltlist[i]['LIS'] == "Desenho" ||
-                        rltlist[i]['LIS'] == "Aprovação da EF BP/Usuário" ||
+                        rltlist[i]['LIS'] == "Aprovação da EF (BP/Usuário)" ||
                         rltlist[i]['LIS'] == "Construção Funcional" ||
                         rltlist[i]['LIS'] == "Construção Abap" ||
                         rltlist[i]['LIS'] == "Liberação de Acesso" ||
@@ -535,7 +535,7 @@ function calcArrRLTBar() {
                     outrlt['ANA'] = outrlt['ANA'] + 1;
                 } else if (rltlist[i]['LIS'] == "Impedimentos" ||
                         rltlist[i]['LIS'] == "Desenho" ||
-                        rltlist[i]['LIS'] == "Aprovação da EF BP/Usuário" ||
+                        rltlist[i]['LIS'] == "Aprovação da EF (BP/Usuário)" ||
                         rltlist[i]['LIS'] == "Construção Funcional" ||
                         rltlist[i]['LIS'] == "Construção Abap" ||
                         rltlist[i]['LIS'] == "Liberação de Acesso" ||
@@ -562,7 +562,7 @@ function calcArrRLTBar() {
                     novrlt['ANA'] = novrlt['ANA'] + 1;
                 } else if (rltlist[i]['LIS'] == "Impedimentos" ||
                         rltlist[i]['LIS'] == "Desenho" ||
-                        rltlist[i]['LIS'] == "Aprovação da EF BP/Usuário" ||
+                        rltlist[i]['LIS'] == "Aprovação da EF (BP/Usuário)" ||
                         rltlist[i]['LIS'] == "Construção Funcional" ||
                         rltlist[i]['LIS'] == "Construção Abap" ||
                         rltlist[i]['LIS'] == "Liberação de Acesso" ||
@@ -589,7 +589,7 @@ function calcArrRLTBar() {
                     dezrlt['ANA'] = dezrlt['ANA'] + 1;
                 } else if (rltlist[i]['LIS'] == "Impedimentos" ||
                         rltlist[i]['LIS'] == "Desenho" ||
-                        rltlist[i]['LIS'] == "Aprovação da EF BP/Usuário" ||
+                        rltlist[i]['LIS'] == "Aprovação da EF (BP/Usuário)" ||
                         rltlist[i]['LIS'] == "Construção Funcional" ||
                         rltlist[i]['LIS'] == "Construção Abap" ||
                         rltlist[i]['LIS'] == "Liberação de Acesso" ||
@@ -615,7 +615,7 @@ function calcArrRLTBar() {
     }
 
     console.group("Relatorio-2.2");
-    console.log();
+    //console.log();
     console.groupEnd("Relatorio-2.2");
 }
 
