@@ -140,6 +140,8 @@ function saldoMes() {
 			dif = Math.abs(dif);
 			dif++;
 			
+			var chamados = [];
+			
 			var ttlms = protejos[pj]['HRSCTR'] * dif;
 			var vcnt = 0;
 			var hrssome = 0;
@@ -149,9 +151,11 @@ function saldoMes() {
 			for (var i = 0; i < cards.length; i++) {
 				for (var z = 0; z < newfields.length; z++) {
 					if (newfields[z]['CARDID'] == cards[i]['id']) {
-						ttlms = ttlms - newfields[z]['HF1'];
-						ttlms = ttlms - newfields[z]['HF2'];
 						var tt = newfields[z]['HF1'] + newfields[z]['HF2'];
+						ttlms = ttlms - tt;
+						
+						chamados.push(cards[i]['name'] + " " + tt + " Horas gastas");
+						
 						hrssome = hrssome + newfields[z]['HF1'] + newfields[z]['HF2'];
 						console.error(vcnt + " - Card " + cards[i]['name'] + " " + tt + " Horas gastas");
 						vcnt++;
@@ -159,9 +163,12 @@ function saldoMes() {
 				}
 			}
 			console.error("Soma horas - " + hrssome);
+			console.log(chamados);
 		}
 	}
 	
+	//Temporio MUDAR
+	ttlms = -7;
 	document.getElementById("saldott").innerHTML = ttlms;
 	
 	if(ttlms < 0){
