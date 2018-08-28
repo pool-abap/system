@@ -48,21 +48,21 @@ var configs = {
     'CFG_ABR': false //Carrega o mes atual sem escolhe em tela
 };
 var dadoprotj = {
-    'NOME': 'BIOSEV', //Nome do projeto
+    'NOME': 'Pool AD - BIOSEV', //Nome do projeto
     'IMG': 'http://www.dausina.com.br/imagens/uploads/conteudos/20140815174318KZkjFeRb.png', //Logo marca
-	'DATA' : '01/08/2017 00:00',
+	'DATA' : '01/10/2017 00:00',
     'HRSCTR': 175, // Saldos em HORAS
 };
 protejos.push(dadoprotj);
 var dadoprotj = {
-    'NOME': 'NLATAM', //Nome do projeto
+    'NOME': 'Pool AD - NLATAM', //Nome do projeto
     'IMG': '', //Logo marca
 	'DATA' : '01/08/2017 00:00',
     'HRSCTR': 175, // Saldos em HORAS
 };
 protejos.push(dadoprotj);
 var dadoprotj = {
-    'NOME': 'SLATAM', //Nome do projeto
+    'NOME': 'Pool AD - SLATAM', //Nome do projeto
     'IMG': '', //Logo marca
 	'DATA' : '01/08/2017 00:00',
     'HRSCTR': 175, // Saldos em HORAS
@@ -92,6 +92,8 @@ var token = configs['CFG_TOK'];
 /*Delações de variaveis*/
 var url = ""; //Variavel onde vai receber todos os link AJAX
 
+var titulo = "";
+
 var boards = []; //Array que receberar todos os boards
 var cards = []; //Array que vai receber os cards
 var cards = []; //Dados completos dos cards
@@ -102,7 +104,7 @@ var tempfield = [];
 var newfields = []; //Array com todos campos novos criados
 var custfields = []; //Parametrizações dos custons
 
-url = "https://api.trello.com/1/members/me/boards?key=" + key + "&token=" + token; //List Bards
+url = "https://api.trello.com/1/members/me/boards?key=" + key + "&token=" + token; //List Boards
 var ajax1 = $.ajax({
     url: url,
     type: 'GET',
@@ -165,9 +167,15 @@ function montarSelect() {
                 var e = document.getElementById("inputState");
                 var value = e.options[e.selectedIndex].value;
                 var text = e.options[e.selectedIndex].text;
+				titulo = text;
                 document.getElementById("tela-01").style.opacity = 0.0;
                 document.getElementById("tela-02").style.opacity = 1.0;
-                document.getElementById("titulo").innerHTML = text;
+				for (var pj = 0; pj < protejos.length; pj++) {
+					if(protejos[pj]['NOME'] == titulo){
+						document.getElementById("titulo").innerHTML = protejos[pj]['NOME'];
+						//document.getElementById("prjt-img").innerHTML = protejos[pj]['IMG'];
+					}
+				}
                 carregarInfosAPI(bodid);
             }
         }
@@ -180,12 +188,22 @@ function gerarRelatorio() {
     var e = document.getElementById("inputState");
     var value = e.options[e.selectedIndex].value;
     var text = e.options[e.selectedIndex].text;
+	titulo = text;
     console.log(value);
     console.log(text);
     document.getElementById("tela-01").style.opacity = 0.0;
     document.getElementById("tela-01").style.display = "none";
     document.getElementById("tela-02").style.opacity = 1.0;
-    document.getElementById("titulo").innerHTML = text;
+	for (var pj = 0; pj < protejos.length; pj++) {
+		if(protejos[pj]['NOME'] == titulo){
+			document.getElementById("titulo").innerHTML = protejos[pj]['NOME'];
+			if(protejos[pj]['IMG'] != ""){
+				document.getElementById("info-board").innerHTML += "<img id='prjt-img' class='prjt-img'>";
+				document.getElementById("prjt-img").src = protejos[pj]['IMG'];
+				document.getElementById("prjt-img").title = protejos[pj]['NOME'];
+			}
+		}
+	}
     carregarInfosAPI(value);
 }
 
@@ -1020,10 +1038,12 @@ function ListasXCards() {
     //PIPELINE
     console.log(pipeline);
 	tlpipeline = pipeline['TOTL'];
-    if (pipeline['FPRZ'] == 0) {
+    if (pipeline['TOTL'] == 0) {
         document.getElementById("pipeline-totl").style.color = "#ed0404";
         document.getElementById("pipeline-totl").style.fontWeight = "bold";
-    }
+    } else {
+		document.getElementById("pipeline-totl").style.color = "#fff";
+	}
     document.getElementById("pipeline-totl").innerHTML = pipeline['TOTL'];
     document.getElementById("pipeline-thrs").innerHTML = pipeline['THRS'] + "h";
 
@@ -1082,14 +1102,19 @@ function mntListasLabels() {
             }
         }
     }
+	
+	//Sorte Array
+	
 
     for (var i = 0; i < labels.length; i++) {
-        var porc = (labels[i]['QNT'] / tlpipeline) * 100;
-        labels[i]['QNT'] = leftPad(labels[i]['QNT'], 2);
-        porc = porc.toFixed(0);
-        porc = leftPad(porc, 2);
-        var div = "<div class='etiq'><p>" + labels[i]['NAME'] + "</p><h4>" + labels[i]['QNT'] + " &nbsp; - &nbsp; " + porc + "%</h4><div class='progress'><div class='progress-bar' role='progressbar' style='width:" + porc + "%; background-color: " + labels[i]['COR'] + ";' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'></div></div></div>";
-        document.getElementById("div-labels").innerHTML += div;
+		if(labels[i]['QNT'] > 0){
+			var porc = (labels[i]['QNT'] / tlpipeline) * 100;
+			labels[i]['QNT'] = leftPad(labels[i]['QNT'], 2);
+			porc = porc.toFixed(0);
+			porc = leftPad(porc, 2);
+			var div = "<div class='etiq'><p>" + labels[i]['NAME'] + "</p><h4>" + labels[i]['QNT'] + " &nbsp; - &nbsp; " + porc + "%</h4><div class='progress'><div class='progress-bar' role='progressbar' style='width:" + porc + "%; background-color: " + labels[i]['COR'] + ";' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'></div></div></div>";
+			document.getElementById("div-labels").innerHTML += div;
+		}
     }
 }
 

@@ -135,7 +135,7 @@
     }
 
     #div-saldo {
-        background-color: #218838;
+        /*background-color: #218838;*/
         color: #fff;
         text-shadow: 1px 1px #494949;
     }
@@ -173,6 +173,14 @@
         border: 0px;
     }
 
+	.prjt-img {
+		float: right;
+		padding: 0px;
+        margin: 0px;
+        border: 0px;
+		height: 42px;
+		margin-top: -10px;
+	}
 
     .etiq {
         float: left;

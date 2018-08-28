@@ -123,7 +123,7 @@ function saldoMes() {
 	
 	for (var pj = 0; pj < protejos.length; pj++) {
 		
-		if(protejos[pj]['NOME'] == "BIOSEV"){
+		if(protejos[pj]['NOME'] == titulo){
 			
 			var dtnow = new Date();
 			var d = dtnow.getDate(); //1-31
@@ -134,15 +134,16 @@ function saldoMes() {
 			var dthoje = dthoje + " 00:00";
 			//DD-MM-AAA HH:MM
 			
-			var dtch = protejos[pj]['DATA'];
-			var data1 = moment(dtch, "DD/MM/YYYY hh:mm");
+			var data1 = moment(protejos[pj]['DATA'], "DD/MM/YYYY hh:mm");
 			var data2 = moment(dthoje, "DD/MM/YYYY hh:mm");
 			var dif = data1.diff(data2, 'months');
 			dif = Math.abs(dif);
 			dif++;
 			
 			var ttlms = protejos[pj]['HRSCTR'] * dif;
-			
+			console.error(protejos[pj]['HRSCTR'] + " Hora contrato");
+			console.error(dif + " Dif de meses");
+			console.error(ttlms + " Valor do Saldo Total");
 			for (var i = 0; i < cards.length; i++) {
 				for (var z = 0; z < newfields.length; z++) {
 					if (newfields[z]['CARDID'] == cards[i]['id']) {
@@ -155,6 +156,16 @@ function saldoMes() {
 	}
 	
 	document.getElementById("saldott").innerHTML = ttlms;
+	
+	if(ttlms < 0){
+		document.getElementById("div-saldo").style.backgroundColor = "#C82333";
+	}
+	if(ttlms == 0){
+		document.getElementById("div-saldo").style.backgroundColor = "#E0A800";
+	}
+	if(ttlms > 0){
+		document.getElementById("div-saldo").style.backgroundColor = "#218838";
+	}
 }
 
 function calcArrRLT() {
