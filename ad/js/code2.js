@@ -141,6 +141,8 @@ function saldoMes() {
 			dif++;
 			
 			var ttlms = protejos[pj]['HRSCTR'] * dif;
+			var vcnt = 0;
+			var hrssome = 0;
 			console.error(protejos[pj]['HRSCTR'] + " Hora contrato");
 			console.error(dif + " Dif de meses");
 			console.error(ttlms + " Valor do Saldo Total");
@@ -149,9 +151,14 @@ function saldoMes() {
 					if (newfields[z]['CARDID'] == cards[i]['id']) {
 						ttlms = ttlms - newfields[z]['HF1'];
 						ttlms = ttlms - newfields[z]['HF2'];
+						var tt = newfields[z]['HF1'] + newfields[z]['HF2'];
+						hrssome = hrssome + newfields[z]['HF1'] + newfields[z]['HF2'];
+						console.error(vcnt + " - Card " + cards[i]['name'] + " " + tt + " Horas gastas");
+						vcnt++;
 					}
 				}
 			}
+			console.error("Soma horas - " + hrssome);
 		}
 	}
 	

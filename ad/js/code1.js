@@ -1104,9 +1104,7 @@ function mntListasLabels() {
     }
 	
 	//Sorte Array
-	
-
-    for (var i = 0; i < labels.length; i++) {
+	for (var i = 0; i < labels.length; i++) {
 		if(labels[i]['QNT'] > 0){
 			var porc = (labels[i]['QNT'] / tlpipeline) * 100;
 			labels[i]['QNT'] = leftPad(labels[i]['QNT'], 2);
