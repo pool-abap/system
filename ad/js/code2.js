@@ -292,7 +292,7 @@ function calcArrRLTBar() {
                     janrlt['ANA'] = janrlt['ANA'] + 1;
                 } else if (rltlist[i]['LIS'] == "Impedimentos" ||
                         rltlist[i]['LIS'] == "Desenho" ||
-                        rltlist[i]['LIS'] == "Aprv. Desenho" ||
+                        rltlist[i]['LIS'] == "Aprovação da EF (BP/Usuário)" ||
                         rltlist[i]['LIS'] == "Construção Funcional" ||
                         rltlist[i]['LIS'] == "Construção Abap" ||
                         rltlist[i]['LIS'] == "Liberação de Acesso" ||
