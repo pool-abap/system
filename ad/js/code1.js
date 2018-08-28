@@ -987,7 +987,7 @@ function ListasXCards() {
     }
     document.getElementById("desenho-totl").innerHTML = desenho['TOTL'];
     document.getElementById("desenho-thrs").innerHTML = desenho['THRS'] + "h";
-    //Aprv. Desenho
+    //Aprovação da EF BP/Usuário
     console.log(aprovdesenho);
     if (aprovdesenho['FPRZ'] > 0) {
         document.getElementById("aprovdesenho-totl").style.color = "#ed0404";
