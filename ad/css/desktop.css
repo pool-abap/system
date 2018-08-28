@@ -164,6 +164,16 @@
         margin-right: calc(50% - 35px);
         opacity: 0.1;
     }
+	#div-labels h6 {
+		float: left;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        border: 0px;
+		text-align: center;
+		font-size: 1.1em;
+		margin-top: 10px;
+	}
 
     canvas {
         float: left;
@@ -186,7 +196,7 @@
         float: left;
         position: relative;
         width: 100%;
-        margin-top: 5px;
+        margin-top: 0px;
         margin-bottom: 5px;
         padding: 8px;
     }
@@ -196,7 +206,7 @@
         margin: 0px;
         padding: 0px;
 		margin-bottom: 3px;
-        font-size: 1.3em;
+        font-size: 1.1em;
     }
     .etiq h4 {
         float: left;
@@ -204,11 +214,11 @@
         text-align: right;
         margin: 0px;
         padding: 0px;
-        font-size: 1.3em;
+        font-size: 1.1em;
     }
     .progress {
         float: left;
         width: 100%;
-		height: 10px;
+		height: 8px;
     }
 }

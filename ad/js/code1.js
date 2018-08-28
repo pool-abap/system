@@ -384,30 +384,25 @@ function orgNewFields() {
 
     var arraystemps = {
         'CARDID': "", // Id do card
-        'APURAPARC': "", // Sim ou Não
+		'EP': 0, //Estimativa prevista
         'HF1': 0, // Hora 1
         'HF2': 0, // Hota 2
         'DF1': "", // Data 1
         'DF2': "" // Data 2
     };
-
+	
+	console.log(tempfield);
+	console.log(custfields);
     for (var n = 0; n < tempfield.length; n++) {
-
+		
         arraystemps['CARDID'] = tempfield[n]['idModel'];
 
         for (var t = 0; t < custfields.length; t++) {
 
             if (tempfield[n]['idCustomField'] == custfields[t]['id']) {
                 switch (custfields[t]['name']) {
-                    case "F%":
-                        switch (tempfield[n]['idValue']) {
-                            case "5b74af89b77c4f7c70fed6b9":
-                                arraystemps['APURAPARC'] = "Nao";
-                                break;
-                            case "5b74af89b77c4f7c70fed6b8":
-                                arraystemps['APURAPARC'] = "Sim";
-                                break;
-                        }
+                    case "EP":
+                        arraystemps['EP'] = parseInt(tempfield[n]['value']['number']);
                         break;
 
                     case "H.F.1":
@@ -437,7 +432,7 @@ function orgNewFields() {
 
         arraystemps = {
             'CARDID': "", // Id do card
-            'APURAPARC': "", // Sim ou Não
+            'EP': 0, //Estimativa prevista
             'HF1': 0, // Hora 1
             'HF2': 0, // Hota 2
             'DF1': "", // Data 1
@@ -452,6 +447,7 @@ function orgNewFields() {
     var card1 = "";
     var cardpr = "";
 
+	var ep = 0;
     var shf1 = 0;
     var shf2 = 0;
     var df1 = "";
@@ -469,7 +465,7 @@ function orgNewFields() {
 
             var arraystemps = {
                 'CARDID': card1, // Id do card
-                'APURAPARC': "", // Sim ou Não
+                'EP': ep, //Estimativa prevista
                 'HF1': shf1, // Hora 1
                 'HF2': shf2, // Hota 2
                 'DF1': df1, // Data 1
@@ -478,7 +474,8 @@ function orgNewFields() {
             newfields.push(arraystemps);
 
             card1 = corg[a]['CARDID'];
-
+			
+			ep = corg[a]['EP'];
             shf1 = corg[a]['HF1'];
             shf2 = corg[a]['HF2'];
 
@@ -490,6 +487,7 @@ function orgNewFields() {
             }
 
         } else {
+			ep = ep + corg[a]['EP'];
             shf1 = shf1 + corg[a]['HF1'];
             shf2 = shf2 + corg[a]['HF2'];
 
@@ -505,7 +503,7 @@ function orgNewFields() {
 
             var arraystemps = {
                 'CARDID': corg[a]['CARDID'], // Id do card
-                'APURAPARC': "", // Sim ou Não
+                'EP': ep, //Estimativa prevista
                 'HF1': shf1, // Hora 1
                 'HF2': shf2, // Hota 2
                 'DF1': df1, // Data 1
@@ -907,7 +905,7 @@ function ListasXCards() {
 
                         for (var n = 0; n < newfields.length; n++) {
                             if (newfields[n]['CARDID'] == cards[i]['id']) {
-                                pipeline['THRS'] = pipeline['THRS'] + newfields[n]['HF1'];
+                                pipeline['THRS'] = pipeline['THRS'] + newfields[n]['EP'];
                                 break;
                             }
                         }
@@ -1045,7 +1043,7 @@ function ListasXCards() {
 		document.getElementById("pipeline-totl").style.color = "#fff";
 	}
     document.getElementById("pipeline-totl").innerHTML = pipeline['TOTL'];
-    document.getElementById("pipeline-thrs").innerHTML = pipeline['THRS'] + "h";
+	document.getElementById("pipeline-thrs").innerHTML = pipeline['THRS'] + "h";
 
     //Reprovs
     document.getElementById("reprovs-totl").innerHTML = reprovs['TOTL'] + " tarefa(s)";
