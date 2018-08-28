@@ -660,7 +660,7 @@ function ListasXCards() {
                         }
                         break;
 
-                    case "Aprovação da EF (BP/Usuário)":
+                    case "Aprv. Desenho":
                         if (cards[i]['dueComplete']) {
                             aprovdesenho['DONE'] = aprovdesenho['DONE'] + 1;
                         } else {
