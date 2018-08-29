@@ -138,10 +138,30 @@
         width: 100%;
         padding: 0px;
         margin: 0px;
-		margin-top: 10px;
+		margin-bottom: 5px;
         text-align: center;
-        font-size: 1.3em;
+        font-size: 1.5em;
 	}
+	.div-indcs4 h2 {
+		float: left;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+		margin-bottom: 5px;
+        text-align: center;
+        font-size: 1.5em;
+	}
+	.div-indcs4  h6 {
+		float: left;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        border: 0px;
+		text-align: center;
+		font-size: 1.1em;
+		margin-top: 0px;
+	}
+	
 	#reprovs-thrs {
 		float: left;
         width: 50%;
@@ -211,12 +231,14 @@
     }
 
 	.prjt-img {
-		float: right;
+		float: left;
+		width: 120px;
 		padding: 0px;
         margin: 0px;
         border: 0px;
-		height: 42px;
-		margin-top: -10px;
+		margin-top: 5px;
+		margin-left: calc(50% - 60px);
+		margin-right: calc(50% - 60px);
 	}
 
     .etiq {
