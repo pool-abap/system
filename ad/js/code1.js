@@ -113,7 +113,7 @@ var arrrrs = {
 };
 dmentrg.push(arrrrs);
 var arrrrs = {
-    'NOME': 'Execução',
+    'NOME': 'Construção',
     'ATV': 0,
 	'HRS': 0,
     'E.M': 0, 
@@ -1228,7 +1228,7 @@ function tableEntre(){
 						listas[x]['NAME'] == "Done") {
 						
 						for (var y = 0; y < dmentrg.length; y++) {
-							if(dmentrg[y]['NOME'] == "Execução"){
+							if(dmentrg[y]['NOME'] == "Construção"){
 								dmentrg[y]['ATV'] = dmentrg[y]['ATV'] + 1;
 								dmentrg[y]['HRS'] = dmentrg[y]['HRS'] + newfields[n]['HF1'] + newfields[n]['HF2'];
 							}
