@@ -133,6 +133,33 @@
         border-radius: 5px;
         padding: 5px;
     }
+	.div-indcs4 h1 {
+		float: left;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+		margin-top: 10px;
+        text-align: center;
+        font-size: 1.3em;
+	}
+	#reprovs-thrs {
+		float: left;
+        width: 50%;
+        padding: 0px;
+        margin: 0px;
+		margin-top: 10px;
+        text-align: center;
+        font-size: 1.3em;
+	}
+	#reprovs-totl {
+		float: left;
+        width: 50%;
+        padding: 0px;
+        margin: 0px;
+		margin-top: 10px;
+        text-align: center;
+        font-size: 1.3em;
+	}
 
     #div-saldo {
         /*background-color: #218838;*/
@@ -197,7 +224,7 @@
         position: relative;
         width: 100%;
         margin-top: 0px;
-        margin-bottom: 5px;
+        margin-bottom: 0px;
         padding: 8px;
     }
     .etiq p {
@@ -205,8 +232,8 @@
         width: 50%;
         margin: 0px;
         padding: 0px;
-		margin-bottom: 3px;
-        font-size: 1.1em;
+		margin-bottom: 0px;
+        font-size: 1.0em;
     }
     .etiq h4 {
         float: left;
@@ -214,7 +241,7 @@
         text-align: right;
         margin: 0px;
         padding: 0px;
-        font-size: 1.1em;
+        font-size: 1.0em;
     }
     .progress {
         float: left;

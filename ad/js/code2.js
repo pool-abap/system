@@ -119,11 +119,16 @@ function saldoMes() {
 
     document.getElementById("saldo-atual").innerHTML = saldohrmes + "h";
     document.getElementById("saldo-prxmes").innerHTML = saldohrprxmes + "h";
-	
-	
+
 	for (var pj = 0; pj < protejos.length; pj++) {
 		
 		if(protejos[pj]['NOME'] == titulo){
+			
+			var calc1 = saldohrmes / protejos[pj]['HRSCTR'];
+			var calc2 = saldohrprxmes / protejos[pj]['HRSCTR'];
+			
+			document.getElementById("saldo-atual-div").innerHTML = calc1.toFixed(1);
+			document.getElementById("saldo-prxmes-div").innerHTML = calc2.toFixed(1);
 			
 			var dtnow = new Date();
 			var d = dtnow.getDate(); //1-31
@@ -661,7 +666,7 @@ function rltBar() {
         data: {
             labels: ["Out", "Nov", "Dez", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set"],
             datasets: [{
-                    label: "Analyze",
+                    label: "Estimativa",
                     backgroundColor: 'rgb(21, 49, 211)',
                     borderColor: 'rgb(21, 49, 211)',
                     stack: 'Stack 0',
@@ -671,7 +676,7 @@ function rltBar() {
                     data: [outrlt['ANA'], novrlt['ANA'], dezrlt['ANA'], janrlt['ANA'], fevrlt['ANA'], marrlt['ANA'], abrrlt['ANA'], mairlt['ANA'], junrlt['ANA'], julrlt['ANA'], agorlt['ANA'], setrlt['ANA']],
                 },
                 {
-                    label: "Execution",
+                    label: "Construção",
                     backgroundColor: 'rgb(29, 186, 113)',
                     borderColor: 'rgb(29, 186, 113)',
                     stack: 'Stack 0',

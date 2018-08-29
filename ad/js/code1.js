@@ -283,6 +283,7 @@ function carregarInfosAPI(id) {
                         'ID': data[i]['id'],
                         'NAME': data[i]['name'],
                         'COR': data[i]['color'],
+						'HRS': 0,
                         'QNT': 0
                     };
                     labels.push(lb);
@@ -1087,28 +1088,29 @@ function mntListasLabels() {
         for (var z = 0; z < cards[i]['idLabels'].length; z++) {
             for (var y = 0; y < labels.length; y++) {
 				for (var x = 0; x < listas.length; x++) {
-					if (cards[i]['idLabels'][z] == labels[y]['ID'] &&
-						cards[i]['idList'] == listas[x]['ID']){
+					for (var n = 0; n < newfields.length; n++) {
+						if (cards[i]['idLabels'][z] == labels[y]['ID'] &&
+							cards[i]['idList'] == listas[x]['ID'] &&
+							newfields[n]['CARDID'] == cards[i]['id']){
 							
-						if (listas[x]['NAME'] == "Estimativas - Aguardando Aprovação") {
-								
-							labels[y]['QNT'] = labels[y]['QNT'] + 1;
-						
+							if (listas[x]['NAME'] == "Estimativas - Aguardando Aprovação") {
+								labels[y]['HRS'] = labels[y]['HRS'] + newfields[n]['EP'];
+								labels[y]['QNT'] = labels[y]['QNT'] + 1;
+							}
 						}
 					}
 				}
             }
         }
     }
-	
-	//Sorte Array
+
 	for (var i = 0; i < labels.length; i++) {
 		if(labels[i]['QNT'] > 0){
 			var porc = (labels[i]['QNT'] / tlpipeline) * 100;
 			labels[i]['QNT'] = leftPad(labels[i]['QNT'], 2);
 			porc = porc.toFixed(0);
 			porc = leftPad(porc, 2);
-			var div = "<div class='etiq'><p>" + labels[i]['NAME'] + "</p><h4>" + labels[i]['QNT'] + " &nbsp; - &nbsp; " + porc + "%</h4><div class='progress'><div class='progress-bar' role='progressbar' style='width:" + porc + "%; background-color: " + labels[i]['COR'] + ";' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'></div></div></div>";
+			var div = "<div class='etiq'><p>" + labels[i]['NAME'] + "</p><h4>" + labels[i]['QNT'] + " &nbsp; - &nbsp; " + labels[i]['HRS'] + "hrs</h4><div class='progress'><div class='progress-bar' role='progressbar' style='width:" + porc + "%; background-color: " + labels[i]['COR'] + ";' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'></div></div></div>";
 			document.getElementById("div-labels").innerHTML += div;
 		}
     }
