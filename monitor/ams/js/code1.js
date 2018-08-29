@@ -498,12 +498,11 @@
 
                 document.getElementById("table-tts").innerHTML = "<th scope='col'>#</th>";
                 document.getElementById("table-tts").innerHTML += "<th scope='col'>Analista</th>";
-
                 for (var i = 0; i < arr.length; i++) {
                     document.getElementById("table-tts").innerHTML += "<th scope='col'>" + arr[i]['NAME'] + "</th>";
                 }
                 RelatorioDounts();
-                exibirTabela(rltable);
+				exibirTabela(rltable);
             }
 
             function montarDivLabel(arr) {
@@ -601,6 +600,11 @@
                         }
                     }
                 }
+				
+				//SORT
+				/*rltable.sort(function(a, b) {
+					return a.DONE - b.DONE;
+				});*/
                 document.getElementById("tabale-rows").innerHTML = rowww;
             }
 
