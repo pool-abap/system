@@ -394,7 +394,8 @@ function processarDados() {
                 calcArrRLTBar();
                 rltLine();
                 rltBar();
-            }, 1000);
+				rltLinEst();
+            }, 1300);
         }
     }
 }
