@@ -39,11 +39,15 @@
 			setInterval(function () {
 				switch(cnt) {
 					case 0:
-						document.getElementById("tela-iframe").src = "ams/index.html";
+						document.getElementById("tela-iframe").src = "ad/index.html";
 						cnt = 1;
 						break;
 					case 1:
 						document.getElementById("tela-iframe").src = "ams/index.html";
+						cnt = 2;
+						break;
+					case 2:
+						document.getElementById("tela-iframe").src = "ad/index.html";
 						cnt = 0;
 						break;
 				}
