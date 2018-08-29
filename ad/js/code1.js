@@ -103,6 +103,29 @@ var labels = []; //Array que vai receber os labels
 var tempfield = [];
 var newfields = []; //Array com todos campos novos criados
 var custfields = []; //Parametrizações dos custons
+var dmentrg = []; //Demandas entregas
+
+var arrrrs = {
+    'NOME': 'Estimativa',
+    'ATV': 0,
+	'HRS': 0,
+    'E.M': 0, 
+};
+dmentrg.push(arrrrs);
+var arrrrs = {
+    'NOME': 'Execução',
+    'ATV': 0,
+	'HRS': 0,
+    'E.M': 0, 
+};
+dmentrg.push(arrrrs);
+var arrrrs = {
+    'NOME': 'Assessment',
+    'ATV': 0,
+	'HRS': 0,
+    'E.M': 0, 
+};
+dmentrg.push(arrrrs);
 
 url = "https://api.trello.com/1/members/me/boards?key=" + key + "&token=" + token; //List Boards
 var ajax1 = $.ajax({
@@ -132,11 +155,6 @@ var ajax1 = $.ajax({
         });
 //Se tiver board, montar na tela
 function montarSelect() {
-	document.getElementById("tela-01").style.opacity = 0.0;
-    document.getElementById("tela-01").style.display = "none";
-    document.getElementById("tela-02").style.opacity = 1.0;
-	carregarInfosAPI("5b5150e32a76ba278f97037e");
-	return;
 	
     if (boards.length > 0) {
         var vldags = false;
@@ -1051,6 +1069,7 @@ function ListasXCards() {
     document.getElementById("reprovs-thrs").innerHTML = reprovs['THRS'] + "h";
 
     risco();
+	tableEntre();
 }
 
 //AAAA-MM-DD
@@ -1174,6 +1193,66 @@ function risco() {
     if (riscos) {
         document.getElementById("img-alert").style.opacity = 1.0;
     }
+}
+
+function tableEntre(){
+	
+	for (var i = 0; i < cards.length; i++) {
+        for (var x = 0; x < listas.length; x++) {
+			for (var n = 0; n < newfields.length; n++) {
+				if (newfields[n]['CARDID'] == cards[i]['id'] &&
+					cards[i]['idList'] == listas[x]['ID']){
+							
+					if (listas[x]['NAME'] == "Estimativas Aprovadas" ||
+						listas[x]['NAME'] == "Estimativas Reprovadas/Canceladas" ||
+						listas[x]['NAME'] == "Estimativas - Aguardando Aprovação") {
+						
+						for (var y = 0; y < dmentrg.length; y++) {
+							if(dmentrg[y]['NOME'] == "Estimativa"){
+								dmentrg[y]['ATV'] = dmentrg[y]['ATV'] + 1;
+								dmentrg[y]['HRS'] = dmentrg[y]['HRS'] + newfields[n]['HF1'] + newfields[n]['HF2'];
+							}
+						}						
+					}
+					
+					if (listas[x]['NAME'] == "Impedimentos" ||
+						listas[x]['NAME'] == "Desenho" ||
+						listas[x]['NAME'] == "Aprovação da EF (BP/Usuário)" ||
+						listas[x]['NAME'] == "Construção Funcional" ||
+						listas[x]['NAME'] == "Construção Abap" ||
+						listas[x]['NAME'] == "Liberação de Acesso" ||
+						listas[x]['NAME'] == "Teste Funcional" ||
+						listas[x]['NAME'] == "Teste do Usuário" ||
+						listas[x]['NAME'] == "Preparação CAB" ||
+						listas[x]['NAME'] == "Pós Implantação" ||
+						listas[x]['NAME'] == "Done") {
+						
+						for (var y = 0; y < dmentrg.length; y++) {
+							if(dmentrg[y]['NOME'] == "Execução"){
+								dmentrg[y]['ATV'] = dmentrg[y]['ATV'] + 1;
+								dmentrg[y]['HRS'] = dmentrg[y]['HRS'] + newfields[n]['HF1'] + newfields[n]['HF2'];
+							}
+						}						
+					}
+					
+					if (listas[x]['NAME'] == "Assessment") {
+						
+						for (var y = 0; y < dmentrg.length; y++) {
+							if(dmentrg[y]['NOME'] == "Assessment"){
+								dmentrg[y]['ATV'] = dmentrg[y]['ATV'] + 1;
+								dmentrg[y]['HRS'] = dmentrg[y]['HRS'] + newfields[n]['HF1'] + newfields[n]['HF2'];
+							}
+						}						
+					}
+				}
+			}
+		}
+    }
+	
+	for (var d = 0; d < dmentrg.length; d++) {
+		var divsao = dmentrg[d]['HRS'] / dmentrg[d]['ATV'];
+		document.getElementById("row-entr").innerHTML += "<tr><th scope='row'>" + dmentrg[d]['NOME'] + "</th><td>" + dmentrg[d]['ATV'] + "</td><td>" + dmentrg[d]['HRS'] + "</td><td>" + divsao.toFixed(1); + "</td></tr>";
+	}
 }
 
 var satisfac = 0; //0-nao tem 1-ruim 2-bom 
