@@ -34,20 +34,20 @@
 		window.onload = function () {
 			var sg = 0;
 			var cnt = 0;
-			document.getElementById("tela-iframe").src = "ams.html";
+			document.getElementById("tela-iframe").src = "ams/index.html";
 			
 			setInterval(function () {
 				switch(cnt) {
 					case 0:
-						document.getElementById("tela-iframe").src = "ams.html";
+						document.getElementById("tela-iframe").src = "ams/index.html";
 						cnt = 1;
 						break;
 					case 1:
-						document.getElementById("tela-iframe").src = "ams.html";
+						document.getElementById("tela-iframe").src = "ams/index.html";
 						cnt = 0;
 						break;
 				}
-            }, 60000);
+            }, 120000);
 			
 			setInterval(function () {
 				location.reload();
