@@ -144,15 +144,20 @@ var ajax1 = $.ajax({
                     'NAME': data[i]['name']
                 };
                 boards.push(array);
+				
+				if(data[i]['name'] == "Pool AD - BIOSEV"){
+					//abridireto(data[i]);
+				}
             }
             console.group("Boards");
             console.log(boards);
             console.groupEnd("Boards");
-            montarSelect();
+			montarSelect();
         })
         .fail(function (jqXHR, textStatus, data) {
             dump("", "A requisição AJAX para buscar os Boards falhou!.");
         });
+		
 //Se tiver board, montar na tela
 function montarSelect() {
 	
@@ -177,24 +182,6 @@ function montarSelect() {
 						document.getElementById("inputState").add(option);
 					}
 				}
-            }
-        }
-        if (configs['CFG_ABR']) {
-            if (vldags) {
-                //Mesmo dados da função gerarRelatorio() ajustado para executar para o ID pre escolhido
-                var e = document.getElementById("inputState");
-                var value = e.options[e.selectedIndex].value;
-                var text = e.options[e.selectedIndex].text;
-				titulo = text;
-                document.getElementById("tela-01").style.opacity = 0.0;
-                document.getElementById("tela-02").style.opacity = 1.0;
-				for (var pj = 0; pj < protejos.length; pj++) {
-					if(protejos[pj]['NOME'] == titulo){
-						document.getElementById("titulo").innerHTML = protejos[pj]['NOME'];
-						//document.getElementById("prjt-img").innerHTML = protejos[pj]['IMG'];
-					}
-				}
-                carregarInfosAPI(bodid);
             }
         }
     } else {
@@ -223,6 +210,27 @@ function gerarRelatorio() {
 		}
 	}
     carregarInfosAPI(value);
+}
+
+function abridireto(ar){
+	
+	titulo = ar['name'];
+	
+	for (var pj = 0; pj < protejos.length; pj++) {
+		if(protejos[pj]['NOME'] == ar['name']){
+			document.getElementById("titulo").innerHTML = protejos[pj]['NOME'];
+			if(protejos[pj]['IMG'] != ""){
+				document.getElementById("info-board").innerHTML += "<img id='prjt-img' class='prjt-img'>";
+				document.getElementById("prjt-img").src = protejos[pj]['IMG'];
+				document.getElementById("prjt-img").title = protejos[pj]['NOME'];
+			}
+		}
+	}
+	
+	document.getElementById("tela-01").style.opacity = 0.0;
+    document.getElementById("tela-01").style.display = "none";
+    document.getElementById("tela-02").style.opacity = 1.0;
+	carregarInfosAPI(ar['id']);
 }
 
 //Puxar infos do site
