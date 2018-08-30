@@ -1262,6 +1262,53 @@ function tableEntre(){
 		var divsao = dmentrg[d]['HRS'] / dmentrg[d]['ATV'];
 		document.getElementById("row-entr").innerHTML += "<tr><th scope='row'>" + dmentrg[d]['NOME'] + "</th><td>" + dmentrg[d]['ATV'] + "</td><td>" + dmentrg[d]['HRS'] + "</td><td>" + divsao.toFixed(1); + "</td></tr>";
 	}
+	
+	var cardsars = [];
+	
+	for (var i = 0; i < cards.length; i++) {
+        for (var x = 0; x < listas.length; x++) {
+			for (var n = 0; n < newfields.length; n++) {
+				
+				if (newfields[n]['CARDID'] == cards[i]['id'] &&
+					cards[i]['idList'] == listas[x]['ID']){
+					
+					if (listas[x]['NAME'] == "Impedimentos" ||
+					listas[x]['NAME'] == "Desenho" ||
+					listas[x]['NAME'] == "Aprovação da EF (BP/Usuário)" ||
+					listas[x]['NAME'] == "Construção Funcional" ||
+					listas[x]['NAME'] == "Construção Abap" ||
+					listas[x]['NAME'] == "Liberação de Acesso" ||
+					listas[x]['NAME'] == "Teste Funcional" ||
+					listas[x]['NAME'] == "Teste do Usuário" ||
+					listas[x]['NAME'] == "Preparação CAB" ||
+					listas[x]['NAME'] == "Pós Implantação" ||
+					listas[x]['NAME'] == "Done") {
+						
+						var desc = cards[i]['desc'].substring(0,20);
+						desc = desc + "...";
+						var temps = {
+							'CRD': newfields[n]['CARDID'],
+							'NAM': cards[i]['name'],
+							'DES': desc,
+							'HF1': newfields[n]['HF1'],
+							'HF2': newfields[n]['HF2'],
+							'TOT': newfields[n]['HF1'] + newfields[n]['HF2']
+						};
+						cardsars.push(temps);					
+					}
+				}
+			}
+		}
+	}
+	
+	cardsars.sort(function(a, b) {
+		return b.TOT - a.TOT;
+	});
+
+	for (var i = 0; i < 5; i++) {
+		document.getElementById("row-top5").innerHTML += "<tr><td>" + cardsars[i]['NAM'] + "</td><td>" + cardsars[i]['DES'] + "</td><td>" + cardsars[i]['TOT'] + "</td></tr>";
+	}
+	
 }
 
 var satisfac = 0; //0-nao tem 1-ruim 2-bom 
