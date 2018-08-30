@@ -271,9 +271,10 @@
 		height: 8px;
     }
 	
-	#row-top5 {
+	.table {
 		font-size: 0.9em;
 	}
+	
 	.input-view {
 		float: left;
 		width: 100%;
