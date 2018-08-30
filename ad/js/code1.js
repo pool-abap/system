@@ -1289,7 +1289,8 @@ function tableEntre(){
 						var temps = {
 							'CRD': newfields[n]['CARDID'],
 							'NAM': cards[i]['name'],
-							'DES': desc,
+							//'DES': desc,
+							'DES': cards[i]['desc'],
 							'HF1': newfields[n]['HF1'],
 							'HF2': newfields[n]['HF2'],
 							'TOT': newfields[n]['HF1'] + newfields[n]['HF2']
@@ -1306,7 +1307,7 @@ function tableEntre(){
 	});
 
 	for (var i = 0; i < 5; i++) {
-		document.getElementById("row-top5").innerHTML += "<tr><td>" + cardsars[i]['NAM'] + "</td><td>" + cardsars[i]['DES'] + "</td><td>" + cardsars[i]['TOT'] + "</td></tr>";
+		document.getElementById("row-top5").innerHTML += "<tr><td>" + cardsars[i]['NAM'] + "</td><td><input class='input-view' type='text' value='" + cardsars[i]['DES'] + "' disabled /></td><td>" + cardsars[i]['TOT'] + "</td></tr>";
 	}
 	
 }
