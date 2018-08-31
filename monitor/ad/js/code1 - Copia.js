@@ -146,13 +146,13 @@ var ajax1 = $.ajax({
                 boards.push(array);
 				
 				if(data[i]['name'] == "Pool AD - BIOSEV"){
-					//abridireto(data[i]);
+					abridireto(data[i]);
 				}
             }
             console.group("Boards");
             console.log(boards);
             console.groupEnd("Boards");
-			montarSelect();
+			//montarSelect();
         })
         .fail(function (jqXHR, textStatus, data) {
             dump("", "A requisição AJAX para buscar os Boards falhou!.");
@@ -233,13 +233,18 @@ function abridireto(ar){
 	carregarInfosAPI(ar['id']);
 }
 
-function ajax2(id){
-	
-	//Buscando todos os CARDS do BOARD
+//Puxar infos do site
+function carregarInfosAPI(id) {
+
+    console.group("Board");
+    console.log(id);
+    console.groupEnd("Board");
+
+    //Buscando todos os CARDS do BOARD
     url = "https://api.trello.com/1/boards/" + id + "/cards/?key=" + key + "&token=" + token; //List CARDS
     var ajax2 = $.ajax({
         url: url,
-        type: 'get',
+        type: 'GET',
         dataType: 'json',
         beforeSend: function () {
             console.log("Buscando Cards...");
@@ -250,14 +255,12 @@ function ajax2(id){
                 console.group("Cards");
                 console.log(cards);
                 console.groupEnd("Cards");
+                processarDados();
             })
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI();", "A requisição AJAX para buscar todos os Cards falhou!.");
             });
-}
-
-function ajax3(id){
-	//Buscando todos os MEMBROS do BOARD
+    //Buscando todos os MEMBROS do BOARD
     url = "https://api.trello.com/1/boards/" + id + "/memberships/?key=" + key + "&token=" + token + "&orgMemberType=true&member=true&member_fields=fullName&member_fields=avatarUrl";
     var ajax3 = $.ajax({
         url: url,
@@ -289,10 +292,7 @@ function ajax3(id){
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI();", "A requisição AJAX para buscar todos membros falhou!.");
             });
-}
-
-function ajax5(id){
-	//Buscando todos os LABEL do BOARD
+    //Buscando todos os LABEL do BOARD
     url = "https://api.trello.com/1/boards/" + id + "/labels?fields=all&key=" + key + "&token=" + token; //List Labels
     var ajax5 = $.ajax({
         url: url,
@@ -321,10 +321,7 @@ function ajax5(id){
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI();", "A requisição AJAX para buscar todas as labels falhou!.");
             });
-}
-
-function ajax4(id){
-	//Buscando todos os LISTAS do BOARD
+    //Buscando todos os LISTAS do BOARD
     url = "https://api.trello.com/1/boards/" + id + "/lists?cards=all&card_fields=all&filter=open&fields=all&key=" + key + "&token=" + token;
     var ajax4 = $.ajax({
         url: url,
@@ -350,10 +347,7 @@ function ajax4(id){
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI();", "A requisição AJAX para buscar todas as Listas falhou!.");
             });
-}
-
-function ajax6(id){
-	//Buscando parametrizações Custom fields
+    //Buscando parametrizações Custom fields
     url = "https://api.trello.com/1/boards/" + id + "/customFields?key=" + key + "&token=" + token; //List Labels
     var ajax6 = $.ajax({
         url: url,
@@ -371,76 +365,6 @@ function ajax6(id){
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI();", "A requisição AJAX para buscar todas os Custom fields falhou!.");
             });
-}
-
-var cnts = 0;
-var refreshIntervalId;
-
-function inicLoad() {
-	
-	refreshIntervalId = setInterval(function(){
-		switch(cnts) {
-			case 0:
-				cnts = 1;
-				document.getElementById("load-txt").innerHTML = "Carregando";
-				break;
-			case 1:
-				cnts = 2;
-				document.getElementById("load-txt").innerHTML = "Carregando.";
-				break;
-			case 2:
-				cnts = 3;
-				document.getElementById("load-txt").innerHTML = "Carregando..";
-				break;
-			case 3:
-				cnts = 0;
-				document.getElementById("load-txt").innerHTML = "Carregando...";
-				break;
-		}
-	}, 300);
-}
-
-function stopLoad() {
-	
-	clearInterval(refreshIntervalId);
-	
-	document.getElementById("load").style.opacity = 0.0;	
-	setTimeout(function(){ 
-		document.getElementById("load").style.display = "none";
-	}, 500);
-}
-
-//Puxar infos do site
-function carregarInfosAPI(id) {
-	
-	inicLoad();
-
-    console.group("Board");
-    console.log(id);
-    console.groupEnd("Board");
-	
-	setTimeout(function(){ 
-		ajax2(id);
-		ajax3(id);
-	}, 1);
-	
-	setTimeout(function(){ 
-		ajax5(id);
-		ajax4(id);
-	}, 500);
-	
-	setTimeout(function(){ 
-		ajax6(id);
-	}, 1000);
-	
-	//setTimeout(function(){ ajax3(id); }, 250);
-	//setTimeout(function(){ ajax5(id); }, 500);
-	//setTimeout(function(){ ajax4(id); }, 1000);
-	//setTimeout(function(){ ajax6(id); }, 1250);
-	
-	setTimeout(function(){ 
-		processarDados();
-	}, 3000);
 }
 
 function processarDados() {
@@ -479,8 +403,6 @@ function processarDados() {
                 rltLine();
                 rltBar();
 				rltLinEst();
-				
-				stopLoad();
             }, 1300);
         }
     }
@@ -1340,54 +1262,6 @@ function tableEntre(){
 		var divsao = dmentrg[d]['HRS'] / dmentrg[d]['ATV'];
 		document.getElementById("row-entr").innerHTML += "<tr><th scope='row'>" + dmentrg[d]['NOME'] + "</th><td>" + dmentrg[d]['ATV'] + "</td><td>" + dmentrg[d]['HRS'] + "</td><td>" + divsao.toFixed(1); + "</td></tr>";
 	}
-	
-	var cardsars = [];
-	
-	for (var i = 0; i < cards.length; i++) {
-        for (var x = 0; x < listas.length; x++) {
-			for (var n = 0; n < newfields.length; n++) {
-				
-				if (newfields[n]['CARDID'] == cards[i]['id'] &&
-					cards[i]['idList'] == listas[x]['ID']){
-					
-					if (listas[x]['NAME'] == "Impedimentos" ||
-					listas[x]['NAME'] == "Desenho" ||
-					listas[x]['NAME'] == "Aprovação da EF (BP/Usuário)" ||
-					listas[x]['NAME'] == "Construção Funcional" ||
-					listas[x]['NAME'] == "Construção Abap" ||
-					listas[x]['NAME'] == "Liberação de Acesso" ||
-					listas[x]['NAME'] == "Teste Funcional" ||
-					listas[x]['NAME'] == "Teste do Usuário" ||
-					listas[x]['NAME'] == "Preparação CAB" ||
-					listas[x]['NAME'] == "Pós Implantação" ||
-					listas[x]['NAME'] == "Done") {
-						
-						var desc = cards[i]['desc'].substring(0,20);
-						desc = desc + "...";
-						var temps = {
-							'CRD': newfields[n]['CARDID'],
-							'NAM': cards[i]['name'],
-							//'DES': desc,
-							'DES': cards[i]['desc'],
-							'HF1': newfields[n]['HF1'],
-							'HF2': newfields[n]['HF2'],
-							'TOT': newfields[n]['HF1'] + newfields[n]['HF2']
-						};
-						cardsars.push(temps);					
-					}
-				}
-			}
-		}
-	}
-	
-	cardsars.sort(function(a, b) {
-		return b.TOT - a.TOT;
-	});
-
-	for (var i = 0; i < 5; i++) {
-		document.getElementById("row-top5").innerHTML += "<tr><td>" + cardsars[i]['NAM'] + "</td><td><input class='input-view' type='text' value='" + cardsars[i]['DES'] + "' disabled /></td><td>" + cardsars[i]['TOT'] + "</td></tr>";
-	}
-	
 }
 
 var satisfac = 0; //0-nao tem 1-ruim 2-bom 
