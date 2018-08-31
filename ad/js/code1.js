@@ -244,7 +244,7 @@ function carregarInfosAPI(id) {
     url = "https://api.trello.com/1/boards/" + id + "/cards/?key=" + key + "&token=" + token; //List CARDS
     var ajax2 = $.ajax({
         url: url,
-        type: 'GET',
+        type: 'get',
         dataType: 'json',
         beforeSend: function () {
             console.log("Buscando Cards...");
