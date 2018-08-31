@@ -440,7 +440,7 @@ function carregarInfosAPI(id) {
 	
 	setTimeout(function(){ 
 		processarDados();
-	}, 3000);
+	}, 3500);
 }
 
 function processarDados() {
