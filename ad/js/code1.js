@@ -250,6 +250,10 @@ function ajax2(id){
                 console.group("Cards");
                 console.log(cards);
                 console.groupEnd("Cards");
+				
+				setTimeout(function(){ 
+					ajax3(id);
+				}, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI();", "A requisição AJAX para buscar todos os Cards falhou!.");
@@ -285,6 +289,10 @@ function ajax3(id){
                 console.group("Membros");
                 console.log(menbros);
                 console.groupEnd("Membros");
+				
+				setTimeout(function(){ 
+					ajax5(id);
+				}, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI();", "A requisição AJAX para buscar todos membros falhou!.");
@@ -317,6 +325,10 @@ function ajax5(id){
                 console.group("Labels");
                 console.log(labels);
                 console.groupEnd("Labels");
+				
+				setTimeout(function(){ 
+					ajax4(id);
+				}, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI();", "A requisição AJAX para buscar todas as labels falhou!.");
@@ -346,6 +358,10 @@ function ajax4(id){
                 console.group("Listas");
                 console.log(listas);
                 console.groupEnd("Listas");
+				
+				setTimeout(function(){ 
+					ajax6(id);
+				}, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI();", "A requisição AJAX para buscar todas as Listas falhou!.");
@@ -367,6 +383,7 @@ function ajax6(id){
                 for (var y = 0; y < data.length; y++) {
                     custfields.push(data[y]);
                 }
+				processarDados();
             })
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI();", "A requisição AJAX para buscar todas os Custom fields falhou!.");
@@ -419,28 +436,8 @@ function carregarInfosAPI(id) {
     console.log(id);
     console.groupEnd("Board");
 	
-	setTimeout(function(){ 
-		ajax2(id);
-		ajax3(id);
-	}, 1);
-	
-	setTimeout(function(){ 
-		ajax5(id);
-		ajax4(id);
-	}, 500);
-	
-	setTimeout(function(){ 
-		ajax6(id);
-	}, 1000);
-	
-	//setTimeout(function(){ ajax3(id); }, 250);
-	//setTimeout(function(){ ajax5(id); }, 500);
-	//setTimeout(function(){ ajax4(id); }, 1000);
-	//setTimeout(function(){ ajax6(id); }, 1250);
-	
-	setTimeout(function(){ 
-		processarDados();
-	}, 3500);
+	ajax2(id);
+
 }
 
 function processarDados() {
