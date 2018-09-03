@@ -308,7 +308,7 @@ function calcArrRLTBar() {
                 } else if (rltlist[i]['LIS'] == "Assessment") {
                     janrlt['ASS'] = janrlt['ASS'] + 1;
                 } else {
-                    dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                    dump("calcArrRLTBar(); - 311", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
                 }
                 break;
 
@@ -335,7 +335,7 @@ function calcArrRLTBar() {
                 } else if (rltlist[i]['LIS'] == "Assessment") {
                     fevrlt['ASS'] = fevrlt['ASS'] + 1;
                 } else {
-                    dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                    dump("calcArrRLTBar(); - 338", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
                 }
                 break;
 
@@ -362,7 +362,7 @@ function calcArrRLTBar() {
                 } else if (rltlist[i]['LIS'] == "Assessment") {
                     marrlt['ASS'] = marrlt['ASS'] + 1;
                 } else {
-                    dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                    dump("calcArrRLTBar(); - 365", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
                 }
                 break;
 
@@ -389,7 +389,7 @@ function calcArrRLTBar() {
                 } else if (rltlist[i]['LIS'] == "Assessment") {
                     abrrlt['ASS'] = abrrlt['ASS'] + 1;
                 } else {
-                    dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                    dump("calcArrRLTBar(); - 392", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
                 }
                 break;
 
@@ -416,7 +416,7 @@ function calcArrRLTBar() {
                 } else if (rltlist[i]['LIS'] == "Assessment") {
                     mairlt['ASS'] = mairlt['ASS'] + 1;
                 } else {
-                    dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                    dump("calcArrRLTBar(); - 419", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
                 }
                 break;
 
@@ -443,7 +443,7 @@ function calcArrRLTBar() {
                 } else if (rltlist[i]['LIS'] == "Assessment") {
                     junrlt['ASS'] = junrlt['ASS'] + 1;
                 } else {
-                    dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                    dump("calcArrRLTBar(); - 446", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
                 }
                 break;
 
@@ -470,7 +470,7 @@ function calcArrRLTBar() {
                 } else if (rltlist[i]['LIS'] == "Assessment") {
                     julrlt['ASS'] = julrlt['ASS'] + 1;
                 } else {
-                    dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                    dump("calcArrRLTBar(); - 473", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
                 }
                 break;
 
@@ -497,7 +497,7 @@ function calcArrRLTBar() {
                 } else if (rltlist[i]['LIS'] == "Assessment") {
                     agorlt['ASS'] = agorlt['ASS'] + 1;
                 } else {
-                    dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                    dump("calcArrRLTBar(); - 500", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
                 }
                 break;
 
@@ -524,7 +524,7 @@ function calcArrRLTBar() {
                 } else if (rltlist[i]['LIS'] == "Assessment") {
                     setrlt['ASS'] = setrlt['ASS'] + 1;
                 } else {
-                    dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                    dump("calcArrRLTBar(); - 527", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
                 }
                 break;
 
@@ -551,7 +551,7 @@ function calcArrRLTBar() {
                 } else if (rltlist[i]['LIS'] == "Assessment") {
                     outrlt['ASS'] = outrlt['ASS'] + 1;
                 } else {
-                    dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                    dump("calcArrRLTBar(); - 554", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
                 }
                 break;
 
@@ -578,7 +578,7 @@ function calcArrRLTBar() {
                 } else if (rltlist[i]['LIS'] == "Assessment") {
                     novrlt['ASS'] = novrlt['ASS'] + 1;
                 } else {
-                    dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                    dump("calcArrRLTBar(); - 581", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
                 }
                 break;
 
@@ -605,12 +605,12 @@ function calcArrRLTBar() {
                 } else if (rltlist[i]['LIS'] == "Assessment") {
                     dezrlt['ASS'] = dezrlt['ASS'] + 1;
                 } else {
-                    dump("calcArrRLTBar();", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
+                    dump("calcArrRLTBar(); - 608", "Lista " + rltlist[i]['LIS'] + " não foi mapeada na função.");
                 }
                 break;
 
             default:
-                dump("calcArrRLTBar();", "Data " + dat + " não foi mapeada na função.");
+                dump("calcArrRLTBar(); - 613", "Data DF1 não foi cadastrado no chamado " + rltlist[i]['NOM']);
                 break;
         }
     }

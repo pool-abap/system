@@ -256,7 +256,7 @@ function ajax2(id){
 				}, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
-                dump("carregarInfosAPI();", "A requisição AJAX para buscar todos os Cards falhou!.");
+                dump("carregarInfosAPI(); - 259", "A requisição AJAX para buscar todos os Cards falhou!.");
             });
 }
 
@@ -295,7 +295,7 @@ function ajax3(id){
 				}, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
-                dump("carregarInfosAPI();", "A requisição AJAX para buscar todos membros falhou!.");
+                dump("carregarInfosAPI(); - 298", "A requisição AJAX para buscar todos membros falhou!.");
             });
 }
 
@@ -331,7 +331,7 @@ function ajax5(id){
 				}, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
-                dump("carregarInfosAPI();", "A requisição AJAX para buscar todas as labels falhou!.");
+                dump("carregarInfosAPI(); - 334", "A requisição AJAX para buscar todas as labels falhou!.");
             });
 }
 
@@ -364,7 +364,7 @@ function ajax4(id){
 				}, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
-                dump("carregarInfosAPI();", "A requisição AJAX para buscar todas as Listas falhou!.");
+                dump("carregarInfosAPI(); - 367", "A requisição AJAX para buscar todas as Listas falhou!.");
             });
 }
 
@@ -386,7 +386,7 @@ function ajax6(id){
 				processarDados();
             })
             .fail(function (jqXHR, textStatus, data) {
-                dump("carregarInfosAPI();", "A requisição AJAX para buscar todas os Custom fields falhou!.");
+                dump("carregarInfosAPI(); - 389", "A requisição AJAX para buscar todas os Custom fields falhou!.");
             });
 }
 
@@ -462,7 +462,7 @@ function processarDados() {
                     }
                 })
                 .fail(function (jqXHR, textStatus, data) {
-                    dump("processarDados();", "A requisição AJAX para buscar todos os campos adicionais falhou!.");
+                    dump("processarDados(); - 465", "A requisição AJAX para buscar todos os campos adicionais falhou!.");
                 });
         if (i == total) {
             setTimeout(function () {
@@ -711,7 +711,7 @@ function ListasXCards() {
             if (cards[i]['idList'] == listas[y]['ID']) {
 
                 if (cards[i]['due'] == null) {
-                    dump("ListasXCards();", "O card " + cards[i]['name'] + " não possui data de entrega.");
+                    dump("ListasXCards(); - 714", "O card " + cards[i]['name'] + " não possui data de entrega.");
                 }
 
                 switch (listas[y]['NAME']) {
@@ -1064,7 +1064,7 @@ function ListasXCards() {
                         break;
 
                     default:
-                        dump("ListasXCards();", "A lista " + listas[y]['NAME'] + " não foi mapeada na função.");
+                        dump("ListasXCards(); - 1067", "A lista " + listas[y]['NAME'] + " não foi mapeada na função.");
                         break;
                 }
             }
@@ -1280,7 +1280,7 @@ function risco() {
 }
 
 function tableEntre(){
-	
+		
 	for (var i = 0; i < cards.length; i++) {
         for (var x = 0; x < listas.length; x++) {
 			for (var n = 0; n < newfields.length; n++) {
@@ -1382,7 +1382,9 @@ function tableEntre(){
 	});
 
 	for (var i = 0; i < 5; i++) {
-		document.getElementById("row-top5").innerHTML += "<tr><td>" + cardsars[i]['NAM'] + "</td><td><input class='input-view' type='text' value='" + cardsars[i]['DES'] + "' disabled /></td><td>" + cardsars[i]['TOT'] + "</td></tr>";
+		if(i < cardsars.length){
+			document.getElementById("row-top5").innerHTML += "<tr><td>" + cardsars[i]['NAM'] + "</td><td><input class='input-view' type='text' value='" + cardsars[i]['DES'] + "' disabled /></td><td>" + cardsars[i]['TOT'] + "</td></tr>";
+		}
 	}
 	
 }
