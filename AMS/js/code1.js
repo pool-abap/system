@@ -95,11 +95,13 @@
                 if (boards.length > 0) {
                     var vldags = false;
                     var bodid = "";
+					var bodname = "";
                     for (var i = 0; i < boards.length; i++) {
                         //Verificar se tem com o mes ATUAL para Carregar
                         if (boards[i]['NAME'].indexOf("AMS " + strg_mes) > -1) {
                             vldags = true;
                             bodid = boards[i]['ID'];
+							bodname = boards[i]['NAME'];
                         }
                         //Montar somente com os nomes AD e AMS
                         if (boards[i]['NAME'].match(/AMS/)) {
@@ -118,13 +120,9 @@
                     if (configs['CFG_ABR']) {
                         if (vldags) {
                             //Mesmo dados da função gerarRelatorio() ajustado para executar para o ID pre escolhido
-                            var e = document.getElementById("inputState");
-                            var value = e.options[e.selectedIndex].value;
-                            var text = e.options[e.selectedIndex].text;
-
                             document.getElementById("tela-01").style.opacity = 0.0;
                             document.getElementById("tela-02").style.opacity = 1.0;
-                            document.getElementById("titulo").innerHTML = text;
+                            document.getElementById("titulo").innerHTML = bodname;
                             buscarCards(bodid);
                             buscarLabel(bodid);
                         }
