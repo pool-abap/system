@@ -54,6 +54,7 @@
             var boards = []; //Array que receberar todos os boards
             var menbros = []; //Array qye receberar os membros
             var listas = []; //Array que vai receber as listas
+			var cards = []; //Array cards
             var rltable = []; //Montar tabela relatorio
             var labels = []; //Array que vai receber os labels https://api.trello.com/1/boards/5b3a5ee83bec5319085e12fc/labels?fields=all&key=0fa63ab5014f860756dcb239e5b03c96&token=8325824adff62c2db66bfd6ab8ee51cff7ceea5f4248c586c7d013a481fe9b7a
 
@@ -124,7 +125,7 @@
                             document.getElementById("tela-01").style.opacity = 0.0;
                             document.getElementById("tela-02").style.opacity = 1.0;
                             document.getElementById("titulo").innerHTML = text;
-                            carregarInfos(bodid);
+                            buscarCards(bodid);
                             buscarLabel(bodid);
                         }
                     }
@@ -145,12 +146,12 @@
                 document.getElementById("tela-02").style.opacity = 1.0;
                 document.getElementById("titulo").innerHTML = text;
 
-                carregarInfos(value);
+                buscarCards(value);
                 buscarLabel(value);
             }
 
             //Puxar infos do site
-            function carregarInfos(id) {
+            function buscarCards(id) {
                 url = "https://api.trello.com/1/boards/" + id + "/cards/?key=" + key + "&token=" + token; //List CARDS
                 var ajax2 = $.ajax({
                     url: url,
@@ -162,13 +163,16 @@
                 })
                         .done(function (data) {
                             console.log(data);
-                            buscarList(id, data);
+							cards = data;
+							buscarMenbros(id);
                         })
                         .fail(function (jqXHR, textStatus, data) {
                             console.log("Não achou.");
                         });
-
-                url = "https://api.trello.com/1/boards/" + id + "/memberships/?key=" + key + "&token=" + token + "&orgMemberType=true&member=true&member_fields=fullName&member_fields=avatarUrl";
+            }
+			
+			function buscarMenbros(id){
+				url = "https://api.trello.com/1/boards/" + id + "/memberships/?key=" + key + "&token=" + token + "&orgMemberType=true&member=true&member_fields=fullName&member_fields=avatarUrl";
                 var ajax3 = $.ajax({
                     url: url,
                     type: 'GET',
@@ -178,6 +182,7 @@
                     }
                 })
                         .done(function (data) {
+							buscarList(id);
                             for (var i = 0; i < data.length; i++) {
                                 var imggg = "";
                                 if (data[i]['member']['avatarUrl'] == null) {
@@ -197,9 +202,9 @@
                         .fail(function (jqXHR, textStatus, data) {
                             console.log("Acesso a API falhou!");
                         });
-            }
+			}
 
-            function buscarList(cod, dados) {
+            function buscarList(cod) {
                 url = "https://api.trello.com/1/boards/" + cod + "/lists?cards=all&card_fields=all&filter=open&fields=all&key=" + key + "&token=" + token;
                 var ajax4 = $.ajax({
                     url: url,
@@ -219,7 +224,7 @@
                                 listas.push(array);
                             }
                             console.log(listas);
-                            contagem(dados);
+							contagem(cards);
                         })
                         .fail(function (jqXHR, textStatus, data) {
                             console.log("Acesso a API falhou!");
@@ -300,6 +305,7 @@
                             }
                         }
                     }
+					
                     if (data[i]['idMembers'].length == 0) {
 
                         //Chamados não assinados
@@ -516,7 +522,7 @@
                         tt = tt + rlrosca[i]['QNT'];
                     }
                 }
-
+								
                 for (var i = 0; i < arr.length; i++) {
                     var porc = (arr[i]['QNT'] / tt) * 100;
                     porc = porc.toFixed(1);
@@ -748,7 +754,7 @@
                 }
 
                 //var md = (backlog['PROGESS'] / backlog['DONE']) * 100;
-                var md = (backlog['PROGESS'] / 100) * 100;
+                var md = (backlog['PROGESS'] / 150) * 100;
                 console.warn(md);
                 var comp = md.toFixed(1);
                 console.warn(comp);
