@@ -91,12 +91,17 @@ var dezrlt = {
 function saldoMes() {
     var data = new Date();
     var mes = data.getMonth(); //0-11
+	var anocplt = data.getFullYear(); //4 dígitos
     mes++; //Para ajustar pas 1-12
-
+	var anolok = anocplt;
+	var anoprx = anocplt;
+	
+	
     var prxmes = 0;
 
     if (mes >= 12) {
         prxmes = 0;
+		anoprx = anoprx + 1;
     } else {
         prxmes = mes + 1;
     }
@@ -105,21 +110,32 @@ function saldoMes() {
         var datatemp = newfields[z]['DF1'];
         var datemp2 = datatemp.split("-");
         var mesproc = datemp2[1];
-
-        if (mes == mesproc) {
-            saldohrmes = saldohrmes + newfields[z]['HF1'];
-            saldohrmes = saldohrmes + newfields[z]['HF2'];
-        }
-
-        if (prxmes == mesproc) {
-            saldohrprxmes = saldohrprxmes + newfields[z]['HF1'];
-            saldohrprxmes = saldohrprxmes + newfields[z]['HF2'];
-        }
+		var anoproc = datemp2[0];
+				
+		if (mesproc == mes && anolok == anoproc) {
+			saldohrmes = saldohrmes + newfields[z]['HF1'];
+			saldohrmes = saldohrmes + newfields[z]['HF2'];
+		}
+		
+		if(prxmes < mes){
+			if (mesproc == prxmes && anoprx == anoproc) {
+				saldohrprxmes = saldohrprxmes + newfields[z]['HF1'];
+				saldohrprxmes = saldohrprxmes + newfields[z]['HF2'];
+			}
+		}
+		
+		if(prxmes > mes){
+			if (mesproc == prxmes && anolok == anoproc) {
+				saldohrprxmes = saldohrprxmes + newfields[z]['HF1'];
+				saldohrprxmes = saldohrprxmes + newfields[z]['HF2'];
+			}
+		}
     }
 
     document.getElementById("saldo-atual").innerHTML = saldohrmes + "h";
     document.getElementById("saldo-prxmes").innerHTML = saldohrprxmes + "h";
-
+	
+	var ttlms;
 	for (var pj = 0; pj < protejos.length; pj++) {
 		
 		if(protejos[pj]['NOME'] == titulo){
@@ -145,7 +161,8 @@ function saldoMes() {
 			dif = Math.abs(dif);
 			dif++;
 			
-			var ttlms = protejos[pj]['HRSCTR'] * dif;
+			ttlms = protejos[pj]['HRSCTR'] * dif;
+			
 			var vcnt = 0;
 			var hrssome = 0;
 			for (var i = 0; i < cards.length; i++) {
@@ -154,12 +171,12 @@ function saldoMes() {
 					cards[i]['dueComplete'] == true) {
 						var tt = newfields[z]['HF1'] + newfields[z]['HF2'];
 						ttlms = ttlms - tt;
-						
 						hrssome = hrssome + newfields[z]['HF1'] + newfields[z]['HF2'];
 						vcnt++;
 					}
 				}
 			}
+			
 		}
 	}
 
@@ -246,7 +263,7 @@ function calcArrRLTBar() {
 
                 if (cards[i]['idList'] == listas[y]['ID'] &&
                         cards[i]['id'] == newfields[z]['CARDID']) {
-
+					
                     var rltdata1 = newfields[z]['DF1'];
                     var rltdata2 = newfields[z]['DF2'];
                     var datasplit1 = rltdata1.split("-");
@@ -610,6 +627,10 @@ function calcArrRLTBar() {
                 break;
 
             default:
+				console.group("DUMP - calcArrRLTBar();");
+				console.error(dat);
+				console.error(rltlist[i]);
+				console.groupEnd();
                 dump("calcArrRLTBar(); - 613", "Data DF1 não foi cadastrado no chamado " + rltlist[i]['NOM']);
                 break;
         }
