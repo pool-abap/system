@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<!--
+Arquivo desenvolvido por Felipe Lopes Melo (EID - felipe.lopes.melo) para atender a necessidade do Pool ABAP
+Desenvolvedor - Felipe Lopes
+Solicitante - Lisiane Neri
+Gerente - Juliana Alencar
+-->
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Language" content="pt-br">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="copyright" content="Accenture Brasil">
+        <meta name="author" content="felipe.lopes.melo@accenture.com">
+        <meta name="robots" content="noindex, nofollow">
+
+        <title>Dashboard Trello AD</title>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="https://rentadrone.cl/wp-content/uploads/2016/12/pie-chart-1.png" />
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+        <!--Links CSS-->
+        <link href="css/reset.css" type="text/css" rel="stylesheet" />
+        <link href="css/body.css" type="text/css" rel="stylesheet" />
+        <link href="css/telas.css" type="text/css" rel="stylesheet" />
+        <link href="css/rodape.css" type="text/css" rel="stylesheet" />
+        <link href="css/dump.css" type="text/css" rel="stylesheet" />
+        <link href="css/smartf.css" type="text/css" rel="stylesheet" />
+        <link href="css/tablet.css" type="text/css" rel="stylesheet" />
+        <link href="css/desktop.css" type="text/css" rel="stylesheet" />
+
+
+        <script type="text/javascript" src="js/onload.js"></script>
+        <script type="text/javascript" src="js/code1.js"></script>
+
+    </head>
+    <body>
+
+        <!-- Tela de inicio -->
+        <div class="tela-01" id="tela-01">
+            <h1>Selecione a board</h1>
+            <select id="inputState" class="form-control">
+            </select>
+            <button type="button" onclick="gerarRelatorio();" class="btn btn-primary">Gerar Relatório</button>
+        </div>
+
+        <div class="tela-02" id="tela-02">
+			
+			<div class="loading" id="load">
+				<h1 id="load-txt"></h1>
+			</div>
+			
+            <div class="lns1" style="margin-top: 10px;">
+                <div class="div-indcs1" style="margin-left: 10px; margin-right: 10px;">
+                    <h1>Desenho</h1>
+                    <h2 id="desenho-totl"></h2>
+                    <p id="desenho-thrs"></p>
+                </div>
+                <div class="div-indcs1" style="margin-left: 10px; margin-right: 10px;">
+                    <h1>Aprovação</h1>
+                    <h2 id="aprovdesenho-totl"></h2>
+                    <p id="aprovdesenho-thrs"></p>
+                </div>
+                <div class="div-indcs1" style="margin-left: 10px; margin-right: 10px;">
+                    <h1>Construção</h1>
+                    <h2 id="construcao-totl"></h2>
+                    <p id="construcao-thrs"></p>
+                </div>
+                <div class="div-indcs1" style="margin-left: 10px; margin-right: 10px;">
+                    <h1>Teste User</h1>
+                    <h2 id="testuser-totl"></h2>
+                    <p id="testuser-thrs"></p>
+                </div>
+                <div class="div-indcs1" style="margin-left: 10px; margin-right: 10px;">
+                    <h1>CAB</h1>
+                    <h2 id="precab-totl"></h2>
+                    <p id="precab-thrs"></p>
+                </div>
+                <div class="div-indcs1" style="margin-left: 10px; margin-right: 10px;">
+                    <h1>Pós GOLIVE</h1>
+                    <h2 id="suportgolive-totl"></h2>
+                    <p id="suportgolive-thrs"></p>
+                </div>
+                <div class="div-indcs1" style="margin-left: 10px; margin-right: 10px;">
+                    <h1>Concluídas</h1>
+                    <h2 id="implementado-totl"></h2>
+                    <p id="implementado-thrs"></p>
+                </div>
+                <div class="div-indcs1" id="div-saldo" style="margin-left: 10px; margin-right: 10px;">
+                    <h1>Saldo</h1>
+                    <h3 id="saldott">0</h3>
+                    <h4>Horas</h4>
+                </div>
+            </div>
+
+            <div class="lns3">
+                <div class="div-indcs3" id="div-impedi" style="margin-left: 10px; margin-right: 10px;">
+                    <h1>Impedimentos</h1>
+                    <h2 id="impedimentos-totl"></h2>
+                    <p id="impedimentos-thrs"></p>
+                </div>
+                <div class="div-indcs3" id="div-pipeline" style="margin-left: 10px; margin-right: 10px;">
+                    <h1>PIPELINE</h1>
+                    <h2 id="pipeline-totl"></h2>
+                    <p id="pipeline-thrs"></p>
+                </div>
+
+                <div class="div-indcs4" id="div-labels" style="margin-left: 10px; margin-right: 20px; padding: 10px;">
+					<h6>Pipeline / Módulo</h6>
+                </div>
+				
+				<div class="div-indcs4" style="margin-left: 10px; margin-right: 20px; padding: 10px;">
+					<!-- <h6></h6> -->
+					<table class="table" style="margin: 0px; margin-top: -5px;">
+					  <thead>
+						<tr>
+						  <th scope="col" style="border-top: 0px;">Demandas Entregues</th>
+						  <th scope="col" style="border-top: 0px;">Atv.</th>
+						  <th scope="col" style="border-top: 0px;">Hrs</th>
+						  <th scope="col" style="border-top: 0px;">E.M</th>
+						</tr>
+					  </thead>
+					  <tbody id="row-entr">
+					  </tbody>
+					</table>
+                </div>
+				
+				<div class="div-indcs4" style="margin-left: 10px; margin-right: 20px; padding: 10px;">
+					<h6>Top 5 - Construção</h6>
+					<table class="table" style="margin: 0px; margin-top: -5px;">
+					  <thead>
+						<tr>
+						  <th scope="col" style="border-top: 0px;">Ticket</th>
+						  <th scope="col" style="border-top: 0px;">Descrição</th>
+						  <th scope="col" style="border-top: 0px;">Hrs</th>
+						</tr>
+					  </thead>
+					  <tbody id="row-top5">
+						<!-- <tr>
+							<td>900451</td>
+							<td>Teste com texto de 20...</td>
+							<td>100</td>
+						</tr> -->
+					  </tbody>
+					</table>
+                </div>
+            </div>
+
+            <div class="lns2">
+                <div class="div-indcs4" style="margin-left: 10px; margin-right: 20px;">
+                    <canvas id="myChart-line"></canvas>
+                </div>
+                <div class="div-indcs4" style="margin-left: 10px; margin-right: 20px;">
+                    <canvas id="myChart-bar"></canvas>
+                </div>
+            </div>
+
+            <div class="lns3">
+                <div class="div-indcs4" id="info-board" style="margin-left: 10px; margin-right: 10px; padding: 15px;">
+                    <h1 id="titulo"></h1>
+                    <h2 id="data-board"></h2>
+					
+                </div>
+
+                <div class="div-indcs3" style="margin-left: 10px; margin-right: 10px;">
+                    <h1>Aprovado Mês</h1>
+                    <h3 id="saldo-atual"></h3>
+                    <h4 id="saldo-atual-div"></h4>
+                </div>
+
+                <div class="div-indcs3" style="margin-left: 10px; margin-right: 10px;">
+                    <h1>Previsão</h1>
+                    <h3 id="saldo-prxmes"></h3>
+                    <h4 id="saldo-prxmes-div"></h4>
+                </div>
+
+                <div class="div-indcs3" style="margin-left: 10px; margin-right: 10px;">
+                    <h1>Risco</h1>
+                    <img id="img-alert" src="img/4Rx8HOu.png" />
+                </div>
+
+                <div class="div-indcs3" style="margin-left: 10px; margin-right: 10px;">
+                    <h1>Satisfação</h1>
+                    <img id="img-satis" src="img/yeBDZft.png" />
+                </div>
+				
+				<div class="div-indcs4" id="info-board" style="margin-left: 10px; margin-right: 10px; padding: 5px;">
+					<canvas id="myChart-est"></canvas>
+                </div>
+				
+				<div class="div-indcs4" style="margin-left: 10px; margin-right: 10px; min-height: 100px; padding: 10px;">
+                    <h6>Demandas Retiradas do Pool</h6>
+                    <p id="reprovs-totl"></p>
+					<p id="reprovs-thrs"></p>
+                </div>
+            </div>
+
+            <footer class="rodape">
+                <p>Powered by <a href="sip:felipe.lopes.melo@accenture.com"><b>felipe.lopes.melo@accenture.com</b></a></p>
+                <!-- <p>© 2004-2018 Accenture Brasil. All Rights Reserved.</p> -->
+                <p>© 2018 Accenture Brasil - All Rights Reserved</p>
+                <p>Page Last Modified : 29/08/2018</p>
+                <p>v1.0.0</p>
+            </footer>
+        </div>
+
+        <div class="dump" id="dump">
+            <h1>DUMP</h1>
+            <h2>Erro de Execução</h2>
+            <h6 id="func-dump"></h6>
+            <p id="txt-dump"></p>
+            <a href="sip:felipe.lopes.melo@accenture.com"><b>suporte</b></a>
+        </div>
+
+        <script type="text/javascript" src="js/code2.js"></script>
+    </body>
+</html>

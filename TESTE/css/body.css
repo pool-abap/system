@@ -1,0 +1,16 @@
+body::-webkit-scrollbar {
+    width: 0px;
+}
+
+body {
+    float: left;
+    width: 100%;
+    padding: 10px;
+    background-color: #284c77;
+    opacity: 0.0;
+    -webkit-transition: all 0.5s linear;
+    -moz-transition: all 0.5s linear;
+    -ms-transition: all 0.5s linear;
+    -o-transition: all 0.5s linear;
+    transition: all 0.5s linear;
+}
