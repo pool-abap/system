@@ -136,15 +136,19 @@ function saldoMes() {
 		
 		if(antmes != mes){
 			if (mesproc == antmes && anoant == anoproc) {
-				saldohrprxmes = saldohrprxmes + newfields[z]['HF1'];
-				saldohrprxmes = saldohrprxmes + newfields[z]['HF2'];
+				saldohrantmes = saldohrantmes + newfields[z]['HF1'];
+				saldohrantmes = saldohrantmes + newfields[z]['HF2'];
 			}
 		}
     }
 
-    document.getElementById("saldo-atual").innerHTML = saldohrmes + "h";
+    /*document.getElementById("saldo-atual").innerHTML = saldohrmes + "h";
     document.getElementById("saldo-prxmes").innerHTML = saldohrprxmes + "h";
-	document.getElementById("saldo-antmes").innerHTML = antmes + "h";
+	document.getElementById("saldo-antmes").innerHTML = antmes + "h";*/
+	
+	document.getElementById("saldo-atual").innerHTML = saldohrmes;
+    document.getElementById("saldo-prxmes").innerHTML = saldohrprxmes;
+	document.getElementById("saldo-antmes").innerHTML = saldohrantmes;
 	
 	
 	var ttlms;
