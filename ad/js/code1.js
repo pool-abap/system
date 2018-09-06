@@ -552,8 +552,6 @@ function orgNewFields() {
             'DF2': "" // Data 2
         };
     }
-
-	console.error(newfields);
 	
     var corg = newfields;
     newfields = [];
@@ -591,9 +589,9 @@ function orgNewFields() {
             newfields.push(arraystemps);
 
             card1 = corg[a]['CARDID'];
+			oc = corg[a]['OC'];
 			
 			ep = corg[a]['EP'];
-			oc = corg[a]['OC'];
             shf1 = corg[a]['HF1'];
             shf2 = corg[a]['HF2'];
 
@@ -606,7 +604,6 @@ function orgNewFields() {
 
         } else {
 			ep = ep + corg[a]['EP'];
-			oc = corg[a]['OC'];
             shf1 = shf1 + corg[a]['HF1'];
             shf2 = shf2 + corg[a]['HF2'];
 
@@ -623,7 +620,7 @@ function orgNewFields() {
             var arraystemps = {
                 'CARDID': corg[a]['CARDID'], // Id do card
                 'EP': ep, //Estimativa prevista
-				'OC': oc, // Ocioso
+				'OC': corg[a]['OC'], // Ocioso
                 'HF1': shf1, // Hora 1
                 'HF2': shf2, // Hota 2
                 'DF1': df1, // Data 1
@@ -636,6 +633,7 @@ function orgNewFields() {
             console.groupEnd("NewCampos");
         }
     }
+
 }
 
 var tlpipeline = 0;

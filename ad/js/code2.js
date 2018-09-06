@@ -122,22 +122,24 @@ function saldoMes() {
         var mesproc = datemp2[1];
 		var anoproc = datemp2[0];
 				
-		if (mesproc == mes && anolok == anoproc) {
-			saldohrmes = saldohrmes + newfields[z]['HF1'];
-			saldohrmes = saldohrmes + newfields[z]['HF2'];
-		}
-		
-		if(prxmes != mes){
-			if (mesproc == prxmes && anoprx == anoproc) {
-				saldohrprxmes = saldohrprxmes + newfields[z]['HF1'];
-				saldohrprxmes = saldohrprxmes + newfields[z]['HF2'];
+		if(newfields[z]['OC'] == false){
+			if (mesproc == mes && anolok == anoproc) {
+				saldohrmes = saldohrmes + newfields[z]['HF1'];
+				saldohrmes = saldohrmes + newfields[z]['HF2'];
 			}
-		}
-		
-		if(antmes != mes){
-			if (mesproc == antmes && anoant == anoproc) {
-				saldohrantmes = saldohrantmes + newfields[z]['HF1'];
-				saldohrantmes = saldohrantmes + newfields[z]['HF2'];
+			
+			if(prxmes != mes){
+				if (mesproc == prxmes && anoprx == anoproc) {
+					saldohrprxmes = saldohrprxmes + newfields[z]['HF1'];
+					saldohrprxmes = saldohrprxmes + newfields[z]['HF2'];
+				}
+			}
+			
+			if(antmes != mes){
+				if (mesproc == antmes && anoant == anoproc) {
+					saldohrantmes = saldohrantmes + newfields[z]['HF1'];
+					saldohrantmes = saldohrantmes + newfields[z]['HF2'];
+				}
 			}
 		}
     }
