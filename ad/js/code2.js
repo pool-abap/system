@@ -1,5 +1,6 @@
 var saldohrmes = 0;
 var saldohrprxmes = 0;
+var saldohrantmes = 0;
 
 var rltline = {
     'OUT': 0,
@@ -95,9 +96,18 @@ function saldoMes() {
     mes++; //Para ajustar pas 1-12
 	var anolok = anocplt;
 	var anoprx = anocplt;
+	var anoant = anocplt;
 	
 	
     var prxmes = 0;
+	var antmes = 0;
+	
+	if (mes <= 1) {
+        antmes = 12;
+		anoant = anoant - 1;
+    } else {
+        antmes = mes - 1;
+    }
 
     if (mes >= 12) {
         prxmes = 0;
@@ -117,15 +127,15 @@ function saldoMes() {
 			saldohrmes = saldohrmes + newfields[z]['HF2'];
 		}
 		
-		if(prxmes < mes){
+		if(prxmes != mes){
 			if (mesproc == prxmes && anoprx == anoproc) {
 				saldohrprxmes = saldohrprxmes + newfields[z]['HF1'];
 				saldohrprxmes = saldohrprxmes + newfields[z]['HF2'];
 			}
 		}
 		
-		if(prxmes > mes){
-			if (mesproc == prxmes && anolok == anoproc) {
+		if(antmes != mes){
+			if (mesproc == antmes && anoant == anoproc) {
 				saldohrprxmes = saldohrprxmes + newfields[z]['HF1'];
 				saldohrprxmes = saldohrprxmes + newfields[z]['HF2'];
 			}
@@ -134,6 +144,8 @@ function saldoMes() {
 
     document.getElementById("saldo-atual").innerHTML = saldohrmes + "h";
     document.getElementById("saldo-prxmes").innerHTML = saldohrprxmes + "h";
+	document.getElementById("saldo-antmes").innerHTML = antmes + "h";
+	
 	
 	var ttlms;
 	for (var pj = 0; pj < protejos.length; pj++) {
@@ -142,9 +154,11 @@ function saldoMes() {
 			
 			var calc1 = saldohrmes / protejos[pj]['HRSCTR'];
 			var calc2 = saldohrprxmes / protejos[pj]['HRSCTR'];
+			var calc3 = saldohrantmes / protejos[pj]['HRSCTR'];
 			
 			document.getElementById("saldo-atual-div").innerHTML = calc1.toFixed(1);
 			document.getElementById("saldo-prxmes-div").innerHTML = calc2.toFixed(1);
+			document.getElementById("saldo-antmes-div").innerHTML = calc3.toFixed(1);
 			
 			var dtnow = new Date();
 			var d = dtnow.getDate(); //1-31
@@ -161,11 +175,7 @@ function saldoMes() {
 			dif = Math.abs(dif);
 			dif++;
 			
-			console.error("Base de horas - " + protejos[pj]['HRSCTR']);
-			
 			ttlms = protejos[pj]['HRSCTR'] * dif;
-			
-			console.error("Total de horas proj - " + ttlms);
 			
 			var vcnt = 0;
 			var hrssome = 0;
@@ -180,8 +190,6 @@ function saldoMes() {
 					}
 				}
 			}
-			
-			console.error("Saldo proj - " + ttlms);
 		}
 	}
 
