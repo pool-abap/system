@@ -56,14 +56,14 @@ var dadoprotj = {
 protejos.push(dadoprotj);
 var dadoprotj = {
     'NOME': 'Pool AD - NLATAM', //Nome do projeto
-    'IMG': '', //Logo marca
+    'IMG': 'https://s.rozee.pk/company_logos/44/37188375395233.png', //Logo marca
 	'DATA' : '01/10/2017 00:00',
     'HRSCTR': 175, // Saldos em HORAS
 };
 protejos.push(dadoprotj);
 var dadoprotj = {
     'NOME': 'Pool AD - SLATAM', //Nome do projeto
-    'IMG': '', //Logo marca
+    'IMG': 'https://s.rozee.pk/company_logos/44/37188375395233.png', //Logo marca
 	'DATA' : '01/10/2017 00:00',
     'HRSCTR': 175, // Saldos em HORAS
 };
