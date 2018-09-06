@@ -161,7 +161,11 @@ function saldoMes() {
 			dif = Math.abs(dif);
 			dif++;
 			
+			console.error("Base de horas - " + protejos[pj]['HRSCTR']);
+			
 			ttlms = protejos[pj]['HRSCTR'] * dif;
+			
+			console.error("Total de horas proj - " + ttlms);
 			
 			var vcnt = 0;
 			var hrssome = 0;
@@ -177,6 +181,7 @@ function saldoMes() {
 				}
 			}
 			
+			console.error("Saldo proj - " + ttlms);
 		}
 	}
 

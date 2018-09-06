@@ -57,14 +57,14 @@ protejos.push(dadoprotj);
 var dadoprotj = {
     'NOME': 'Pool AD - NLATAM', //Nome do projeto
     'IMG': '', //Logo marca
-	'DATA' : '01/08/2017 00:00',
+	'DATA' : '01/10/2017 00:00',
     'HRSCTR': 175, // Saldos em HORAS
 };
 protejos.push(dadoprotj);
 var dadoprotj = {
     'NOME': 'Pool AD - SLATAM', //Nome do projeto
     'IMG': '', //Logo marca
-	'DATA' : '01/08/2017 00:00',
+	'DATA' : '01/10/2017 00:00',
     'HRSCTR': 175, // Saldos em HORAS
 };
 protejos.push(dadoprotj);
