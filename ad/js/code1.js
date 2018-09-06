@@ -488,6 +488,7 @@ function orgNewFields() {
     var arraystemps = {
         'CARDID': "", // Id do card
 		'EP': 0, //Estimativa prevista
+		'OC': false, // Ocioso
         'HF1': 0, // Hora 1
         'HF2': 0, // Hota 2
         'DF1': "", // Data 1
@@ -506,6 +507,14 @@ function orgNewFields() {
                 switch (custfields[t]['name']) {
                     case "EP":
                         arraystemps['EP'] = parseInt(tempfield[n]['value']['number']);
+                        break;
+						
+					case "IDLE":
+						if(tempfield[n]['value']['checked'] == "true"){
+							arraystemps['OC'] = true;
+						} else {
+							arraystemps['OC'] = false;
+						}
                         break;
 
                     case "H.F.1":
@@ -536,6 +545,7 @@ function orgNewFields() {
         arraystemps = {
             'CARDID': "", // Id do card
             'EP': 0, //Estimativa prevista
+			'OC': false, // Ocioso
             'HF1': 0, // Hora 1
             'HF2': 0, // Hota 2
             'DF1': "", // Data 1
@@ -543,6 +553,8 @@ function orgNewFields() {
         };
     }
 
+	console.error(newfields);
+	
     var corg = newfields;
     newfields = [];
     var total = corg.length - 1;
@@ -551,6 +563,7 @@ function orgNewFields() {
     var cardpr = "";
 
 	var ep = 0;
+	var oc = false;
     var shf1 = 0;
     var shf2 = 0;
     var df1 = "";
@@ -569,6 +582,7 @@ function orgNewFields() {
             var arraystemps = {
                 'CARDID': card1, // Id do card
                 'EP': ep, //Estimativa prevista
+				'OC': oc, // Ocioso
                 'HF1': shf1, // Hora 1
                 'HF2': shf2, // Hota 2
                 'DF1': df1, // Data 1
@@ -579,6 +593,7 @@ function orgNewFields() {
             card1 = corg[a]['CARDID'];
 			
 			ep = corg[a]['EP'];
+			oc = corg[a]['OC'];
             shf1 = corg[a]['HF1'];
             shf2 = corg[a]['HF2'];
 
@@ -591,6 +606,7 @@ function orgNewFields() {
 
         } else {
 			ep = ep + corg[a]['EP'];
+			oc = corg[a]['OC'];
             shf1 = shf1 + corg[a]['HF1'];
             shf2 = shf2 + corg[a]['HF2'];
 
@@ -607,6 +623,7 @@ function orgNewFields() {
             var arraystemps = {
                 'CARDID': corg[a]['CARDID'], // Id do card
                 'EP': ep, //Estimativa prevista
+				'OC': oc, // Ocioso
                 'HF1': shf1, // Hora 1
                 'HF2': shf2, // Hota 2
                 'DF1': df1, // Data 1
