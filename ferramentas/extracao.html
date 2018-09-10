@@ -618,23 +618,71 @@
 
             //Monta a tabela na tela
             function montarTabela() {
-                var tb = document.getElementById("tb-cont");
-                var cnt = 0;
+               
+				
+				var arryscards = [];
 				
                 for (var i = 0; i < cards.length; i++) {
 					for (var y = 0; y < newfields.length; y++) {
 						if(cards[i]['id'] == newfields[y]['CARDID']){
-							cnt = i + 1;
-							tb.innerHTML += "<tr>" +
-							"<th scope='row' width='1%'>" + cnt + "</th>" +
-							"<td width='10%'>" + cards[i]['name'] + "</td>" +
-							"<td width='74%'>" + cards[i]['desc'] + "</td>" +
-							"<td width='10%'>" + newfields[y]['DF1'] + "</td>" +
-							"<td width='5%'>" + newfields[y]['HF1'] + "</td>" +
-							"</tr>";
+							
+							var ar = {
+								'CHAM': cards[i]['name'],
+								'DESC': cards[i]['desc'], 
+								'DF1': newfields[y]['DF1'],
+								'HF1': newfields[y]['HF1'],
+								'TDT': 0
+							};
+							arryscards.push(ar);
+							
 						}
 					}
                 }
+				
+				for (var i = 0; i < arryscards.length; i++) {
+					
+					var datascr = arryscards[i]['DF1'];
+					var splitdt = datascr.split("-");
+					
+					var dtano = parseInt(splitdt[0]);
+					var dtmes = parseInt(splitdt[1]);
+					var dtdia = parseInt(splitdt[2]);
+					
+					var totl = 0;
+					
+					dtano = dtano - 2000;
+					
+					dtano = dtano * (12 * 30);
+					dtmes = dtmes * 30;
+					totl = dtano + dtmes + dtdia;
+					
+					arryscards[i]['TDT'] = totl;
+				}
+				
+				arryscards.sort(function(a, b) {
+					return b.TDT - a.TDT;
+				});
+				
+				var tb = document.getElementById("tb-cont");
+                var cnt = 0;
+				
+				for (var i = 0; i < arryscards.length; i++) {
+					cnt = i + 1;
+					
+					var datascr = arryscards[i]['DF1'];
+					var splitdt = datascr.split("-");
+							
+					var dtxt = splitdt[1] + "/" + splitdt[0];
+					
+					tb.innerHTML += "<tr>" +
+						"<th scope='row' width='1%'>" + cnt + "</th>" +
+						"<td width='10%'>" + arryscards[i]['CHAM'] + "</td>" +
+						"<td width='73%'>" + arryscards[i]['DESC'] + "</td>" +
+						"<td width='8%'>" + dtxt + "</td>" +
+						"<td width='8%'>" + arryscards[i]['HF1'] + " hrs</td>" +
+						"</tr>";
+				}
+				
             }
 
             //Rotinas para quando a tela carregar
