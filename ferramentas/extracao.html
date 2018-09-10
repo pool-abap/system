@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Language" content="pt-br">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="copyright" content="Felipe Lopes">
+        <meta name="author" content="felipe.lm@hotmail.com.br">
+        <meta name="robots" content="noindex, nofollow">
+
+        <title>Listas de Chamados</title>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="https://rentadrone.cl/wp-content/uploads/2016/12/pie-chart-1.png" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <style type="text/css">
+            * {
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+            }
+            body {
+                float: left;
+                width: 100%;
+                min-width: 900px;
+                padding: 20px;
+                background-color: #284c77;
+                opacity: 0.0;
+                -webkit-transition: all 0.5s linear;
+                -moz-transition: all 0.5s linear;
+                -ms-transition: all 0.5s linear;
+                -o-transition: all 0.5s linear;
+                transition: all 0.5s linear;
+            }
+
+            .div-sp {
+                float: left;
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+            }
+
+            .tela-01 {
+                float: left;
+                width: 482px;
+                height: 182px;
+                top: calc(50% - 101px);
+                left: calc(50% - 251px);
+                position: absolute;
+                background-color: #fff;
+                padding: 20px;
+                opacity: 1.0;
+                z-index: 99;
+            }
+            .tela-01 h1 {
+                float: left;
+                width: 100%;
+                color: #284c77;
+                font-size: 1.5em;
+                text-align: center;
+            }
+            .tela-01 select {
+                float: left;
+                width: 100%;
+                margin-top: 10px;
+                text-align: center;
+            }
+            .tela-01 button {
+                float: left;
+                width: 100%;
+                margin-top: 20px;
+                text-align: center;
+            }
+
+            .tela-02 {
+                float: left;
+                width: 100%;
+                height: 800px;
+                opacity: 0.0;
+            }
+            .tela-02 h1 {
+                float: left;
+                width: 800px;
+                margin-left: calc(50% - 400px);
+                margin-right: calc(50% - 400px);
+                font-size: 1.5em;
+                text-align: center;
+                color: #fff;
+            }
+            .content {
+                float: left;
+                width: 1200px;
+                margin-left: calc(50% - 600px);
+                margin-right: calc(50% - 600px);
+                padding: 30px 30px 10px 30px;
+                background-color: #fff;
+            }
+            #table-chamados {
+                float: left;
+                width: 100%;
+            }
+            .rodape {
+                float: left;
+                width: 100%;
+                margin-top: 30px;
+                margin-bottom: 20px;
+            }
+            .rodape a {
+                text-decoration: none;
+                color: #fff;
+            }
+            .rodape p {
+                float: left;
+                width: 100%;
+                opacity: 0.2;
+                font-size: 0.8em;
+                cursor: default;
+                margin: 0px;
+                padding: 0px;
+                text-align: center;
+                color: #fff;
+            }
+        </style>
+
+        <script type="text/javascript">
+
+            // Obtém a data/hora atual
+            var data = new Date();
+
+            var meses = new Array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
+            var semana = new Array("Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado");
+
+            // Guarda cada pedaço em uma variável
+            var dia = data.getDate();           // 1-31
+            var dia_sem = data.getDay();            // 0-6 (zero=domingo)
+            var mes = data.getMonth();          // 0-11 (zero=janeiro)
+            var ano2 = data.getYear();           // 2 dígitos
+            var ano4 = data.getFullYear();       // 4 dígitos
+            var hora = data.getHours();          // 0-23
+            var min = data.getMinutes();        // 0-59
+            var seg = data.getSeconds();        // 0-59
+            var mseg = data.getMilliseconds();   // 0-999
+            var tz = data.getTimezoneOffset(); // em minutos
+
+            var strg_mes = meses[mes];
+            console.group("Datas");
+            console.log("Mes - " + strg_mes);
+            console.groupEnd("Datas");
+
+
+            //ALTERE SOMENTE AQUI ----------------------------------------------------------------------------------------------------------
+
+            var configs = {
+                'CFG_NOME': 0, // 0 - Primeiro Nome  1 - Nome Completo
+                'CFG_KEY': '0fa63ab5014f860756dcb239e5b03c96', // Key gerada pelo trello para ixibir boards
+                'CFG_TOK': '8325824adff62c2db66bfd6ab8ee51cff7ceea5f4248c586c7d013a481fe9b7a', //Token gerado pelo trello para acessar a API
+                'CFG_MDC': 10, //Quantidade media IDEAL de chamado por mes - Será usado para os relatorios
+                'CFG_ABR': false //Carrega o mes atual sem escolhe em tela
+            };
+
+            //-------------------------------------------------------------------------------------------------------------------------------
+            if (configs['CFG_NOME'] != 0 && configs['CFG_NOME'] != 1) {
+                throw "configs['CFG_NOME'] - Está com um valor errado";
+            }
+            if (configs['CFG_KEY'] == null || configs['CFG_KEY'] == '') {
+                throw "configs['CFG_KEY'] - Está vazio";
+            }
+            if (configs['CFG_TOK'] == null || configs['CFG_KEY'] == '') {
+                throw "configs['CFG_TOK'] - Está vazio";
+            }
+            if (configs['CFG_MDC'] == null || configs['CFG_MDC'] == '') {
+                throw "configs['CFG_MDC'] - Está vazio";
+            }
+
+            var key = configs['CFG_KEY'];
+            var token = configs['CFG_TOK'];
+            //var cod = "5b3a5ee83bec5319085e12fc"; //Pool AMS Julho
+
+            /*Delações de variaveis*/
+            var url = ""; //Variavel onde vai receber todos os link AJAX
+
+            var boards = []; //Array que receberar todos os boards
+            var cards = []; //Array que vai receber os cards
+            var menbros = []; //Array qye receberar os membros
+            var listas = []; //Array que vai receber as listas
+            var labels = []; //Array que vai receber os labels
+			var tempfield = [];
+			var newfields = []; //Array com todos campos novos criados
+			var custfields = []; //Parametrizações dos custons
+
+            var tabletd = []; //Array que vai receber os dados para tabela
+
+            url = "https://api.trello.com/1/members/me/boards?key=" + key + "&token=" + token; //List Bards
+            var ajax1 = $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                beforeSend: function () {
+                    console.log("Buscando Boards...");
+                }
+            })
+                    .done(function (data) {
+                        //Montar Array de boards
+                        for (var i = 0; i < data.length; i++) {
+                            var array = {
+                                'ID': data[i]['id'],
+                                'NAME': data[i]['name']
+                            };
+                            boards.push(array);
+                        }
+                        console.group("Boards");
+                        console.log(boards);
+                        console.groupEnd("Boards");
+                        montarSelect();
+                    })
+                    .fail(function (jqXHR, textStatus, data) {
+                        location.reload();
+                    });
+
+            //Se tiver board, montar na tela
+            function montarSelect() {
+                if (boards.length > 0) {
+                    var vldags = false;
+                    var bodid = "";
+                    for (var i = 0; i < boards.length; i++) {
+                        //Verificar se tem com o mes ATUAL para Carregar
+                        if (boards[i]['NAME'].indexOf("AD " + strg_mes) > -1) {
+                            vldags = true;
+                            bodid = boards[i]['ID'];
+                        }
+                        //Montar somente com os nomes AD e AMS
+                        if (boards[i]['NAME'].match(/AMS/)) {
+                            var option = document.createElement("option");
+                            option.text = boards[i]['NAME'];
+                            option.value = boards[i]['ID'];
+                            document.getElementById("inputState").add(option);
+                        }
+                        if (boards[i]['NAME'].match(/AD/)) {
+                            var option = document.createElement("option");
+                            option.text = boards[i]['NAME'];
+                            option.value = boards[i]['ID'];
+                            document.getElementById("inputState").add(option);
+                        }
+                    }
+                    if (configs['CFG_ABR']) {
+                        if (vldags) {
+                            //Mesmo dados da função gerarRelatorio() ajustado para executar para o ID pre escolhido
+                            var e = document.getElementById("inputState");
+                            var value = e.options[e.selectedIndex].value;
+                            var text = e.options[e.selectedIndex].text;
+
+                            document.getElementById("tela-01").style.display = 'none';
+                            document.getElementById("tela-02").style.opacity = 1.0;
+                            //document.getElementById("titulo").innerHTML = text;
+                            carregarInfosAPI(bodid);
+                        }
+                    }
+                } else {
+                    console.log("Vazio");
+                }
+            }
+
+            function gerarRelatorio() {
+                var e = document.getElementById("inputState");
+                var value = e.options[e.selectedIndex].value;
+                var text = e.options[e.selectedIndex].text;
+                console.log(value);
+                console.log(text);
+
+                document.getElementById("tela-01").style.display = 'none';
+                document.getElementById("tela-02").style.opacity = 1.0;
+                document.getElementById("titulo").innerHTML = text;
+
+                carregarInfosAPI(value);
+            }
+
+            //Puxar infos do site
+            function carregarInfosAPI(id) {
+				Buscacards(id);
+            }
+			
+			function Buscacards(id){
+			//Buscando todos os CARDS do BOARD
+                url = "https://api.trello.com/1/boards/" + id + "/cards/?key=" + key + "&token=" + token; //List CARDS
+                var ajax2 = $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Buscando Cards...");
+                    }
+                })
+                        .done(function (data) {
+                            cards = data;
+                            console.group("Cards");
+                            console.log(cards);
+                            console.groupEnd("Cards");
+							membros(id);
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            throw new Error("Cards - Acesso a API falhou!");
+                        });
+			}
+			
+			function membros(id){
+			//Buscando todos os MEMBROS do BOARD
+                url = "https://api.trello.com/1/boards/" + id + "/memberships/?key=" + key + "&token=" + token + "&orgMemberType=true&member=true&member_fields=fullName&member_fields=avatarUrl";
+                var ajax3 = $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Buscando Membros...");
+                    }
+                })
+                        .done(function (data) {
+                            for (var i = 0; i < data.length; i++) {
+                                var imggg = "";
+                                if (data[i]['member']['avatarUrl'] == null) {
+                                    imggg = "https://i.imgur.com/LuX2uKH.jpg";
+                                } else {
+                                    imggg = data[i]['member']['avatarUrl'];
+                                }
+                                var array = {
+                                    'ID': data[i]['idMember'],
+                                    'USER': data[i]['member']['fullName'],
+                                    'IMG': imggg
+                                };
+                                menbros.push(array);
+                            }
+                            console.group("Membros");
+                            console.log(menbros);
+                            console.groupEnd("Membros");
+							Busclistas(id);
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            throw new Error("Membros - Acesso a API falhou!");
+                        });
+			}
+			
+			function Busclistas(id){
+				//Buscando todos os LISTAS do BOARD
+                url = "https://api.trello.com/1/boards/" + id + "/lists?cards=all&card_fields=all&filter=open&fields=all&key=" + key + "&token=" + token;
+                var ajax4 = $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Buscando Listas...");
+                    }
+                })
+                        .done(function (data) {
+                            for (var i = 0; i < data.length; i++) {
+
+                                var array = {
+                                    'ID': data[i]['id'],
+                                    'NAME': data[i]['name']
+                                };
+                                listas.push(array);
+                            }
+                            console.group("Listas");
+                            console.log(listas);
+                            console.groupEnd("Listas");
+							label(id);
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            throw new Error("Listas - Acesso a API falhou!");
+                        });
+			}
+			
+			function label(id){
+				//Buscando todos os LABEL do BOARD
+                url = "https://api.trello.com/1/boards/" + id + "/labels?fields=all&key=" + key + "&token=" + token; //List Labels
+                var ajax5 = $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Buscando Labels...");
+                    }
+                })
+                        .done(function (data) {
+                            //Montar Labels
+                            for (var i = 0; i < data.length; i++) {
+                                var lb = {
+                                    'ID': data[i]['id'],
+                                    'NAME': data[i]['name'],
+                                    'COR': data[i]['color'],
+                                    'QNT': 0
+                                };
+                                labels.push(lb);
+                            }
+                            console.group("Labels");
+                            console.log(labels);
+                            console.groupEnd("Labels");
+							customField(id);
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            throw new Error("Labels - Acesso a API falhou!");
+                        });
+			}
+			
+			function customField(id){
+				//Buscando parametrizações Custom fields
+				url = "https://api.trello.com/1/boards/" + id + "/customFields?key=" + key + "&token=" + token;
+				var ajax6 = $.ajax({
+					url: url,
+					type: 'GET',
+					dataType: 'json',
+					beforeSend: function () {
+						console.log("Buscando custom fields...");
+					}
+				})
+						.done(function (data) {
+							for (var y = 0; y < data.length; y++) {
+								custfields.push(data[y]);
+							}
+							processarDados();
+						})
+						.fail(function (jqXHR, textStatus, data) {
+							throw "carregarInfosAPI(); - 389", "A requisição AJAX para buscar todas os Custom fields falhou!.";
+						});
+			}
+			
+			function processarDados() {
+				
+				var ajaxdic = "";
+				var ajaxnewcamp = "";
+				var total = cards.length - 1;
+				for (var i = 0; i < cards.length; i++) {
+					
+					//Buscando todos os campos adicionais individual
+					url = "https://api.trello.com/1/cards/" + cards[i][﻿'id'] + "/customFieldItems?key=" + key + "&token=" + token;
+					ajaxnewcamp = $.ajax({
+						url: url,
+						type: 'GET',
+						dataType: 'json',
+						beforeSend: function () {
+							//console.log("Buscando New Field - " + cards[i][﻿'id']);
+						}
+					})
+							.done(function (data) {
+								for (var y = 0; y < data.length; y++) {
+									tempfield.push(data[y]);
+								}
+							})
+							.fail(function (jqXHR, textStatus, data) {
+								throw "processarDados(); - 465", "A requisição AJAX para buscar todos os campos adicionais falhou!.";
+							});
+					if (i == total) {
+						setTimeout(function () {
+							//Funções de exibição
+							orgNewFields();
+						}, 1300);
+					}
+				}
+			}
+						
+            function orgNewFields(){
+
+				var arraystemps = {
+					'CARDID': "", // Id do card
+					'EP': 0, //Estimativa prevista
+					'OC': false, // Ocioso
+					'HF1': 0, // Hora 1
+					'HF2': 0, // Hota 2
+					'DF1': "", // Data 1
+					'DF2': "" // Data 2
+				};
+				
+				console.log(tempfield);
+				console.log(custfields);
+				for (var n = 0; n < tempfield.length; n++) {
+					
+					arraystemps['CARDID'] = tempfield[n]['idModel'];
+
+					for (var t = 0; t < custfields.length; t++) {
+
+						if (tempfield[n]['idCustomField'] == custfields[t]['id']) {
+							switch (custfields[t]['name']) {
+								case "EP":
+									arraystemps['EP'] = parseInt(tempfield[n]['value']['number']);
+									break;
+									
+								case "IDLE":
+									if(tempfield[n]['value']['checked'] == "true"){
+										arraystemps['OC'] = true;
+									} else {
+										arraystemps['OC'] = false;
+									}
+									break;
+
+								case "H.F.1":
+									arraystemps['HF1'] = parseInt(tempfield[n]['value']['number']);
+									break;
+
+								case "H.F.2":
+									arraystemps['HF2'] = parseInt(tempfield[n]['value']['number']);
+									break;
+
+								case "D.F.1":
+									var ddf = tempfield[n]['value']['date'];
+									ddf = ddf.split("T");
+									arraystemps['DF1'] = ddf[0];
+									break;
+
+								case "D.F.2":
+									var ddf = tempfield[n]['value']['date'];
+									ddf = ddf.split("T");
+									arraystemps['DF2'] = ddf[0];
+									break;
+							}
+						}
+					}
+
+					newfields.push(arraystemps);
+
+					arraystemps = {
+						'CARDID': "", // Id do card
+						'EP': 0, //Estimativa prevista
+						'OC': false, // Ocioso
+						'HF1': 0, // Hora 1
+						'HF2': 0, // Hota 2
+						'DF1': "", // Data 1
+						'DF2': "" // Data 2
+					};
+				}
+				
+				var corg = newfields;
+				newfields = [];
+				var total = corg.length - 1;
+
+				var card1 = "";
+				var cardpr = "";
+
+				var ep = 0;
+				var oc = false;
+				var shf1 = 0;
+				var shf2 = 0;
+				var df1 = "";
+				var df2 = "";
+
+				for (var a = 0; a < corg.length; a++) {
+
+					cardpr = corg[a]['CARDID'];
+
+					if (card1 == "") {
+						card1 = corg[a]['CARDID'];
+					}
+
+					if (card1 != cardpr) {
+
+						var arraystemps = {
+							'CARDID': card1, // Id do card
+							'EP': ep, //Estimativa prevista
+							'OC': oc, // Ocioso
+							'HF1': shf1, // Hora 1
+							'HF2': shf2, // Hota 2
+							'DF1': df1, // Data 1
+							'DF2': df2 // Data 2
+						};
+						newfields.push(arraystemps);
+
+						card1 = corg[a]['CARDID'];
+						oc = corg[a]['OC'];
+						
+						ep = corg[a]['EP'];
+						shf1 = corg[a]['HF1'];
+						shf2 = corg[a]['HF2'];
+
+						if (corg[a]['DF1'] != "") {
+							df1 = corg[a]['DF1'];
+						}
+						if (corg[a]['DF2'] != "") {
+							df2 = corg[a]['DF2'];
+						}
+
+					} else {
+						ep = ep + corg[a]['EP'];
+						shf1 = shf1 + corg[a]['HF1'];
+						shf2 = shf2 + corg[a]['HF2'];
+
+						if (corg[a]['DF1'] != "") {
+							df1 = corg[a]['DF1'];
+						}
+						if (corg[a]['DF2'] != "") {
+							df2 = corg[a]['DF2'];
+						}
+					}
+
+					if (a == total) {
+
+						var arraystemps = {
+							'CARDID': corg[a]['CARDID'], // Id do card
+							'EP': ep, //Estimativa prevista
+							'OC': corg[a]['OC'], // Ocioso
+							'HF1': shf1, // Hora 1
+							'HF2': shf2, // Hota 2
+							'DF1': df1, // Data 1
+							'DF2': df2 // Data 2
+						};
+						newfields.push(arraystemps);
+
+						console.group("NewCampos");
+						console.log(newfields);
+						console.groupEnd("NewCampos");
+						montarTabela();
+					}
+				}
+
+			}
+
+
+            //Monta a tabela na tela
+            function montarTabela() {
+                var tb = document.getElementById("tb-cont");
+                var cnt = 0;
+				
+                for (var i = 0; i < cards.length; i++) {
+					for (var y = 0; y < newfields.length; y++) {
+						if(cards[i]['id'] == newfields[y]['CARDID']){
+							cnt = i + 1;
+							tb.innerHTML += "<tr>" +
+							"<th scope='row' width='1%'>" + cnt + "</th>" +
+							"<td width='10%'>" + cards[i]['name'] + "</td>" +
+							"<td width='74%'>" + cards[i]['desc'] + "</td>" +
+							"<td width='10%'>" + newfields[y]['DF1'] + "</td>" +
+							"<td width='5%'>" + newfields[y]['HF1'] + "</td>" +
+							"</tr>";
+						}
+					}
+                }
+            }
+
+            //Rotinas para quando a tela carregar
+            window.onload = function () {
+                document.body.style.opacity = "1.0";
+
+                if (configs['CFG_ABR']) {
+                    console.warn("A página vai atualizar em 60 segundos.");
+                    setTimeout(function () {
+                        location.reload();
+                    }, 60000);
+                }
+            };
+        </script>
+    </head>
+
+    <body>
+        <!-- Tela de inicio -->
+        <div class="tela-01" id="tela-01">
+            <h1>Selecione a board</h1>
+            <select id="inputState" class="form-control">
+            </select>
+            <button type="button" onclick="gerarRelatorio();" class="btn btn-primary">Gerar Relatório</button>
+        </div>
+
+        <div class="tela-02" id="tela-02">
+            <h1 id="titulo"></h1>
+            <div class="content">
+                <table class="table table-hover" id="table-chamados">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Chamado</th>
+                            <th scope="col">Descrição</th>
+                            <th scope="col">D.F.1</th>
+                            <th scope="col">H.F.1</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tb-cont">
+                    </tbody>
+                </table>
+            </div>
+            <footer class="rodape">
+                <p>© 2018 felipelopes.eti.br - All Rights Reserved</p>
+                <p>v1.0.0</p>
+            </footer>
+        </div>
+    </body>
+</html>
