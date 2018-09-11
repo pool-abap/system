@@ -576,7 +576,8 @@
 											'IMG': menbros[z]['IMG'],
 											'MEMB': menbros[z]['USER'], 
 											'DATA': cards[i]['due'],
-											'BIP': newfields[y]['BIP']
+											'BIP': newfields[y]['BIP'],
+											'LINK': cards[i]['shortUrl']
 										};
 										arryscards.push(ar);
 										
@@ -619,18 +620,27 @@
 				for (var i = 0; i < arryscards.length; i++) {
 					cnt = i + 1;
 					
+					var name = arryscards[i]['CHAM'].split(" ");
+					var chma = name[1];
+					var proj = name[0].split("[");
+					proj = proj[1].split("]");
+					proj = proj[0];
+					
 					var datascr = arryscards[i]['DATA'];
-					var splitdt = datascr.split("-");
+					var splitdt = datascr.split("T");
+					splitdt = splitdt[0].split("-");
 							
-					var dtxt = splitdt[1] + "/" + splitdt[0];
+					var dtxt = splitdt[2] + "/" + splitdt[1] + "/" + splitdt[0];
 					
 					tb.innerHTML += "<tr>" +
 						"<th scope='row' width='1%'>" + cnt + "</th>" +
-						"<td >" + arryscards[i]['CHAM'] + "</td>" +
-						"<td ><img height='30' width='30' src='" + arryscards[i]['IMG'] + "/170.png'></td>" +
+						"<td >" + proj + "</td>" +
+						"<td >" + chma + "</td>" +
+						"<td ><img style='border-radius: 30px;' height='30' width='30' src='" + arryscards[i]['IMG'] + "/170.png'></td>" +
 						"<td >" + arryscards[i]['MEMB'] + "</td>" +
 						"<td >" + dtxt + "</td>" +
 						"<td >" + arryscards[i]['BIP'] + " hrs</td>" +
+						"<td ><a target='_blank' href='" + arryscards[i]['LINK'] + "'>Click Aqui</a></td>" +
 						"</tr>";
 				}
 				
@@ -666,10 +676,12 @@
                     <thead>
                         <tr>
                             <th scope="col">#</th>
+							<th scope="col">Projeto</th>
                             <th scope="col">Chamado</th>
                             <th scope="col" colspan="2">Responsável</th>
                             <th scope="col">Data</th>
                             <th scope="col">Horas</th>
+							<th scope="col">Link</th>
                         </tr>
                     </thead>
                     <tbody id="tb-cont">
