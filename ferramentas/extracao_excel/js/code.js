@@ -268,11 +268,13 @@ function orgFields() {
 					break;
 					
 				case "date":
-				value = "DATA";
+				var dtemp = arrys[n][z]['value']['date'];
+				dtemp = dtemp.split("T");
+				value = dtemp[0];
 					break;
 				
 				case "text":
-				value = "TEXTO";
+				value = arrys[n][z]['value']['text'];
 					break;
 					
 				case "checkbox":
@@ -295,11 +297,7 @@ function orgFields() {
 	
 	
 	newsc = said;
-	
-	console.group("News Custons 2");
-    console.log(newsc);
-	console.groupEnd();
-	
+		
 	excel();
 }
 
