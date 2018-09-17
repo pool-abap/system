@@ -242,14 +242,64 @@ function customFidels(){
 
 function orgFields() {
 	var arrys = newsc;
+	newsc = [];
+	
 	var said = [];
 	
-	for (n = 0; n < newsc.length; n++) {
-		
+	var type = "";
+	
+	for (n = 0; n < arrys.length; n++) {
+		for (z = 0; z < arrys[n].length; z++) {
+			
+			var id = arrys[n][z]['idCustomField'];
+			var card = arrys[n][z]['idModel'];
+			var value = "";
+			
+			for (c = 0; c < custfields.length; c++) {
+				if(arrys[n][z]['idCustomField'] == custfields[c]['id']){
+					type = custfields[c]['type'];
+				}
+			}
+			
+			switch(type){
+			
+				case "number":
+				value = "NUMERO";
+					break;
+					
+				case "date":
+				value = "DATA";
+					break;
+				
+				case "text":
+				value = "TEXTO";
+					break;
+					
+				case "checkbox":
+				value = "CHECKBOX";
+					break;
+				
+				case "list":
+				value = "LIST";
+					break;
+			}
+
+			var arr = {
+				'ID': id,
+				'CARD': card,
+				'VALUE': value
+			};
+			said.push(arr);
+		}
 	}
 	
 	
 	newsc = said;
+	
+	console.group("News Custons 2");
+    console.log(newsc);
+	console.groupEnd();
+	
 	excel();
 }
 
@@ -343,8 +393,9 @@ function excel(){
 		for (c = 0; c < custfields.length; c++) {
 			
 			for (y = 0; y < newsc.length; y++) {
-				if(custfields[c]['id'] == newsc[y]['id']){
-					cust = "ACHOU!";
+				if(custfields[c]['id'] == newsc[y]['ID'] &&
+				cards[i]['id'] == newsc[y]['CARD']){
+					cust = newsc[y]['VALUE'];
 				}
 			}
 			
