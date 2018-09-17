@@ -12,6 +12,7 @@ var cards = []; //Array que vai receber os cards
 var labels = []; //Array que vai receber os labels
 var menbros = []; //Array qye receberar os membros
 var custfields = []; //Parametrizações dos custons
+var newsc = []; //Campos custom de todos os cards
 
 
 /* Inicio Logica */
@@ -43,7 +44,7 @@ var ajax1 = $.ajax({
 			montarSelect();
         })
         .fail(function (jqXHR, textStatus, data) {
-            dump("", "A requisição AJAX para buscar os Boards falhou!.");
+            throw "A requisição AJAX para buscar os Boards falhou!.";
         });
 		
 //Se tiver board, montar na tela
@@ -92,7 +93,7 @@ function ajax2(id){
 				}, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
-                dump("carregarInfosAPI(); - 259", "A requisição AJAX para buscar todos os Cards falhou!.");
+                throw "A requisição AJAX para buscar todos os Cards falhou!.";
             });
 }
 
@@ -118,7 +119,7 @@ function ajax3(id){
 				}, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
-                dump("carregarInfosAPI(); - 298", "A requisição AJAX para buscar todos membros falhou!.");
+                throw "A requisição AJAX para buscar todos membros falhou!.";
             });
 }
 
@@ -144,7 +145,7 @@ function ajax4(id){
 				}, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
-                dump("carregarInfosAPI(); - 367", "A requisição AJAX para buscar todas as Listas falhou!.");
+                throw "A requisição AJAX para buscar todas as Listas falhou!.";
             });
 }
 
@@ -171,7 +172,7 @@ function ajax5(id){
 				}, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
-                dump("carregarInfosAPI(); - 334", "A requisição AJAX para buscar todas as labels falhou!.");
+                throw "A requisição AJAX para buscar todas as labels falhou!.";
             });
 }
 
@@ -191,8 +192,174 @@ function ajax6(id){
 				console.group("Custons");
                 console.log(custfields);
                 console.groupEnd("Custons");
+				
+				setTimeout(function(){ 
+					customFidels();
+				}, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
-                dump("carregarInfosAPI(); - 389", "A requisição AJAX para buscar todas os Custom fields falhou!.");
+                throw "A requisição AJAX para buscar todas os Custom fields falhou!.";
             });
+}
+
+function customFidels(){
+	
+	var ajaxdic = "";
+    var ajaxnewcamp = "";
+    var total = cards.length - 1;
+	
+    for (var i = 0; i < cards.length; i++) {
+		
+        //Buscando todos os campos adicionais individual
+        url = "https://api.trello.com/1/cards/" + cards[i][﻿'id'] + "/customFieldItems?key=" + key + "&token=" + token;
+        ajaxnewcamp = $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'json',
+            beforeSend: function () {
+                //console.log("Buscando New Field - " + cards[i][﻿'id']);
+            }
+        })
+                .done(function (data) {
+					newsc.push(data);
+                })
+                .fail(function (jqXHR, textStatus, data) {
+                    throw "A requisição AJAX para buscar todos os campos adicionais falhou!.";
+                });
+        if (i == total) {
+            setTimeout(function () {
+				
+				console.group("News Custons");
+                console.log(newsc);
+				console.groupEnd();
+				
+				orgFields();
+				
+            }, 1500);
+        }
+    }
+}
+
+function orgFields() {
+	var arrys = newsc;
+	var said = [];
+	
+	for (n = 0; n < newsc.length; n++) {
+		
+	}
+	
+	
+	newsc = said;
+	excel();
+}
+
+function excel(){
+	
+	var chmd = "";
+	var titl = "";
+	var desc = "";
+	var list = "";
+	var dten = "";
+	var done = "";
+	var etiq = "";
+	var cust = "";
+	
+	for (i = 0; i < cards.length; i++) {
+		if(i == 0){
+			document.getElementById("tela02").innerHTML += "Chamado;Titulo;Descrição;Lista;Data de Entrega;Concluido;Etiqueta";
+			
+			for (c = 0; c < custfields.length; c++) {
+				document.getElementById("tela02").innerHTML += ";" + custfields[c]['name'];
+			}
+			
+			document.getElementById("tela02").innerHTML += "<br>";
+		}
+		
+		var txt = cards[i]['name'];
+		txt = txt.replace("–", "-");
+		txt = txt.split("-");
+		
+		//Montando CHAMADO
+		if(txt[0] != undefined){
+			chmd = txt[0];
+		} else {
+			chmd = "";
+		}
+		
+		//Montando TITULO
+		if(txt[1] != undefined){
+			titl = txt[1];
+		} else {
+			titl = "";
+		}
+		
+		//Montando Descrição
+		if(cards[i]['desc'] != undefined || cards[i]['desc'] != null){
+			desc = cards[i]['desc'];
+		} else {
+			desc = "";
+		}
+		
+		//Montando Lista
+		for (l = 0; l < listas.length; l++) {
+			if(cards[i]['idList'] == listas[l]['id']){
+				list = listas[l]['name'];
+			}
+		}
+
+		//Montando Data de entrega
+		if(cards[i]['due'] != undefined || cards[i]['due'] != null){
+			var dats = cards[i]['due'];
+			dats = dats.split("T");
+			dten = dats[0];
+		} else {
+			dten = "";
+		}
+		
+		//Montando Concluido
+		if(cards[i]['dueComplete'] != false){
+			done = "X";
+		} else {
+			done = "";
+		}
+		
+		//Montando Etiquetas
+		for (e = 0; e < labels.length; e++) {
+			if(cards[i]['idLabels'] == labels[e]['id']){
+				
+				if(etiq == ""){
+					etiq = labels[e]['name'];
+				} else {
+					etiq += ",";
+					etiq += labels[e]['name'];
+				}
+				
+			}
+		}
+		
+		document.getElementById("tela02").innerHTML += chmd + ";" + titl + ";" + desc + ";" + list + ";" + dten + ";" + done + ";" + etiq + "<br>";
+		
+				
+		for (c = 0; c < custfields.length; c++) {
+			
+			for (y = 0; y < newsc.length; y++) {
+				if(custfields[c]['id'] == newsc[y]['id']){
+					cust = "ACHOU!";
+				}
+			}
+			
+			document.getElementById("tela02").innerHTML += ";" + cust;
+		}
+		
+		document.getElementById("tela02").innerHTML += "<br>";
+		
+		chmd = "";
+		titl = "";
+		desc = "";
+		list = "";
+		dten = "";
+		done = "";
+		etiq = "";
+		cust = "";
+	}
 }
