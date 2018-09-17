@@ -289,7 +289,15 @@ function orgFields() {
 					break;
 				
 				case "list":
-				value = "LIST";
+				for (c = 0; c < custfields.length; c++) {
+					if(arrys[n][z]['idCustomField'] == custfields[c]['id']){
+						for (d = 0; d < custfields[c]['options'].length; d++) {
+							if(arrys[n][z]['idValue'] == custfields[c]['options'][d]['id']){
+								value = custfields[c]['options'][d]['value']['text'];
+							}
+						}
+					}
+				}
 					break;
 			}
 
