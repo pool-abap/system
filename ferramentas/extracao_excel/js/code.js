@@ -337,7 +337,7 @@ function excel(){
 			}
 		}
 		
-		document.getElementById("tela02").innerHTML += chmd + ";" + titl + ";" + desc + ";" + list + ";" + dten + ";" + done + ";" + etiq + "<br>";
+		document.getElementById("tela02").innerHTML += chmd + ";" + titl + ";" + desc + ";" + list + ";" + dten + ";" + done + ";" + etiq ;
 		
 				
 		for (c = 0; c < custfields.length; c++) {
