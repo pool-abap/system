@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+Arquivo desenvolvido por Felipe Lopes Melo (EID - felipe.lopes.melo) para atender a necessidade do Pool ABAP
+Desenvolvedor - Felipe Lopes
+Solicitante - Lisiane Neri
+Gerente - Juliana Alencar
+-->
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Language" content="pt-br">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="copyright" content="Accenture Brasil">
+        <meta name="author" content="felipe.lopes.melo@accenture.com">
+        <meta name="robots" content="noindex, nofollow">
+
+        <title>Extração Excel AD</title>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="https://rentadrone.cl/wp-content/uploads/2016/12/pie-chart-1.png" />
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		
+		<style>
+			.telas {
+				float: left;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0px;
+				left: 0px;
+				margin: 0px;
+				padding: 0px;
+				border: 0px;
+			}
+		</style>
+		
+		<script type="text/javascript">
+		//Rotinas para quando a tela carregar
+		window.onload = function () {
+			document.body.style.opacity = "1.0";
+		};
+		</script>
+		
+		<script type="text/javascript" src="js/code.js"></script>
+		
+    </head>
+    <body id="corpo">
+		<div id="tela01" class="telas">
+			<div style="width: 400px; height: 100px;">
+				<h2>Selecione a board</h2>
+				<select id="inputState" class="form-control">
+				</select>
+				<button type="button" onclick="gerarRelatorio();" class="btn btn-primary">Gerar Relatório</button>
+			</div>
+		</div>
+		
+		<div id="tela02" class="telas">
+		</div>
+    </body>
+</html>
