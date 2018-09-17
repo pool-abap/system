@@ -248,12 +248,15 @@ function orgFields() {
 	
 	var type = "";
 	
+	var id = "";
+	var card = "";
+	var value = "";
+	
 	for (n = 0; n < arrys.length; n++) {
 		for (z = 0; z < arrys[n].length; z++) {
 			
-			var id = arrys[n][z]['idCustomField'];
-			var card = arrys[n][z]['idModel'];
-			var value = "";
+			id = arrys[n][z]['idCustomField'];
+			card = arrys[n][z]['idModel'];
 			
 			for (c = 0; c < custfields.length; c++) {
 				if(arrys[n][z]['idCustomField'] == custfields[c]['id']){
@@ -264,7 +267,7 @@ function orgFields() {
 			switch(type){
 			
 				case "number":
-				value = "NUMERO";
+				value = arrys[n][z]['value']['number'];
 					break;
 					
 				case "date":
@@ -278,7 +281,11 @@ function orgFields() {
 					break;
 					
 				case "checkbox":
-				value = "CHECKBOX";
+				if(arrys[n][z]['value']['checked'] == true){
+					value = "X";
+				} else {
+					value = "";
+				}
 					break;
 				
 				case "list":
@@ -292,12 +299,16 @@ function orgFields() {
 				'VALUE': value
 			};
 			said.push(arr);
+			
+			id = "";
+			card = "";
+			value = "";
 		}
 	}
 	
 	
 	newsc = said;
-		
+	console.warn(newsc);
 	excel();
 }
 
@@ -398,6 +409,7 @@ function excel(){
 			}
 			
 			document.getElementById("tela02").innerHTML += ";" + cust;
+			cust = "";
 		}
 		
 		document.getElementById("tela02").innerHTML += "<br>";
