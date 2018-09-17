@@ -316,7 +316,7 @@ function orgFields() {
 	
 	
 	newsc = said;
-	console.warn(newsc);
+	
 	excel();
 }
 
