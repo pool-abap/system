@@ -125,6 +125,29 @@
                 text-align: center;
                 color: #fff;
             }
+			
+			.loadd {
+				float: left;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0px;
+				left: 0px;
+				background-color: #284c77;
+				z-index: 99999;
+				margin: 0px;
+				padding: 0px;
+				border: 0px;
+			}
+			
+			.progress{
+				float: left;
+				position: absolute;
+				width: calc(100% - 40px);
+				top: 50%;
+				margin-left: 20px;
+				margin-right: 20px;
+			}
         </style>
 
         <script type="text/javascript">
@@ -151,6 +174,9 @@
             console.group("Datas");
             console.log("Mes - " + strg_mes);
             console.groupEnd("Datas");
+			
+			
+			var barprogress = 0; //Porcentagem progresso
 
 
             //ALTERE SOMENTE AQUI ----------------------------------------------------------------------------------------------------------
@@ -277,6 +303,8 @@
                 document.getElementById("titulo").innerHTML = text;
 
                 carregarInfosAPI(value);
+				startsload();
+				barprogress = 10;
             }
 
             //Puxar infos do site
@@ -285,6 +313,7 @@
             }
 			
 			function Buscacards(id){
+			barprogress = 11;
 			//Buscando todos os CARDS do BOARD
                 url = "https://api.trello.com/1/boards/" + id + "/cards/?key=" + key + "&token=" + token; //List CARDS
                 var ajax2 = $.ajax({
@@ -308,6 +337,7 @@
 			}
 			
 			function membros(id){
+			barprogress = 12;
 			//Buscando todos os MEMBROS do BOARD
                 url = "https://api.trello.com/1/boards/" + id + "/memberships/?key=" + key + "&token=" + token + "&orgMemberType=true&member=true&member_fields=fullName&member_fields=avatarUrl";
                 var ajax3 = $.ajax({
@@ -344,6 +374,7 @@
 			}
 			
 			function Busclistas(id){
+			barprogress = 13;
 				//Buscando todos os LISTAS do BOARD
                 url = "https://api.trello.com/1/boards/" + id + "/lists?cards=all&card_fields=all&filter=open&fields=all&key=" + key + "&token=" + token;
                 var ajax4 = $.ajax({
@@ -374,6 +405,7 @@
 			}
 			
 			function label(id){
+			barprogress = 14;
 				//Buscando todos os LABEL do BOARD
                 url = "https://api.trello.com/1/boards/" + id + "/labels?fields=all&key=" + key + "&token=" + token; //List Labels
                 var ajax5 = $.ajax({
@@ -406,6 +438,7 @@
 			}
 			
 			function customField(id){
+				barprogress = 15;
 				//Buscando parametrizações Custom fields
 				url = "https://api.trello.com/1/boards/" + id + "/customFields?key=" + key + "&token=" + token;
 				var ajax6 = $.ajax({
@@ -427,38 +460,87 @@
 						});
 			}
 			
+			function CustomFields(id){
+				//Buscando todos os campos adicionais individual
+				url = "https://api.trello.com/1/cards/" + id + "/customFieldItems?key=" + key + "&token=" + token;
+				ajaxnewcamp = $.ajax({
+					url: url,
+					type: 'GET',
+					dataType: 'json',
+					beforeSend: function () {
+					console.log("Buscando New Field - " + id);
+					}
+				})
+					.done(function (data) {
+						for (var y = 0; y < data.length; y++) {
+							tempfield.push(data[y]);
+							}
+						})
+					.fail(function (jqXHR, textStatus, data) {
+							console.warn(textStatus);
+								throw "processarDados(); - 465", "A requisição AJAX para buscar todos os campos adicionais falhou!.";
+						});
+			}
+			
 			function processarDados() {
 				
 				var ajaxdic = "";
 				var ajaxnewcamp = "";
 				var total = cards.length - 1;
-				for (var i = 0; i < cards.length; i++) {
+				
+				var temp = 0;
+				var id;
+				
+				var cnt = 0;
+				
+				barprogress = 20;
+				
+				var divcards = cards.length / 80;
+				divcards = Math.round(divcards);
+				
+				var vfcnt = 0;
+				
+				var mytime = setInterval(function () {
+					cnt++;
 					
-					//Buscando todos os campos adicionais individual
-					url = "https://api.trello.com/1/cards/" + cards[i][﻿'id'] + "/customFieldItems?key=" + key + "&token=" + token;
-					ajaxnewcamp = $.ajax({
-						url: url,
-						type: 'GET',
-						dataType: 'json',
-						beforeSend: function () {
-							//console.log("Buscando New Field - " + cards[i][﻿'id']);
-						}
-					})
-							.done(function (data) {
-								for (var y = 0; y < data.length; y++) {
-									tempfield.push(data[y]);
-								}
-							})
-							.fail(function (jqXHR, textStatus, data) {
-								throw "processarDados(); - 465", "A requisição AJAX para buscar todos os campos adicionais falhou!.";
-							});
+					if(vfcnt == divcards){
+						barprogress = barprogress + 1;
+					} else {
+						vfcnt = vfcnt + 1;
+					}
+					
+					
+					if(cnt < cards.length){
+						
+						CustomFields(cards[cnt][﻿'id'])
+						
+					} else {
+						clearInterval(mytime);
+					}
+					
+					if (cnt == total) {
+						setTimeout(function () {
+							//Funções de exibição
+							orgNewFields();
+							stopload();
+						}, 1300);
+					}
+					
+				}, 1500);
+				
+				/*for (var i = 0; i < cards.length; i++) {
+
+					temp = temp + 1000;
+					console.log(temp);
+					setTimeout(CustomFields(cards[i][﻿'id']), temp);
+					
 					if (i == total) {
 						setTimeout(function () {
 							//Funções de exibição
 							orgNewFields();
 						}, 1300);
 					}
-				}
+				}*/
 			}
 						
             function orgNewFields(){
@@ -645,6 +727,21 @@
 				}
 				
             }
+			
+			
+			var loadsss;
+			function startsload(){
+				
+				loadsss = setInterval(function(){
+					console.log("Progresso - " + barprogress);
+					document.getElementById("loading").innerHTML = "<div class='progress'><div class='progress-bar' role='progressbar' style='width: " + barprogress + "%;' aria-valuenow='" + barprogress + "' aria-valuemin='0' aria-valuemax='100'>" + barprogress + "%</div></div>";
+				}, 1000);
+			}
+			
+			function stopload(){
+				clearInterval(loadsss);
+				document.getElementById("loading").style.display = 'none';
+			}
 
             //Rotinas para quando a tela carregar
             window.onload = function () {
@@ -670,6 +767,8 @@
         </div>
 
         <div class="tela-02" id="tela-02">
+			<div id="loading" class="loadd">
+			</div>
             <h1 id="titulo"></h1>
             <div class="content">
                 <table class="table table-hover" id="table-chamados">
