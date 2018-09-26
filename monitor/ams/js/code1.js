@@ -448,6 +448,7 @@
                 }
                 ajutarTh(rlrosca);
                 montarDivLabel(labels);
+				montarDoing();
             }
 
             function addLog(id, td, dg, pd, dn) {
@@ -611,6 +612,49 @@
 				});*/
                 document.getElementById("tabale-rows").innerHTML = rowww;
             }
+			
+			//Montar Chamados em doing
+			function montarDoing() {
+				
+				var lineee = "";
+				
+				var txt = "";
+				var menb = "";
+				var x = 0;
+				
+				for (var i = 0; i < cards.length; i++) {
+					for (var y = 0; y < listas.length; y++) {
+						if(listas[y]['NAME'] == "Doing"){
+							if(cards[i]['idList'] == listas[y]['ID']){
+								
+								txt = cards[i]['name'];
+								txt = txt.split(" ");
+								
+								for (var z = 0; z < cards[i]['idMembers'].length; z++) {
+									x = z;
+									
+									if(x != 0){
+										break;
+									} else {
+										for (var a = 0; a < menbros.length; a++) {
+											if(cards[i]['idMembers'][z] == menbros[a]['ID']){
+												menb = "<img class='img-pf' src='" + menbros[a]['IMG'] + "/170.png'>";
+											}
+										}
+									}
+								}
+								
+								x = 0;
+								
+								lineee += "<tr><td>" + txt[0] + "</td><td>" + txt[1] + "</td><td>" + menb + "</td></tr>";
+							}
+						}
+					}
+				}
+				
+				document.getElementById("row-five").innerHTML = lineee;
+				
+			}
 
             //Verificar se existe
             function validar(array2) {
