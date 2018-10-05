@@ -21,8 +21,9 @@ Gerente - Juliana Alencar
 
         <!-- Favicon -->
         <link rel="shortcut icon" href="https://rentadrone.cl/wp-content/uploads/2016/12/pie-chart-1.png" />
-
+	
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <style type="text/css">
             
@@ -78,10 +79,14 @@ Gerente - Juliana Alencar
 
             <div class="div-sp" style="width: 35%;">
                 <div id="donutchart" class="block" style="float: left; height: 400px; margin-right: 20px"></div>
+				
+				<!-- <div id="rltsbars" class="block" style="float: left; height: 400px;">
+					
+				</div> -->
             </div>
 
             <div id="relat-mid" class="block" style="float: left; height: 400px;">
-                <div id="piechart" style="width: 100%; height: 400px;"></div>
+                <canvas id="myChart-bar"></canvas>
             </div>
 
             <div class="div-sp" style="width: 400px;">
@@ -112,7 +117,7 @@ Gerente - Juliana Alencar
 
 
             <div class="div-sp" style="width: 100%;">
-                <div class="block" style="float: left; width: 55%; margin-top: 20px; padding: 15px; overflow-x: auto;">
+                <div class="block" style="float: left; width: 45%; margin-top: 20px; padding: 15px; overflow-x: auto;">
                     <table id="table-rows" class="table table-hover">
                         <thead>
                             <tr id="table-tts">
@@ -129,6 +134,7 @@ Gerente - Juliana Alencar
                             <tr id="table-five">
 								<th>Projeto</th>
 								<th>Chamado</th>
+								<th>Dt Aber.</th>
 								<th>Resp.</th>
                             </tr>
                         </thead>
@@ -153,5 +159,7 @@ Gerente - Juliana Alencar
                 <p>v1.0.3</p>
             </footer>
         </div>
+		
+		<script type="text/javascript" src="js/code2.js"></script>
     </body>
 </html>

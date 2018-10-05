@@ -183,6 +183,9 @@ function saldoMes() {
 			
 			ttlms = protejos[pj]['HRSCTR'] * dif;
 			
+			//Debugue
+			//console.error("Total Saldo - " + ttlms);
+			
 			var vcnt = 0;
 			var hrssome = 0;
 			for (var i = 0; i < cards.length; i++) {
@@ -680,7 +683,7 @@ function rltLine() {
         type: 'line',
         // The data for our dataset
         data: {
-            labels: ["Out", "Nov", "Dez", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set"],
+            labels: ["Nov", "Dez", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out"],
             datasets: [{
                     label: "Consumo Mensal (H%)",
                     backgroundColor: 'rgb(158, 158, 158)',
@@ -688,7 +691,7 @@ function rltLine() {
                     fill: false,
                     responsive: true,
                     maintainAspectRatio: true,
-                    data: [rltline['OUT'], rltline['NOV'], rltline['DEZ'], rltline['JAN'], rltline['FEV'], rltline['MAR'], rltline['ABR'], rltline['MAI'], rltline['JUN'], rltline['JUL'], rltline['AGO'], rltline['SET']],
+                    data: [rltline['NOV'], rltline['DEZ'], rltline['JAN'], rltline['FEV'], rltline['MAR'], rltline['ABR'], rltline['MAI'], rltline['JUN'], rltline['JUL'], rltline['AGO'], rltline['SET'], rltline['OUT']],
                 }]
         },
         // Configuration options go here

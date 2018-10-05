@@ -152,6 +152,7 @@
                 width: calc(65% - 420px);
                 margin-right: 20px;
                 background-color: #fff;
+				padding: 10px 18px 15px 15px;
                 box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
             }
             #cmd-by-day {
@@ -303,6 +304,10 @@
                 margin-top: -35px;
                 color: #1a395b;
             }
+			#rltsbars {
+				width: calc(100% - 20px);
+				margin-right: 20px;
+			}
 			#table-rows {
 				float: left;
 				width: 100%;
@@ -319,7 +324,7 @@
 			}
 			#top-fiv {
 				float: left;
-				width: calc(25% - 20px);
+				width: calc(35% - 20px);
 				margin-top: 20px;
 				margin-left: 20px;
 				padding: 20px;

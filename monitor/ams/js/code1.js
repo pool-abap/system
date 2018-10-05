@@ -160,8 +160,10 @@
                     }
                 })
                         .done(function (data) {
-                            console.log(data);
 							cards = data;
+							console.group("Cards");
+							console.log(cards);
+							console.groupEnd();
 							buscarMenbros(id);
                         })
                         .fail(function (jqXHR, textStatus, data) {
@@ -504,9 +506,13 @@
                 document.getElementById("table-tts").innerHTML = "<th scope='col'>#</th>";
                 document.getElementById("table-tts").innerHTML += "<th scope='col'>Analista</th>";
                 for (var i = 0; i < arr.length; i++) {
-                    document.getElementById("table-tts").innerHTML += "<th scope='col'>" + arr[i]['NAME'] + "</th>";
+					var nametab = arr[i]['NAME'];
+					nametab = nametab.split(" ");
+                    document.getElementById("table-tts").innerHTML += "<th scope='col'>" + nametab[0] + "</th>";
                 }
                 RelatorioDounts();
+                mediaChamdos();
+				rltBar();
 				exibirTabela(rltable);
             }
 
@@ -622,6 +628,13 @@
 				var menb = "";
 				var x = 0;
 				
+				var dtabr = "";
+				var dtexe = "";
+				
+				var dtd = "";
+				var dtm = "";
+				var dta = "";
+				
 				for (var i = 0; i < cards.length; i++) {
 					for (var y = 0; y < listas.length; y++) {
 						if(listas[y]['NAME'] == "Doing"){
@@ -646,7 +659,18 @@
 								
 								x = 0;
 								
-								lineee += "<tr><td>" + txt[0] + "</td><td>" + txt[1] + "</td><td>" + menb + "</td></tr>";
+								if(cards[i]['due'] != null){
+									dtabr = cards[i]['due'];
+									dtabr = dtabr.split("T");
+									dtabr = dtabr[0].split("-");
+									dtd = dtabr[2];
+									dtm = dtabr[1];
+									dta = dtabr[0];
+									dtexe = dtd + "/" + dtm + "/" + dta;
+								}
+								
+								lineee += "<tr><td>" + txt[0] + "</td><td>" + txt[1] + "</td><td>" + dtexe + "</td><td>" + menb + "</td></tr>";
+								dtexe = "";
 							}
 						}
 					}
@@ -673,7 +697,7 @@
 
                 return true;
             }
-
+			
             function RelatorioDounts() {
                 //Exibir relatorio
                 google.charts.load("current", {packages: ["corechart"]});
