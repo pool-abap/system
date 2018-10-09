@@ -6,7 +6,8 @@
                 float: left;
                 width: 100%;
                 padding: 20px;
-                background-color: #284c77;
+                /* background-color: #284c77; */
+				background-color: #93295e;
                 opacity: 0.0;
                 -webkit-transition: all 0.5s linear;
                 -moz-transition: all 0.5s linear;
