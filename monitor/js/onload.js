@@ -9,4 +9,6 @@
                 if (configs['CFG_ABR']) {
                     
                 }
+				
+				setTimeout(function(){ location.reload(); }, 450000);
             };
