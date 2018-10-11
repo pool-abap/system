@@ -1,79 +1,165 @@
 <!DOCTYPE html>
+<!--
+Arquivo desenvolvido por Felipe Lopes Melo (EID - felipe.lopes.melo) para atender a necessidade do Pool ABAP
+Desenvolvedor - Felipe Lopes
+Solicitante - Lisiane Neri
+Gerente - Juliana Alencar
+-->
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Language" content="pt-br">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="copyright" content="Accenture Brasil">
-    <meta name="author" content="felipe.lopes.melo@accenture.com">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Monitor Dashboard</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Language" content="pt-br">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="copyright" content="Accenture Brasil">
+        <meta name="author" content="felipe.lopes.melo@accenture.com">
+        <meta name="robots" content="noindex, nofollow">
+
+        <title>Dashboard Trello AMS</title>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="https://rentadrone.cl/wp-content/uploads/2016/12/pie-chart-1.png" />
 	
-	<link rel="shortcut icon" href="https://rentadrone.cl/wp-content/uploads/2016/12/pie-chart-1.png" />
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-	<style type="text/css">
-		* {
-            margin: 0px;
-            padding: 0px;
-            border: 0px;
-        }
-		body {
-			float: left;
-			width: 100%;
-			margin: 0px;
-            padding: 0px;
-            border: 0px;
-		}
-		.telafront {
-			float: left;
-			position: absolute;
-			top: 0px;
-			left: 0px;
-            width: 100%;
-			height: 100%;
-			margin: 0px;
-            padding: 0px;
-            border: 0px;
-		}
-	</style>
-	<script type="text/javascript">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <style type="text/css">
+            
+            
+        </style>
 		
-		window.onload = function () {
-			var sg = 0;
-			var cnt = 0;
-			document.getElementById("tela-iframe").src = "ams/index.html";
-			
-			setInterval(function () {
-				switch(cnt) {
-					case 0:
-						document.getElementById("tela-iframe").src = "ams/index.html";
-						cnt = 1;
-						break;
-					case 1:
-						document.getElementById("tela-iframe").src = "ams/index.html";
-						cnt = 2;
-						break;
-					case 2:
-						document.getElementById("tela-iframe").src = "ams/index.html";
-						cnt = 0;
-						break;
-				}
-            }, 120000);
-			
-			setInterval(function () {
-				location.reload();
-            }, 3600000);
-		}
-	</script>
+		<link href="css/reset.css" type="text/css" rel="stylesheet" />
+        <link href="css/body.css" type="text/css" rel="stylesheet" />
+        <link href="css/desktop.css" type="text/css" rel="stylesheet" />
 
-  </head>
-  <body>
-  
-    <iframe class="telafront" id="tela-iframe"></iframe>
-	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  </body>
+        <script type="text/javascript" src="js/onload.js"></script>
+        <script type="text/javascript" src="js/code1.js"></script>
+		
+    </head>
+
+    <body>
+
+        <!-- Tela de inicio -->
+        <div class="tela-01" id="tela-01">
+            <h1>Selecione a board</h1>
+            <select id="inputState" class="form-control">
+            </select>
+            <button type="button" onclick="gerarRelatorio();" class="btn btn-primary">Gerar Relatório</button>
+        </div>
+
+        <div class="tela-02" id="tela-02">
+            <div class="div-sp" style="width: 100%;">
+
+                <div id="div-todo" class="div-cham">
+                    <h2>To Do</h2>
+                    <p id="txt-todo"></p>
+                    <img src="img/4nrZb5k.png" />
+                </div>
+
+                <div id="div-doing" class="div-cham">
+                    <h2>Doing</h2>
+                    <p id="txt-doing"></p>
+                    <img src="img/dBj7Y3e.png" />
+                </div>
+
+                <div id="div-pedent" class="div-cham">
+                    <h2>Pendent</h2>
+                    <p id="txt-pedent"></p>
+                    <img src="img/CbWnNkA.png" />
+                </div>
+
+                <div id="div-done" class="div-cham">
+                    <h2>Done</h2>
+                    <p id="txt-done"></p>
+                    <img src="img/2gyptXE.png" />
+                </div>
+            </div>
+
+            <div class="div-sp" style="width: 35%;">
+                <div id="donutchart" class="block" style="float: left; height: 400px; margin-right: 20px"></div>
+				
+				<!-- <div id="rltsbars" class="block" style="float: left; height: 400px;">
+					
+				</div> -->
+            </div>
+
+            <div id="relat-mid" class="block" style="float: left; height: 400px;">
+                <canvas id="myChart-bar"></canvas>
+            </div>
+
+            <div class="div-sp" style="width: 400px;">
+                <div id="time-info" class="block" style="float: left; height: 190px;">
+                    <h3 id="titulo"></h3>
+                    <h4 id="hr-div"></h4>
+                    <h5 id="sm-div"></h5>
+                    <h6 id="dt-div"></h6>
+                    <img src="img/STTDWMz.jpg">
+                </div>
+
+                <div id="cmd-by-day" class="block" style="float: left; height: 190px; margin-top: 20px">
+                    <p>Backlog</p>
+                    <img id="src-legal">
+                    <div class="div-sp" style="width: 100%;">
+                        <div class="div-sp" style="width: 20%;">
+                            <img id="img-md">
+                        </div>
+                        <div class="div-sp" style="width: 80%;">
+                            <h3 id="tt-md"></h3>
+                        </div>
+                    </div>
+                    <div class="div-sp" style="width: 100%;">
+                        <h4 id="stt-md"></h4>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="div-sp" style="width: 100%;">
+                <div class="block" style="float: left; width: 45%; margin-top: 20px; padding: 15px; overflow-x: auto;">
+                    <table id="table-rows" class="table table-hover">
+                        <thead>
+                            <tr id="table-tts">
+                            </tr>
+                        </thead>
+                        <tbody id="tabale-rows">
+                        </tbody>
+                    </table>
+                </div>
+				
+				<div class="block" id="top-fiv">
+					<table id="table-rows" class="table table-hover">
+                        <thead>
+                            <tr id="table-five">
+								<th>Projeto</th>
+								<th>Chamado</th>
+								<th>Dt Aber.</th>
+								<th>Resp.</th>
+                            </tr>
+                        </thead>
+                        <tbody id="row-five">
+                        </tbody>
+                    </table>
+				</div>
+				
+				<div class="div-sp" style="width: 20%;">
+                    <div class="block" id="bar-labels">
+                    </div>
+                </div>
+            </div>
+
+
+
+            <footer class="rodape">
+                <p>Powered by <a href="sip:felipe.lopes.melo@accenture.com"><b>felipe.lopes.melo@accenture.com</b></a></p>
+                <!-- <p>© 2004-2018 Accenture Brasil. All Rights Reserved.</p> -->
+                <p>© 2018 Accenture Brasil - All Rights Reserved</p>
+                <p>Page Last Modified : 11/08/2018</p>
+                <p>v1.0.3</p>
+            </footer>
+        </div>
+		
+		<script type="text/javascript" src="js/code2.js"></script>
+    </body>
 </html>
