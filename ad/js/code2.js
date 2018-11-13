@@ -92,26 +92,26 @@ var dezrlt = {
 function saldoMes() {
     var data = new Date();
     var mes = data.getMonth(); //0-11
-	var anocplt = data.getFullYear(); //4 dígitos
+    var anocplt = data.getFullYear(); //4 dígitos
     mes++; //Para ajustar pas 1-12
-	var anolok = anocplt;
-	var anoprx = anocplt;
-	var anoant = anocplt;
-	
-	
+    var anolok = anocplt;
+    var anoprx = anocplt;
+    var anoant = anocplt;
+
+
     var prxmes = 0;
-	var antmes = 0;
-	
-	if (mes <= 1) {
+    var antmes = 0;
+
+    if (mes <= 1) {
         antmes = 12;
-		anoant = anoant - 1;
+        anoant = anoant - 1;
     } else {
         antmes = mes - 1;
     }
 
     if (mes >= 12) {
         prxmes = 0;
-		anoprx = anoprx + 1;
+        anoprx = anoprx + 1;
     } else {
         prxmes = mes + 1;
     }
@@ -120,157 +120,168 @@ function saldoMes() {
         var datatemp = newfields[z]['DF1'];
         var datemp2 = datatemp.split("-");
         var mesproc = datemp2[1];
-		var anoproc = datemp2[0];
-				
-		if(newfields[z]['OC'] == false){
-			if (mesproc == mes && anolok == anoproc) {
-				saldohrmes = saldohrmes + newfields[z]['HF1'];
-				saldohrmes = saldohrmes + newfields[z]['HF2'];
-			}
-			
-			if(prxmes != mes){
-				if (mesproc == prxmes && anoprx == anoproc) {
-					saldohrprxmes = saldohrprxmes + newfields[z]['HF1'];
-					saldohrprxmes = saldohrprxmes + newfields[z]['HF2'];
-				}
-			}
-			
-			if(antmes != mes){
-				if (mesproc == antmes && anoant == anoproc) {
-					saldohrantmes = saldohrantmes + newfields[z]['HF1'];
-					saldohrantmes = saldohrantmes + newfields[z]['HF2'];
-				}
-			}
-		}
+        var anoproc = datemp2[0];
+
+        if (newfields[z]['OC'] == false) {
+            if (mesproc == mes && anolok == anoproc) {
+                saldohrmes = saldohrmes + newfields[z]['HF1'];
+                saldohrmes = saldohrmes + newfields[z]['HF2'];
+            }
+
+            if (prxmes != mes) {
+                if (mesproc == prxmes && anoprx == anoproc) {
+                    saldohrprxmes = saldohrprxmes + newfields[z]['HF1'];
+                    saldohrprxmes = saldohrprxmes + newfields[z]['HF2'];
+                }
+            }
+
+            if (antmes != mes) {
+                if (mesproc == antmes && anoant == anoproc) {
+                    saldohrantmes = saldohrantmes + newfields[z]['HF1'];
+                    saldohrantmes = saldohrantmes + newfields[z]['HF2'];
+                }
+            }
+        }
     }
 
     /*document.getElementById("saldo-atual").innerHTML = saldohrmes + "h";
-    document.getElementById("saldo-prxmes").innerHTML = saldohrprxmes + "h";
-	document.getElementById("saldo-antmes").innerHTML = antmes + "h";*/
-	
-	document.getElementById("saldo-atual").innerHTML = saldohrmes;
-    document.getElementById("saldo-prxmes").innerHTML = saldohrprxmes;
-	document.getElementById("saldo-antmes").innerHTML = saldohrantmes;
-	
-	
-	var ttlms;
-	for (var pj = 0; pj < protejos.length; pj++) {
-		
-		if(protejos[pj]['NOME'] == titulo){
-			
-			var calc1 = saldohrmes / protejos[pj]['HRSCTR'];
-			var calc2 = saldohrprxmes / protejos[pj]['HRSCTR'];
-			var calc3 = saldohrantmes / protejos[pj]['HRSCTR'];
-			
-			document.getElementById("saldo-atual-div").innerHTML = calc1.toFixed(1);
-			document.getElementById("saldo-prxmes-div").innerHTML = calc2.toFixed(1);
-			document.getElementById("saldo-antmes-div").innerHTML = calc3.toFixed(1);
-			
-			var dtnow = new Date();
-			var d = dtnow.getDate(); //1-31
-			var m = dtnow.getMonth(); //0-11
-			var a = dtnow.getFullYear(); //4 dígitos
-			m++; //1-12 ajustar
-			var dthoje = d + '/' + m + '/' + a;
-			var dthoje = dthoje + " 00:00";
-			//DD-MM-AAA HH:MM
-			
-			var data1 = moment(protejos[pj]['DATA'], "DD/MM/YYYY hh:mm");
-			var data2 = moment(dthoje, "DD/MM/YYYY hh:mm");
-			var dif = data1.diff(data2, 'months');
-			dif = Math.abs(dif);
-			dif++;
-			
-			ttlms = protejos[pj]['HRSCTR'] * dif;
-			
-			//Debugue
-			//console.error("Total Saldo - " + ttlms);
-			
-			var vcnt = 0;
-			var hrssome = 0;
-			for (var i = 0; i < cards.length; i++) {
-				for (var z = 0; z < newfields.length; z++) {
-					if (newfields[z]['CARDID'] == cards[i]['id'] &&
-					cards[i]['dueComplete'] == true) {
-						var tt = newfields[z]['HF1'] + newfields[z]['HF2'];
-						ttlms = ttlms - tt;
-						hrssome = hrssome + newfields[z]['HF1'] + newfields[z]['HF2'];
-						vcnt++;
-					}
-				}
-			}
-		}
-	}
+     document.getElementById("saldo-prxmes").innerHTML = saldohrprxmes + "h";
+     document.getElementById("saldo-antmes").innerHTML = antmes + "h";*/
 
-	document.getElementById("saldott").innerHTML = ttlms;
-	
-	if(ttlms < 0){
-		document.getElementById("div-saldo").style.backgroundColor = "#C82333";
-	}
-	if(ttlms == 0){
-		document.getElementById("div-saldo").style.backgroundColor = "#E0A800";
-	}
-	if(ttlms > 0){
-		document.getElementById("div-saldo").style.backgroundColor = "#218838";
-	}
+    document.getElementById("saldo-atual").innerHTML = saldohrmes;
+    document.getElementById("saldo-prxmes").innerHTML = saldohrprxmes;
+    document.getElementById("saldo-antmes").innerHTML = saldohrantmes;
+
+
+    var ttlms;
+    for (var pj = 0; pj < protejos.length; pj++) {
+
+        if (protejos[pj]['NOME'] == titulo) {
+
+            var calc1 = saldohrmes / protejos[pj]['HRSCTR'];
+            var calc2 = saldohrprxmes / protejos[pj]['HRSCTR'];
+            var calc3 = saldohrantmes / protejos[pj]['HRSCTR'];
+
+            document.getElementById("saldo-atual-div").innerHTML = calc1.toFixed(1);
+            document.getElementById("saldo-prxmes-div").innerHTML = calc2.toFixed(1);
+            document.getElementById("saldo-antmes-div").innerHTML = calc3.toFixed(1);
+
+            var dtnow = new Date();
+            var d = dtnow.getDate(); //1-31
+            var m = dtnow.getMonth(); //0-11
+            var a = dtnow.getFullYear(); //4 dígitos
+            m++; //1-12 ajustar
+            var dthoje = d + '/' + m + '/' + a;
+            var dthoje = dthoje + " 00:00";
+            //DD-MM-AAA HH:MM
+
+            var data1 = moment(protejos[pj]['DATA'], "DD/MM/YYYY hh:mm");
+            var data2 = moment(dthoje, "DD/MM/YYYY hh:mm");
+            var dif = data1.diff(data2, 'months');
+            dif = Math.abs(dif);
+            dif++;
+
+            ttlms = protejos[pj]['HRSCTR'] * dif;
+
+            //Debugue
+            //console.error("Total Saldo - " + ttlms);
+
+            var vcnt = 0;
+            var hrssome = 0;
+            for (var i = 0; i < cards.length; i++) {
+                for (var z = 0; z < newfields.length; z++) {
+                    if (newfields[z]['CARDID'] == cards[i]['id'] &&
+                            cards[i]['dueComplete'] == true) {
+                        var tt = newfields[z]['HF1'] + newfields[z]['HF2'];
+                        ttlms = ttlms - tt;
+                        hrssome = hrssome + newfields[z]['HF1'] + newfields[z]['HF2'];
+                        vcnt++;
+                    }
+                }
+            }
+        }
+    }
+
+    document.getElementById("saldott").innerHTML = ttlms;
+
+    if (ttlms < 0) {
+        document.getElementById("div-saldo").style.backgroundColor = "#C82333";
+    }
+    if (ttlms == 0) {
+        document.getElementById("div-saldo").style.backgroundColor = "#E0A800";
+    }
+    if (ttlms > 0) {
+        document.getElementById("div-saldo").style.backgroundColor = "#218838";
+    }
 }
 
 function calcArrRLT() {
 
     for (var i = 0; i < cards.length; i++) {
         //for (var y = 0; y < listas.length; y++) {
-            for (var z = 0; z < newfields.length; z++) {
+        for (var z = 0; z < newfields.length; z++) {
 
-                if (cards[i]['dueComplete'] == true &&
-                        cards[i]['id'] == newfields[z]['CARDID']) {
+            if (cards[i]['dueComplete'] == true &&
+                    cards[i]['id'] == newfields[z]['CARDID']) {
 
-                    var rltdata = newfields[z]['DF1'];
-                    var datasplit = rltdata.split("-");
-                    var mes = parseInt(datasplit[1]);
+                var rltdata = newfields[z]['DF1'];
+                var datasplit = rltdata.split("-");
+                var mes = parseInt(datasplit[1]);
+                var anoo = parseInt(datasplit[0]);
 
-                    switch (mes) {
-                        case 1:
-                            rltline['JAN'] = rltline['JAN'] + newfields[z]['HF1'];
-                            break;
-                        case 2:
-                            rltline['FEV'] = rltline['FEV'] + newfields[z]['HF1'];
-                            break;
-                        case 3:
-                            rltline['MAR'] = rltline['MAR'] + newfields[z]['HF1'];
-                            break;
-                        case 4:
-                            rltline['ABR'] = rltline['ABR'] + newfields[z]['HF1'];
-                            break;
-                        case 5:
-                            rltline['MAI'] = rltline['MAI'] + newfields[z]['HF1'];
-                            break;
-                        case 6:
-                            rltline['JUN'] = rltline['JUN'] + newfields[z]['HF1'];
-                            break;
-                        case 7:
-                            rltline['JUL'] = rltline['JUL'] + newfields[z]['HF1'];
-                            break;
-                        case 8:
-                            rltline['AGO'] = rltline['AGO'] + newfields[z]['HF1'];
-                            break;
-                        case 9:
-                            rltline['SET'] = rltline['SET'] + newfields[z]['HF1'];
-                            break;
-                        case 10:
-                            rltline['OUT'] = rltline['OUT'] + newfields[z]['HF1'];
-                            break;
-                        case 11:
-                            rltline['NOV'] = rltline['NOV'] + newfields[z]['HF1'];
-                            break;
-                        case 12:
-                            rltline['DEZ'] = rltline['DEZ'] + newfields[z]['HF1'];
-                            break;
-                    }
+                //Logica validar ano antes de somar o numero do mes
+
+                switch (mes) {
+                    case 1:
+                        rltline['JAN'] = rltline['JAN'] + newfields[z]['HF1'];
+                        break;
+                    case 2:
+                        rltline['FEV'] = rltline['FEV'] + newfields[z]['HF1'];
+                        break;
+                    case 3:
+                        rltline['MAR'] = rltline['MAR'] + newfields[z]['HF1'];
+                        break;
+                    case 4:
+                        rltline['ABR'] = rltline['ABR'] + newfields[z]['HF1'];
+                        break;
+                    case 5:
+                        rltline['MAI'] = rltline['MAI'] + newfields[z]['HF1'];
+                        break;
+                    case 6:
+                        rltline['JUN'] = rltline['JUN'] + newfields[z]['HF1'];
+                        break;
+                    case 7:
+                        rltline['JUL'] = rltline['JUL'] + newfields[z]['HF1'];
+                        break;
+                    case 8:
+                        rltline['AGO'] = rltline['AGO'] + newfields[z]['HF1'];
+                        break;
+                    case 9:
+                        rltline['SET'] = rltline['SET'] + newfields[z]['HF1'];
+                        break;
+                    case 10:
+                        rltline['OUT'] = rltline['OUT'] + newfields[z]['HF1'];
+                        break;
+                    case 11:
+                        rltline['NOV'] = rltline['NOV'] + newfields[z]['HF1'];
+                        break;
+                    case 12:
+                        rltline['DEZ'] = rltline['DEZ'] + newfields[z]['HF1'];
+                        break;
                 }
-
+                
             }
+
+        }
         //}
     }
+    
+    console.warn(rltline);
+    rltline['NOV'] = rltline['NOV'] - 298;
+    rltline['DEZ'] = rltline['DEZ'] - 0;
+    
+    //Criar logo para validar o ano da timeline
+    //OBS: Não é ano fiscal!!
 
     return;
 }
@@ -285,7 +296,7 @@ function calcArrRLTBar() {
 
                 if (cards[i]['idList'] == listas[y]['ID'] &&
                         cards[i]['id'] == newfields[z]['CARDID']) {
-					
+
                     var rltdata1 = newfields[z]['DF1'];
                     var rltdata2 = newfields[z]['DF2'];
                     var datasplit1 = rltdata1.split("-");
@@ -649,10 +660,10 @@ function calcArrRLTBar() {
                 break;
 
             default:
-				console.group("DUMP - calcArrRLTBar();");
-				console.error(dat);
-				console.error(rltlist[i]);
-				console.groupEnd();
+                console.group("DUMP - calcArrRLTBar();");
+                console.error(dat);
+                console.error(rltlist[i]);
+                console.groupEnd();
                 dump("calcArrRLTBar(); - 613", "Data DF1 não foi cadastrado no chamado " + rltlist[i]['NOM']);
                 break;
         }
@@ -764,185 +775,185 @@ function rltBar() {
 
 
 function rltLinEst() {
-	
-	var estmes = {
-		'OUT': 0,
-		'NOV': 0,
-		'DEZ': 0,
-		'JAN': 0,
-		'FEV': 0,
-		'MAR': 0,
-		'ABR': 0,
-		'MAI': 0,
-		'JUN': 0,
-		'JUL': 0,
-		'AGO': 0,
-		'SET': 0,
-	};
-	
-	var tlsmes = {
-		'OUT': 0,
-		'NOV': 0,
-		'DEZ': 0,
-		'JAN': 0,
-		'FEV': 0,
-		'MAR': 0,
-		'ABR': 0,
-		'MAI': 0,
-		'JUN': 0,
-		'JUL': 0,
-		'AGO': 0,
-		'SET': 0,
-	};
-	
-	for (var i = 0; i < cards.length; i++) {
+
+    var estmes = {
+        'OUT': 0,
+        'NOV': 0,
+        'DEZ': 0,
+        'JAN': 0,
+        'FEV': 0,
+        'MAR': 0,
+        'ABR': 0,
+        'MAI': 0,
+        'JUN': 0,
+        'JUL': 0,
+        'AGO': 0,
+        'SET': 0,
+    };
+
+    var tlsmes = {
+        'OUT': 0,
+        'NOV': 0,
+        'DEZ': 0,
+        'JAN': 0,
+        'FEV': 0,
+        'MAR': 0,
+        'ABR': 0,
+        'MAI': 0,
+        'JUN': 0,
+        'JUL': 0,
+        'AGO': 0,
+        'SET': 0,
+    };
+
+    for (var i = 0; i < cards.length; i++) {
         for (var x = 0; x < listas.length; x++) {
-			for (var n = 0; n < newfields.length; n++) {
-				
-				if (newfields[n]['CARDID'] == cards[i]['id'] &&
-					cards[i]['idList'] == listas[x]['ID']){
-					
-					if (listas[x]['NAME'] == "Estimativas Aprovadas" ||
-						listas[x]['NAME'] == "Estimativas Reprovadas/Canceladas" ||
-						listas[x]['NAME'] == "Estimativas - Aguardando Aprovação") {
-						
-						var mes1 = "";
-						var mes2 = "";
+            for (var n = 0; n < newfields.length; n++) {
 
-						if (newfields[n]['DF1'] != "") {
-							var rltdata1 = newfields[n]['DF1'];
-							var datasplit1 = rltdata1.split("-");
-							mes1 = parseInt(datasplit1[1]);
-							
-							switch (mes1) {
-								case 1:
-									tlsmes['JAN'] = tlsmes['JAN'] + 1;
-									estmes['JAN'] = estmes['JAN'] + newfields[n]['HF1'];
-									break;
-								case 2:
-									tlsmes['FEV'] = tlsmes['FEV'] + 1;
-									estmes['FEV'] = estmes['FEV'] + newfields[n]['HF1'];
-									break;
-								case 3:
-									tlsmes['MAR'] = tlsmes['MAR'] + 1;
-									estmes['MAR'] = estmes['MAR'] + newfields[n]['HF1'];
-									break;
-								case 4:
-									tlsmes['ABR'] = tlsmes['ABR'] + 1;
-									estmes['ABR'] = estmes['ABR'] + newfields[n]['HF1'];
-									break;
-								case 5:
-									tlsmes['MAI'] = tlsmes['MAI'] + 1;
-									estmes['MAI'] = estmes['MAI'] + newfields[n]['HF1'];
-									break;
-								case 6:
-									tlsmes['JUN'] = tlsmes['JUN'] + 1;
-									estmes['JUN'] = estmes['JUN'] + newfields[n]['HF1'];
-									break;
-								case 7:
-									tlsmes['JUL'] = tlsmes['JUL'] + 1;
-									estmes['JUL'] = estmes['JUL'] + newfields[n]['HF1'];
-									break;
-								case 8:
-									tlsmes['AGO'] = tlsmes['AGO'] + 1;
-									estmes['AGO'] = estmes['AGO'] + newfields[n]['HF1'];
-									break;
-								case 9:
-									tlsmes['SET'] = tlsmes['SET'] + 1;
-									estmes['SET'] = estmes['SET'] + newfields[n]['HF1'];
-									break;
-								case 10:
-									tlsmes['OUT'] = tlsmes['OUT'] + 1;
-									estmes['OUT'] = estmes['OUT'] + newfields[n]['HF1'];
-									break;
-								case 11:
-									tlsmes['NOV'] = tlsmes['NOV'] + 1;
-									estmes['NOV'] = estmes['NOV'] + newfields[n]['HF1'];
-									break;
-								case 12:
-									tlsmes['DEZ'] = tlsmes['DEZ'] + 1;
-									estmes['DEZ'] = estmes['DEZ'] + newfields[n]['HF1'];
-									break;
-							}
-						}
-						if (newfields[n]['DF2'] != "") {
-							var rltdata2 = newfields[n]['DF2'];
-							var datasplit2 = rltdata2.split("-");
-							mes2 = parseInt(datasplit2[1]);
-							
-							switch (mes2) {
-								case 1:
-									tlsmes['JAN'] = tlsmes['JAN'] + 1;
-									estmes['JAN'] = estmes['JAN'] + newfields[n]['HF2'];
-									break;
-								case 2:
-									tlsmes['FEV'] = tlsmes['FEV'] + 1;
-									estmes['FEV'] = estmes['FEV'] + newfields[n]['HF2'];
-									break;
-								case 3:
-									tlsmes['MAR'] = tlsmes['MAR'] + 1;
-									estmes['MAR'] = estmes['MAR'] + newfields[n]['HF2'];
-									break;
-								case 4:
-									tlsmes['ABR'] = tlsmes['ABR'] + 1;
-									estmes['ABR'] = estmes['ABR'] + newfields[n]['HF2'];
-									break;
-								case 5:
-									tlsmes['MAI'] = tlsmes['MAI'] + 1;
-									estmes['MAI'] = estmes['MAI'] + newfields[n]['HF2'];
-									break;
-								case 6:
-									tlsmes['JUN'] = tlsmes['JUN'] + 1;
-									estmes['JUN'] = estmes['JUN'] + newfields[n]['HF2'];
-									break;
-								case 7:
-									tlsmes['JUL'] = tlsmes['JUL'] + 1;
-									estmes['JUL'] = estmes['JUL'] + newfields[n]['HF2'];
-									break;
-								case 8:
-									tlsmes['AGO'] = tlsmes['AGO'] + 1;
-									estmes['AGO'] = estmes['AGO'] + newfields[n]['HF2'];
-									break;
-								case 9:
-									tlsmes['SET'] = tlsmes['SET'] + 1;
-									estmes['SET'] = estmes['SET'] + newfields[n]['HF2'];
-									break;
-								case 10:
-									tlsmes['OUT'] = tlsmes['OUT'] + 1;
-									estmes['OUT'] = estmes['OUT'] + newfields[n]['HF2'];
-									break;
-								case 11:
-									tlsmes['NOV'] = tlsmes['NOV'] + 1;
-									estmes['NOV'] = estmes['NOV'] + newfields[n]['HF2'];
-									break;
-								case 12:
-									tlsmes['DEZ'] = tlsmes['DEZ'] + 1;
-									estmes['DEZ'] = estmes['DEZ'] + newfields[n]['HF2'];
-									break;
-							}
-						}
-					}
+                if (newfields[n]['CARDID'] == cards[i]['id'] &&
+                        cards[i]['idList'] == listas[x]['ID']) {
 
-				}
-					
-			}	
-		}
-	}
-	
-	var rlout = estmes['OUT'] / tlsmes['OUT'];
-	var rlnov = estmes['NOV'] / tlsmes['NOV'];
-	var rldez = estmes['DEZ'] / tlsmes['DEZ'];
-	var rljan = estmes['JAN'] / tlsmes['JAN'];
-	var rlfev = estmes['FEV'] / tlsmes['FEV'];
-	var rlmar = estmes['MAR'] / tlsmes['MAR'];
-	var rlabr = estmes['ABR'] / tlsmes['ABR'];
-	var rlmai = estmes['MAI'] / tlsmes['MAI'];
-	var rljun = estmes['JUN'] / tlsmes['JUN'];
-	var rljul = estmes['JUL'] / tlsmes['JUL'];
-	var rlago = estmes['AGO'] / tlsmes['AGO'];
-	var rlset = estmes['SET'] / tlsmes['SET'];
-	
-	var ctx1 = document.getElementById('myChart-est').getContext('2d');
+                    if (listas[x]['NAME'] == "Estimativas Aprovadas" ||
+                            listas[x]['NAME'] == "Estimativas Reprovadas/Canceladas" ||
+                            listas[x]['NAME'] == "Estimativas - Aguardando Aprovação") {
+
+                        var mes1 = "";
+                        var mes2 = "";
+
+                        if (newfields[n]['DF1'] != "") {
+                            var rltdata1 = newfields[n]['DF1'];
+                            var datasplit1 = rltdata1.split("-");
+                            mes1 = parseInt(datasplit1[1]);
+
+                            switch (mes1) {
+                                case 1:
+                                    tlsmes['JAN'] = tlsmes['JAN'] + 1;
+                                    estmes['JAN'] = estmes['JAN'] + newfields[n]['HF1'];
+                                    break;
+                                case 2:
+                                    tlsmes['FEV'] = tlsmes['FEV'] + 1;
+                                    estmes['FEV'] = estmes['FEV'] + newfields[n]['HF1'];
+                                    break;
+                                case 3:
+                                    tlsmes['MAR'] = tlsmes['MAR'] + 1;
+                                    estmes['MAR'] = estmes['MAR'] + newfields[n]['HF1'];
+                                    break;
+                                case 4:
+                                    tlsmes['ABR'] = tlsmes['ABR'] + 1;
+                                    estmes['ABR'] = estmes['ABR'] + newfields[n]['HF1'];
+                                    break;
+                                case 5:
+                                    tlsmes['MAI'] = tlsmes['MAI'] + 1;
+                                    estmes['MAI'] = estmes['MAI'] + newfields[n]['HF1'];
+                                    break;
+                                case 6:
+                                    tlsmes['JUN'] = tlsmes['JUN'] + 1;
+                                    estmes['JUN'] = estmes['JUN'] + newfields[n]['HF1'];
+                                    break;
+                                case 7:
+                                    tlsmes['JUL'] = tlsmes['JUL'] + 1;
+                                    estmes['JUL'] = estmes['JUL'] + newfields[n]['HF1'];
+                                    break;
+                                case 8:
+                                    tlsmes['AGO'] = tlsmes['AGO'] + 1;
+                                    estmes['AGO'] = estmes['AGO'] + newfields[n]['HF1'];
+                                    break;
+                                case 9:
+                                    tlsmes['SET'] = tlsmes['SET'] + 1;
+                                    estmes['SET'] = estmes['SET'] + newfields[n]['HF1'];
+                                    break;
+                                case 10:
+                                    tlsmes['OUT'] = tlsmes['OUT'] + 1;
+                                    estmes['OUT'] = estmes['OUT'] + newfields[n]['HF1'];
+                                    break;
+                                case 11:
+                                    tlsmes['NOV'] = tlsmes['NOV'] + 1;
+                                    estmes['NOV'] = estmes['NOV'] + newfields[n]['HF1'];
+                                    break;
+                                case 12:
+                                    tlsmes['DEZ'] = tlsmes['DEZ'] + 1;
+                                    estmes['DEZ'] = estmes['DEZ'] + newfields[n]['HF1'];
+                                    break;
+                            }
+                        }
+                        if (newfields[n]['DF2'] != "") {
+                            var rltdata2 = newfields[n]['DF2'];
+                            var datasplit2 = rltdata2.split("-");
+                            mes2 = parseInt(datasplit2[1]);
+
+                            switch (mes2) {
+                                case 1:
+                                    tlsmes['JAN'] = tlsmes['JAN'] + 1;
+                                    estmes['JAN'] = estmes['JAN'] + newfields[n]['HF2'];
+                                    break;
+                                case 2:
+                                    tlsmes['FEV'] = tlsmes['FEV'] + 1;
+                                    estmes['FEV'] = estmes['FEV'] + newfields[n]['HF2'];
+                                    break;
+                                case 3:
+                                    tlsmes['MAR'] = tlsmes['MAR'] + 1;
+                                    estmes['MAR'] = estmes['MAR'] + newfields[n]['HF2'];
+                                    break;
+                                case 4:
+                                    tlsmes['ABR'] = tlsmes['ABR'] + 1;
+                                    estmes['ABR'] = estmes['ABR'] + newfields[n]['HF2'];
+                                    break;
+                                case 5:
+                                    tlsmes['MAI'] = tlsmes['MAI'] + 1;
+                                    estmes['MAI'] = estmes['MAI'] + newfields[n]['HF2'];
+                                    break;
+                                case 6:
+                                    tlsmes['JUN'] = tlsmes['JUN'] + 1;
+                                    estmes['JUN'] = estmes['JUN'] + newfields[n]['HF2'];
+                                    break;
+                                case 7:
+                                    tlsmes['JUL'] = tlsmes['JUL'] + 1;
+                                    estmes['JUL'] = estmes['JUL'] + newfields[n]['HF2'];
+                                    break;
+                                case 8:
+                                    tlsmes['AGO'] = tlsmes['AGO'] + 1;
+                                    estmes['AGO'] = estmes['AGO'] + newfields[n]['HF2'];
+                                    break;
+                                case 9:
+                                    tlsmes['SET'] = tlsmes['SET'] + 1;
+                                    estmes['SET'] = estmes['SET'] + newfields[n]['HF2'];
+                                    break;
+                                case 10:
+                                    tlsmes['OUT'] = tlsmes['OUT'] + 1;
+                                    estmes['OUT'] = estmes['OUT'] + newfields[n]['HF2'];
+                                    break;
+                                case 11:
+                                    tlsmes['NOV'] = tlsmes['NOV'] + 1;
+                                    estmes['NOV'] = estmes['NOV'] + newfields[n]['HF2'];
+                                    break;
+                                case 12:
+                                    tlsmes['DEZ'] = tlsmes['DEZ'] + 1;
+                                    estmes['DEZ'] = estmes['DEZ'] + newfields[n]['HF2'];
+                                    break;
+                            }
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
+
+    var rlout = estmes['OUT'] / tlsmes['OUT'];
+    var rlnov = estmes['NOV'] / tlsmes['NOV'];
+    var rldez = estmes['DEZ'] / tlsmes['DEZ'];
+    var rljan = estmes['JAN'] / tlsmes['JAN'];
+    var rlfev = estmes['FEV'] / tlsmes['FEV'];
+    var rlmar = estmes['MAR'] / tlsmes['MAR'];
+    var rlabr = estmes['ABR'] / tlsmes['ABR'];
+    var rlmai = estmes['MAI'] / tlsmes['MAI'];
+    var rljun = estmes['JUN'] / tlsmes['JUN'];
+    var rljul = estmes['JUL'] / tlsmes['JUL'];
+    var rlago = estmes['AGO'] / tlsmes['AGO'];
+    var rlset = estmes['SET'] / tlsmes['SET'];
+
+    var ctx1 = document.getElementById('myChart-est').getContext('2d');
     var chart = new Chart(ctx1, {
         // The type of chart we want to create
         type: 'line',
@@ -953,7 +964,7 @@ function rltLinEst() {
                     label: "Estimativa (E.M)",
                     backgroundColor: 'rgb(85, 104, 214)',
                     borderColor: 'rgb(21, 49, 211)',
-					pointRadius: 0,
+                    pointRadius: 0,
                     fill: false,
                     responsive: true,
                     maintainAspectRatio: true,
@@ -962,12 +973,12 @@ function rltLinEst() {
         },
         // Configuration options go here
         options: {
-			elements: {
-				line: {
-					tension: 0, // disables bezier curves
-				}
-			}
-		}
+            elements: {
+                line: {
+                    tension: 0, // disables bezier curves
+                }
+            }
+        }
     });
 }
 
