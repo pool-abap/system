@@ -216,6 +216,22 @@ function saldoMes() {
 }
 
 function calcArrRLT() {
+    
+    var dtatt = new Date();
+    
+    var ano_atual = dtatt.getFullYear();
+    var mes_atual = dtatt.getMonth();
+    
+    var anoproc = ano_atual;
+    var mesproc = mes_atual;
+    
+    //mesproc = mesproc - 1;
+    //Não precisa diminuir pois o array já vem com 1 a menos
+    
+    if(mesproc < 1){
+       mesproc = 12;
+       anoproc = anoproc - 1;
+    }
 
     for (var i = 0; i < cards.length; i++) {
         //for (var y = 0; y < listas.length; y++) {
@@ -226,47 +242,226 @@ function calcArrRLT() {
 
                 var rltdata = newfields[z]['DF1'];
                 var datasplit = rltdata.split("-");
-                var mes = parseInt(datasplit[1]);
-                var anoo = parseInt(datasplit[0]);
+                var mescard = parseInt(datasplit[1]);
+                var anocard = parseInt(datasplit[0]);
 
-                //Logica validar ano antes de somar o numero do mes
-
-                switch (mes) {
+                
+                switch (mescard) {
                     case 1:
-                        rltline['JAN'] = rltline['JAN'] + newfields[z]['HF1'];
+                        if (mescard < mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['JAN'] = rltline['JAN'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard == mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['JAN'] = rltline['JAN'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard > mesproc) {
+                            if (anocard < anoproc) {
+                                rltline['JAN'] = rltline['JAN'] + newfields[z]['HF1'];
+                            }
+                        }
+                        //rltline['JAN'] = rltline['JAN'] + newfields[z]['HF1'];
                         break;
                     case 2:
-                        rltline['FEV'] = rltline['FEV'] + newfields[z]['HF1'];
+                        if (mescard < mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['FEV'] = rltline['FEV'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard == mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['FEV'] = rltline['FEV'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard > mesproc) {
+                            if (anocard < anoproc) {
+                                rltline['FEV'] = rltline['FEV'] + newfields[z]['HF1'];
+                            }
+                        }
+                        //rltline['FEV'] = rltline['FEV'] + newfields[z]['HF1'];
                         break;
                     case 3:
-                        rltline['MAR'] = rltline['MAR'] + newfields[z]['HF1'];
+                        if (mescard < mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['MAR'] = rltline['MAR'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard == mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['MAR'] = rltline['MAR'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard > mesproc) {
+                            if (anocard < anoproc) {
+                                rltline['MAR'] = rltline['MAR'] + newfields[z]['HF1'];
+                            }
+                        }
+                        //rltline['MAR'] = rltline['MAR'] + newfields[z]['HF1'];
                         break;
                     case 4:
-                        rltline['ABR'] = rltline['ABR'] + newfields[z]['HF1'];
+                        if (mescard < mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['ABR'] = rltline['ABR'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard == mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['ABR'] = rltline['ABR'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard > mesproc) {
+                            if (anocard < anoproc) {
+                                rltline['ABR'] = rltline['ABR'] + newfields[z]['HF1'];
+                            }
+                        }
+                        //rltline['ABR'] = rltline['ABR'] + newfields[z]['HF1'];
                         break;
                     case 5:
-                        rltline['MAI'] = rltline['MAI'] + newfields[z]['HF1'];
+                        if (mescard < mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['MAI'] = rltline['MAI'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard == mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['MAI'] = rltline['MAI'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard > mesproc) {
+                            if (anocard < anoproc) {
+                                rltline['MAI'] = rltline['MAI'] + newfields[z]['HF1'];
+                            }
+                        }
+                        //rltline['MAI'] = rltline['MAI'] + newfields[z]['HF1'];
                         break;
                     case 6:
-                        rltline['JUN'] = rltline['JUN'] + newfields[z]['HF1'];
+                        if (mescard < mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['JUN'] = rltline['JUN'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard == mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['JUN'] = rltline['JUN'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard > mesproc) {
+                            if (anocard < anoproc) {
+                                rltline['JUN'] = rltline['JUN'] + newfields[z]['HF1'];
+                            }
+                        }
+                        //rltline['JUN'] = rltline['JUN'] + newfields[z]['HF1'];
                         break;
                     case 7:
-                        rltline['JUL'] = rltline['JUL'] + newfields[z]['HF1'];
+                        if (mescard < mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['JUL'] = rltline['JUL'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard == mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['JUL'] = rltline['JUL'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard > mesproc) {
+                            if (anocard < anoproc) {
+                                rltline['JUL'] = rltline['JUL'] + newfields[z]['HF1'];
+                            }
+                        }
+                        //rltline['JUL'] = rltline['JUL'] + newfields[z]['HF1'];
                         break;
                     case 8:
-                        rltline['AGO'] = rltline['AGO'] + newfields[z]['HF1'];
+                        if (mescard < mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['AGO'] = rltline['AGO'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard == mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['AGO'] = rltline['AGO'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard > mesproc) {
+                            if (anocard < anoproc) {
+                                rltline['AGO'] = rltline['AGO'] + newfields[z]['HF1'];
+                            }
+                        }
+                        //rltline['AGO'] = rltline['AGO'] + newfields[z]['HF1'];
                         break;
                     case 9:
-                        rltline['SET'] = rltline['SET'] + newfields[z]['HF1'];
+                        if (mescard < mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['SET'] = rltline['SET'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard == mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['SET'] = rltline['SET'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard > mesproc) {
+                            if (anocard < anoproc) {
+                                rltline['SET'] = rltline['SET'] + newfields[z]['HF1'];
+                            }
+                        }
+                        //rltline['SET'] = rltline['SET'] + newfields[z]['HF1'];
                         break;
                     case 10:
-                        rltline['OUT'] = rltline['OUT'] + newfields[z]['HF1'];
+                        if (mescard < mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['OUT'] = rltline['OUT'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard == mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['OUT'] = rltline['OUT'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard > mesproc) {
+                            if (anocard < anoproc) {
+                                rltline['OUT'] = rltline['OUT'] + newfields[z]['HF1'];
+                            }
+                        }
+                        //rltline['OUT'] = rltline['OUT'] + newfields[z]['HF1'];
                         break;
                     case 11:
-                        rltline['NOV'] = rltline['NOV'] + newfields[z]['HF1'];
+                        if (mescard < mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['NOV'] = rltline['NOV'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard == mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['NOV'] = rltline['NOV'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard > mesproc) {
+                            if (anocard < anoproc) {
+                                rltline['NOV'] = rltline['NOV'] + newfields[z]['HF1'];
+                            }
+                        }
+                        //rltline['NOV'] = rltline['NOV'] + newfields[z]['HF1'];
                         break;
                     case 12:
-                        rltline['DEZ'] = rltline['DEZ'] + newfields[z]['HF1'];
+                        if (mescard < mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['DEZ'] = rltline['DEZ'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard == mesproc) {
+                            if (anocard == anoproc) {
+                                rltline['DEZ'] = rltline['DEZ'] + newfields[z]['HF1'];
+                            }
+                        }
+                        if (mescard > mesproc) {
+                            if (anocard < anoproc) {
+                                rltline['DEZ'] = rltline['DEZ'] + newfields[z]['HF1'];
+                            }
+                        }
+                        //rltline['DEZ'] = rltline['DEZ'] + newfields[z]['HF1'];
                         break;
                 }
                 
@@ -275,9 +470,6 @@ function calcArrRLT() {
         }
         //}
     }
-    
-    //Criar logo para validar o ano da timeline
-    //OBS: Não é ano fiscal!!
 
     return;
 }
