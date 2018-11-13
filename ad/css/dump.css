@@ -12,6 +12,7 @@
     border-radius: 3px;
     opacity: 0.0;
     cursor: default;
+    display: none;
 }
 .dump h1 {
     float: left;

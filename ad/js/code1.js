@@ -1244,6 +1244,7 @@ function dump(func, txt) {
     document.getElementById("tela-01").style.display = "none";
     document.getElementById("tela-02").style.opacity = 0.0;
     document.getElementById("tela-02").style.display = "none";
+    document.getElementById("dump").style.display = "block";
     document.getElementById("dump").style.opacity = 1.0;
     document.getElementById("func-dump").innerHTML = "Função : " + func;
     document.getElementById("txt-dump").innerHTML = txt;
