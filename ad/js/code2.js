@@ -277,7 +277,7 @@ function calcArrRLT() {
     }
     
     console.warn(rltline);
-    rltline['NOV'] = rltline['NOV'] - 298;
+    rltline['NOV'] = rltline['NOV'] - 8;
     rltline['DEZ'] = rltline['DEZ'] - 0;
     
     //Criar logo para validar o ano da timeline
