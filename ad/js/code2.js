@@ -277,6 +277,7 @@ function calcArrRLT() {
     }
     
     console.warn(rltline);
+    rltline['OUT'] = rltline['OUT'] - 175;
     rltline['NOV'] = rltline['NOV'] - 8;
     rltline['DEZ'] = rltline['DEZ'] - 0;
     
