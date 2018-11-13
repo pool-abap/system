@@ -276,11 +276,6 @@ function calcArrRLT() {
         //}
     }
     
-    console.warn(rltline);
-    //rltline['OUT'] = rltline['OUT'] - 175;
-    rltline['NOV'] = rltline['NOV'] - 29;
-    rltline['DEZ'] = rltline['DEZ'] - 0;
-    
     //Criar logo para validar o ano da timeline
     //OBS: Não é ano fiscal!!
 
