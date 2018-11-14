@@ -2,6 +2,28 @@ var projsts = [];
 var prjtsarr = [];
 var chmadst = [];
 
+var projscors = [];
+
+var pjcors = [
+    'LACTALIS',
+    'rgb(37,156,212)'
+];
+projscors.push(pjcors);
+var pjcors = [
+    'COTY',
+    'rgb(60,16,83)'
+];
+projscors.push(pjcors);
+var pjcors = [
+    'LDC',
+    'rgb(0,78,116)'
+];
+projscors.push(pjcors);
+var pjcors = [
+    'JDE',
+    'rgb(65,32,16)'
+];
+projscors.push(pjcors);
 
 var corarrs = [
     'rgb(244,18,9)',
@@ -69,10 +91,19 @@ function rltBar() {
 
     for (var h = 0; h < projsts.length; h++) {
         var stak = 'Stack ' + contcor;
+        var corss = corarrs[h];
+        
+        for (var g = 0; g < projscors.length; g++) {
+            if(projsts[h] == projscors[g][0]){
+                corss = projscors[g][1];
+            }
+        }
+        
+        
         var arystemp = {
             label: projsts[h],
-            backgroundColor: corarrs[h],
-            borderColor: corarrs[h],
+            backgroundColor: corss,
+            borderColor: corss,
             stack: 'Stack 0',
             //stack: stak,
             fill: false,
