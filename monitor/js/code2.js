@@ -20,6 +20,7 @@ var corarrs = [
 
 var contcor = 0;
 
+
 //Desativadooooo ---------------
 function radomcolor() {
     var clrs;
@@ -155,11 +156,12 @@ function rltLine() {
     messs++;
     var anomes = dthj.getFullYear() + "-" + messs;
     
+    var ddt;
+    
     if (ttds <= 15) {
         
         for (i = 1; i <= 15; i++) {
             
-            var ddt;
             if(i <= 9){
                 ddt = "0" + i;
             } else {
@@ -171,14 +173,12 @@ function rltLine() {
             rllabels.push(itxt);
 
             var vint = RpValorByDay(dma);
-            if (vint != 0) {
-                rldata.push(vint);
-            }
+            rldata.push(vint);
         }
         
     } else {
         for (i = 1; i <= ttds; i++) {
-            var ddt;
+            
             if(i < 9){
                 ddt = "0" + i;
             } else {
@@ -190,9 +190,7 @@ function rltLine() {
             rllabels.push(itxt);
 
             var vint = RpValorByDay(dma);
-            if (vint != 0) {
-                rldata.push(vint);
-            }
+            rldata.push(vint);
         }
     }
 
@@ -221,6 +219,20 @@ function rltLine() {
                 line: {
                     tension: 0, // disables bezier curves
                 }
+            },
+            scales: {
+                yAxes: [{
+                        //stacked: true,
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }],
+                xAxes: [{
+                        //stacked: true,
+                        gridLines: {
+                            offsetGridLines: true
+                        }
+                    }]
             }
         }
     });
