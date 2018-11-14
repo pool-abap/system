@@ -120,6 +120,111 @@ function rltBar() {
         }
     });
 }
+
+function diasNoMes(mes, ano) {
+    var data = new Date(ano, mes, 0);
+    return data.getDate();
+}
+
+function RpValorByDay(dma) {
+    var vlrr = 0;
+
+    for (a = 0; a < cards.length; a++) {
+        
+        var dtsc = cards[a]['due'].split("T");
+        
+        if(dma == dtsc[0]){
+            vlrr++;
+        }
+    }
+
+    return vlrr;
+}
+
+function rltLine() {
+
+    var dthj = new Date();
+    //var ttds = diasNoMes(dthj.getMonth(), dthj.getFullYear());
+    var ttds = dthj.getDate();
+    var dma;
+    
+    var rllabels = [];
+    var rldata = [];
+    
+    var messs = dthj.getMonth();
+    messs++;
+    var anomes = dthj.getFullYear() + "-" + messs;
+    
+    if (ttds <= 15) {
+        
+        for (i = 1; i <= 15; i++) {
+            
+            var ddt;
+            if(i <= 9){
+                ddt = "0" + i;
+            } else {
+                ddt = i;
+            }
+            dma = anomes + "-" + ddt;
+            
+            var itxt = "" + i + "";
+            rllabels.push(itxt);
+
+            var vint = RpValorByDay(dma);
+            if (vint != 0) {
+                rldata.push(vint);
+            }
+        }
+        
+    } else {
+        for (i = 1; i <= ttds; i++) {
+            var ddt;
+            if(i < 9){
+                ddt = "0" + i;
+            } else {
+                ddt = i;
+            }
+            dma = anomes + "-" + ddt;
+            
+            var itxt = "" + i + "";
+            rllabels.push(itxt);
+
+            var vint = RpValorByDay(dma);
+            if (vint != 0) {
+                rldata.push(vint);
+            }
+        }
+    }
+
+
+    var ctx1 = document.getElementById('myChart-line').getContext('2d');
+    var chart = new Chart(ctx1, {
+        // The type of chart we want to create
+        type: 'line',
+        // The data for our dataset
+        data: {
+            labels: rllabels,
+            datasets: [{
+                    label: "Aberturas de chamado",
+                    backgroundColor: 'rgb(40, 76, 119)',
+                    borderColor: 'rgb(40, 76, 119)',
+                    pointRadius: 0,
+                    fill: false,
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    data: rldata,
+                }]
+        },
+        // Configuration options go here
+        options: {
+            elements: {
+                line: {
+                    tension: 0, // disables bezier curves
+                }
+            }
+        }
+    });
+}
 /*
  function rltBar() {
  

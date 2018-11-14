@@ -308,4 +308,37 @@
 		color: #fff;
 		text-shadow: 1px 1px #494949;
 	}
+        
+        .table {
+            margin: 0px;
+            font-size: 0.9em;
+            margin: 3px;
+        }
+        
+        .table thead th {
+            border-bottom: 0px;
+            font-size: 0.9em;
+            padding: 4px;
+            border-left: 1px solid #dee2e6;
+        }
+        .table tbody td {
+            padding: 4px;
+            font-size: 0.9em;
+            border-left: 1px solid #dee2e6;
+        }
+        .table tbody th {
+            padding: 4px;
+            font-size: 0.9em;
+        }
+        
+        .table::-webkit-scrollbar-track {
+            background-color: #F4F4F4;
+        }
+        .table::-webkit-scrollbar {
+            width: 6px;
+            background: #F4F4F4;
+        }
+        .table::-webkit-scrollbar-corner {
+            background: #dad7d7;
+        }
 }

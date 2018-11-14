@@ -18,19 +18,19 @@ Gerente - Juliana Alencar
 
         <!-- Favicon -->
         <link rel="shortcut icon" href="https://rentadrone.cl/wp-content/uploads/2016/12/pie-chart-1.png" />
-	
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-		
-		<link href="css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-		<link href="css/reset.css" type="text/css" rel="stylesheet" />
+
+        <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+        <link href="css/reset.css" type="text/css" rel="stylesheet" />
         <link href="css/body.css" type="text/css" rel="stylesheet" />
         <link href="css/desktop.css" type="text/css" rel="stylesheet" />
 
         <script type="text/javascript" src="js/onload.js"></script>
         <script type="text/javascript" src="js/code1.js"></script>
-		
+
     </head>
 
     <body>
@@ -71,12 +71,14 @@ Gerente - Juliana Alencar
                 </div>
             </div>
 
-            <div class="div-sp" style="width: 35%;">
+            <!-- <div class="div-sp" style="width: 40%;">
                 <div id="donutchart" class="block" style="float: left; height: 400px; margin-right: 20px"></div>
-				
-				<!-- <div id="rltsbars" class="block" style="float: left; height: 400px;">
-					
-				</div> -->
+                                <div id="rltsbars" class="block" style="float: left; height: 400px;">
+                                </div>
+            </div> -->
+
+            <div class="block" id="div-lef" style="float: left; width: 38%; height: 400px;">
+                <canvas id="myChart-line"></canvas>
             </div>
 
             <div id="relat-mid" class="block" style="float: left; height: 400px;">
@@ -121,23 +123,23 @@ Gerente - Juliana Alencar
                         </tbody>
                     </table>
                 </div>
-				
-				<div class="block" id="top-fiv">
-					<table id="table-rows" class="table table-hover">
+
+                <div class="block" id="top-fiv">
+                    <table id="table-rows" class="table table-hover">
                         <thead>
                             <tr id="table-five">
-								<th>Projeto</th>
-								<th>Chamado</th>
-								<th>Dt Aber.</th>
-								<th>Resp.</th>
+                                <th>Projeto</th>
+                                <th>Chamado</th>
+                                <th>Dt Aber.</th>
+                                <th>Resp.</th>
                             </tr>
                         </thead>
                         <tbody id="row-five">
                         </tbody>
                     </table>
-				</div>
-				
-				<div class="div-sp" style="width: 20%;">
+                </div>
+
+                <div class="div-sp" style="width: 20%;">
                     <div class="block" id="bar-labels">
                     </div>
                 </div>
@@ -153,7 +155,7 @@ Gerente - Juliana Alencar
                 <p>v1.0.3</p>
             </footer>
         </div>
-		
-		<script type="text/javascript" src="js/code2.js"></script>
+
+        <script type="text/javascript" src="js/code2.js"></script>
     </body>
 </html>
