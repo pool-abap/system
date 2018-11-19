@@ -11,7 +11,7 @@ var pjcors = [
 projscors.push(pjcors);
 var pjcors = [
     'COTY',
-    'rgb(60,16,83)'
+    'rgb(81,24,112)'
 ];
 projscors.push(pjcors);
 var pjcors = [
