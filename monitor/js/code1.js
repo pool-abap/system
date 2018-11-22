@@ -198,7 +198,7 @@ function buscarMenbros(id) {
                     };
                     menbros.push(array);
                 }
-                //console.log(menbros);
+                console.log(menbros);
             })
             .fail(function (jqXHR, textStatus, data) {
                 console.log("Acesso a API falhou!");
