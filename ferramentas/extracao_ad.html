@@ -94,15 +94,19 @@
             }
             .content {
                 float: left;
-                width: 1200px;
-                margin-left: calc(50% - 600px);
-                margin-right: calc(50% - 600px);
-                padding: 30px 30px 10px 30px;
+                width: 100%;
+                padding: 0px ;
                 background-color: #fff;
             }
             #table-chamados {
                 float: left;
                 width: 100%;
+            }
+            #table-chamados thead tr th {
+                padding: 5px 10px 5px 10px;
+            }
+            #table-chamados tbody tr td {
+                padding: 3px 8px 3px 8px;
             }
             .rodape {
                 float: left;
@@ -189,9 +193,9 @@
             var menbros = []; //Array qye receberar os membros
             var listas = []; //Array que vai receber as listas
             var labels = []; //Array que vai receber os labels
-			var tempfield = [];
-			var newfields = []; //Array com todos campos novos criados
-			var custfields = []; //Parametrizações dos custons
+            var tempfield = [];
+            var newfields = []; //Array com todos campos novos criados
+            var custfields = []; //Parametrizações dos custons
 
             var tabletd = []; //Array que vai receber os dados para tabela
 
@@ -281,11 +285,11 @@
 
             //Puxar infos do site
             function carregarInfosAPI(id) {
-				Buscacards(id);
+                Buscacards(id);
             }
-			
-			function Buscacards(id){
-			//Buscando todos os CARDS do BOARD
+
+            function Buscacards(id) {
+                //Buscando todos os CARDS do BOARD
                 url = "https://api.trello.com/1/boards/" + id + "/cards/?key=" + key + "&token=" + token; //List CARDS
                 var ajax2 = $.ajax({
                     url: url,
@@ -300,15 +304,15 @@
                             console.group("Cards");
                             console.log(cards);
                             console.groupEnd("Cards");
-							membros(id);
+                            membros(id);
                         })
                         .fail(function (jqXHR, textStatus, data) {
                             throw new Error("Cards - Acesso a API falhou!");
                         });
-			}
-			
-			function membros(id){
-			//Buscando todos os MEMBROS do BOARD
+            }
+
+            function membros(id) {
+                //Buscando todos os MEMBROS do BOARD
                 url = "https://api.trello.com/1/boards/" + id + "/memberships/?key=" + key + "&token=" + token + "&orgMemberType=true&member=true&member_fields=fullName&member_fields=avatarUrl";
                 var ajax3 = $.ajax({
                     url: url,
@@ -336,15 +340,15 @@
                             console.group("Membros");
                             console.log(menbros);
                             console.groupEnd("Membros");
-							Busclistas(id);
+                            Busclistas(id);
                         })
                         .fail(function (jqXHR, textStatus, data) {
                             throw new Error("Membros - Acesso a API falhou!");
                         });
-			}
-			
-			function Busclistas(id){
-				//Buscando todos os LISTAS do BOARD
+            }
+
+            function Busclistas(id) {
+                //Buscando todos os LISTAS do BOARD
                 url = "https://api.trello.com/1/boards/" + id + "/lists?cards=all&card_fields=all&filter=open&fields=all&key=" + key + "&token=" + token;
                 var ajax4 = $.ajax({
                     url: url,
@@ -366,15 +370,15 @@
                             console.group("Listas");
                             console.log(listas);
                             console.groupEnd("Listas");
-							label(id);
+                            label(id);
                         })
                         .fail(function (jqXHR, textStatus, data) {
                             throw new Error("Listas - Acesso a API falhou!");
                         });
-			}
-			
-			function label(id){
-				//Buscando todos os LABEL do BOARD
+            }
+
+            function label(id) {
+                //Buscando todos os LABEL do BOARD
                 url = "https://api.trello.com/1/boards/" + id + "/labels?fields=all&key=" + key + "&token=" + token; //List Labels
                 var ajax5 = $.ajax({
                     url: url,
@@ -398,291 +402,337 @@
                             console.group("Labels");
                             console.log(labels);
                             console.groupEnd("Labels");
-							customField(id);
+                            customField(id);
                         })
                         .fail(function (jqXHR, textStatus, data) {
                             throw new Error("Labels - Acesso a API falhou!");
                         });
-			}
-			
-			function customField(id){
-				//Buscando parametrizações Custom fields
-				url = "https://api.trello.com/1/boards/" + id + "/customFields?key=" + key + "&token=" + token;
-				var ajax6 = $.ajax({
-					url: url,
-					type: 'GET',
-					dataType: 'json',
-					beforeSend: function () {
-						console.log("Buscando custom fields...");
-					}
-				})
-						.done(function (data) {
-							for (var y = 0; y < data.length; y++) {
-								custfields.push(data[y]);
-							}
-							processarDados();
-						})
-						.fail(function (jqXHR, textStatus, data) {
-							throw "carregarInfosAPI(); - 389", "A requisição AJAX para buscar todas os Custom fields falhou!.";
-						});
-			}
-			
-			function processarDados() {
-				
-				var ajaxdic = "";
-				var ajaxnewcamp = "";
-				var total = cards.length - 1;
-				for (var i = 0; i < cards.length; i++) {
-					
-					//Buscando todos os campos adicionais individual
-					url = "https://api.trello.com/1/cards/" + cards[i][﻿'id'] + "/customFieldItems?key=" + key + "&token=" + token;
-					ajaxnewcamp = $.ajax({
-						url: url,
-						type: 'GET',
-						dataType: 'json',
-						beforeSend: function () {
-							//console.log("Buscando New Field - " + cards[i][﻿'id']);
-						}
-					})
-							.done(function (data) {
-								for (var y = 0; y < data.length; y++) {
-									tempfield.push(data[y]);
-								}
-							})
-							.fail(function (jqXHR, textStatus, data) {
-								throw "processarDados(); - 465", "A requisição AJAX para buscar todos os campos adicionais falhou!.";
-							});
-					if (i == total) {
-						setTimeout(function () {
-							//Funções de exibição
-							orgNewFields();
-						}, 1300);
-					}
-				}
-			}
-						
-            function orgNewFields(){
+            }
 
-				var arraystemps = {
-					'CARDID': "", // Id do card
-					'EP': 0, //Estimativa prevista
-					'OC': false, // Ocioso
-					'HF1': 0, // Hora 1
-					'HF2': 0, // Hota 2
-					'DF1': "", // Data 1
-					'DF2': "" // Data 2
-				};
-				
-				console.log(tempfield);
-				console.log(custfields);
-				for (var n = 0; n < tempfield.length; n++) {
-					
-					arraystemps['CARDID'] = tempfield[n]['idModel'];
+            function customField(id) {
+                //Buscando parametrizações Custom fields
+                url = "https://api.trello.com/1/boards/" + id + "/customFields?key=" + key + "&token=" + token;
+                var ajax6 = $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function () {
+                        console.log("Buscando custom fields...");
+                    }
+                })
+                        .done(function (data) {
+                            for (var y = 0; y < data.length; y++) {
+                                custfields.push(data[y]);
+                            }
+                            processarDados();
+                        })
+                        .fail(function (jqXHR, textStatus, data) {
+                            throw "carregarInfosAPI(); - 389", "A requisição AJAX para buscar todas os Custom fields falhou!.";
+                        });
+            }
 
-					for (var t = 0; t < custfields.length; t++) {
+            function processarDados() {
 
-						if (tempfield[n]['idCustomField'] == custfields[t]['id']) {
-							switch (custfields[t]['name']) {
-								case "EP":
-									arraystemps['EP'] = parseInt(tempfield[n]['value']['number']);
-									break;
-									
-								case "IDLE":
-									if(tempfield[n]['value']['checked'] == "true"){
-										arraystemps['OC'] = true;
-									} else {
-										arraystemps['OC'] = false;
-									}
-									break;
+                var ajaxdic = "";
+                var ajaxnewcamp = "";
+                var total = cards.length - 1;
+                for (var i = 0; i < cards.length; i++) {
 
-								case "H.F.1":
-									arraystemps['HF1'] = parseInt(tempfield[n]['value']['number']);
-									break;
+                    //Buscando todos os campos adicionais individual
+                    url = "https://api.trello.com/1/cards/" + cards[i][﻿'id'] + "/customFieldItems?key=" + key + "&token=" + token;
+                    ajaxnewcamp = $.ajax({
+                        url: url,
+                        type: 'GET',
+                        dataType: 'json',
+                        beforeSend: function () {
+                            //console.log("Buscando New Field - " + cards[i][﻿'id']);
+                        }
+                    })
+                            .done(function (data) {
+                                for (var y = 0; y < data.length; y++) {
+                                    tempfield.push(data[y]);
+                                }
+                            })
+                            .fail(function (jqXHR, textStatus, data) {
+                                throw "processarDados(); - 465", "A requisição AJAX para buscar todos os campos adicionais falhou!.";
+                            });
+                    if (i == total) {
+                        setTimeout(function () {
+                            //Funções de exibição
+                            orgNewFields();
+                        }, 1300);
+                    }
+                }
+            }
 
-								case "H.F.2":
-									arraystemps['HF2'] = parseInt(tempfield[n]['value']['number']);
-									break;
+            function orgNewFields() {
 
-								case "D.F.1":
-									var ddf = tempfield[n]['value']['date'];
-									ddf = ddf.split("T");
-									arraystemps['DF1'] = ddf[0];
-									break;
+                var arraystemps = {
+                    'CARDID': "", // Id do card
+                    'EP': 0, //Estimativa prevista
+                    'OC': false, // Ocioso
+                    'HF1': 0, // Hora 1
+                    'HF2': 0, // Hota 2
+                    'DF1': "", // Data 1
+                    'DF2': "" // Data 2
+                };
 
-								case "D.F.2":
-									var ddf = tempfield[n]['value']['date'];
-									ddf = ddf.split("T");
-									arraystemps['DF2'] = ddf[0];
-									break;
-							}
-						}
-					}
+                console.log(tempfield);
+                console.log(custfields);
+                for (var n = 0; n < tempfield.length; n++) {
 
-					newfields.push(arraystemps);
+                    arraystemps['CARDID'] = tempfield[n]['idModel'];
 
-					arraystemps = {
-						'CARDID': "", // Id do card
-						'EP': 0, //Estimativa prevista
-						'OC': false, // Ocioso
-						'HF1': 0, // Hora 1
-						'HF2': 0, // Hota 2
-						'DF1': "", // Data 1
-						'DF2': "" // Data 2
-					};
-				}
-				
-				var corg = newfields;
-				newfields = [];
-				var total = corg.length - 1;
+                    for (var t = 0; t < custfields.length; t++) {
 
-				var card1 = "";
-				var cardpr = "";
+                        if (tempfield[n]['idCustomField'] == custfields[t]['id']) {
+                            switch (custfields[t]['name']) {
+                                case "EP":
+                                    arraystemps['EP'] = parseInt(tempfield[n]['value']['number']);
+                                    break;
 
-				var ep = 0;
-				var oc = false;
-				var shf1 = 0;
-				var shf2 = 0;
-				var df1 = "";
-				var df2 = "";
+                                case "IDLE":
+                                    if (tempfield[n]['value']['checked'] == "true") {
+                                        arraystemps['OC'] = true;
+                                    } else {
+                                        arraystemps['OC'] = false;
+                                    }
+                                    break;
 
-				for (var a = 0; a < corg.length; a++) {
+                                case "H.F.1":
+                                    arraystemps['HF1'] = parseInt(tempfield[n]['value']['number']);
+                                    break;
 
-					cardpr = corg[a]['CARDID'];
+                                case "H.F.2":
+                                    arraystemps['HF2'] = parseInt(tempfield[n]['value']['number']);
+                                    break;
 
-					if (card1 == "") {
-						card1 = corg[a]['CARDID'];
-					}
+                                case "D.F.1":
+                                    var ddf = tempfield[n]['value']['date'];
+                                    ddf = ddf.split("T");
+                                    arraystemps['DF1'] = ddf[0];
+                                    break;
 
-					if (card1 != cardpr) {
+                                case "D.F.2":
+                                    var ddf = tempfield[n]['value']['date'];
+                                    ddf = ddf.split("T");
+                                    arraystemps['DF2'] = ddf[0];
+                                    break;
+                            }
+                        }
+                    }
 
-						var arraystemps = {
-							'CARDID': card1, // Id do card
-							'EP': ep, //Estimativa prevista
-							'OC': oc, // Ocioso
-							'HF1': shf1, // Hora 1
-							'HF2': shf2, // Hota 2
-							'DF1': df1, // Data 1
-							'DF2': df2 // Data 2
-						};
-						newfields.push(arraystemps);
+                    newfields.push(arraystemps);
 
-						card1 = corg[a]['CARDID'];
-						oc = corg[a]['OC'];
-						
-						ep = corg[a]['EP'];
-						shf1 = corg[a]['HF1'];
-						shf2 = corg[a]['HF2'];
+                    arraystemps = {
+                        'CARDID': "", // Id do card
+                        'EP': 0, //Estimativa prevista
+                        'OC': false, // Ocioso
+                        'HF1': 0, // Hora 1
+                        'HF2': 0, // Hota 2
+                        'DF1': "", // Data 1
+                        'DF2': "" // Data 2
+                    };
+                }
 
-						if (corg[a]['DF1'] != "") {
-							df1 = corg[a]['DF1'];
-						}
-						if (corg[a]['DF2'] != "") {
-							df2 = corg[a]['DF2'];
-						}
+                var corg = newfields;
+                newfields = [];
+                var total = corg.length - 1;
 
-					} else {
-						ep = ep + corg[a]['EP'];
-						shf1 = shf1 + corg[a]['HF1'];
-						shf2 = shf2 + corg[a]['HF2'];
+                var card1 = "";
+                var cardpr = "";
 
-						if (corg[a]['DF1'] != "") {
-							df1 = corg[a]['DF1'];
-						}
-						if (corg[a]['DF2'] != "") {
-							df2 = corg[a]['DF2'];
-						}
-					}
+                var ep = 0;
+                var oc = false;
+                var shf1 = 0;
+                var shf2 = 0;
+                var df1 = "";
+                var df2 = "";
 
-					if (a == total) {
+                for (var a = 0; a < corg.length; a++) {
 
-						var arraystemps = {
-							'CARDID': corg[a]['CARDID'], // Id do card
-							'EP': ep, //Estimativa prevista
-							'OC': corg[a]['OC'], // Ocioso
-							'HF1': shf1, // Hora 1
-							'HF2': shf2, // Hota 2
-							'DF1': df1, // Data 1
-							'DF2': df2 // Data 2
-						};
-						newfields.push(arraystemps);
+                    cardpr = corg[a]['CARDID'];
 
-						console.group("NewCampos");
-						console.log(newfields);
-						console.groupEnd("NewCampos");
-						montarTabela();
-					}
-				}
+                    if (card1 == "") {
+                        card1 = corg[a]['CARDID'];
+                    }
 
-			}
+                    if (card1 != cardpr) {
+
+                        var arraystemps = {
+                            'CARDID': card1, // Id do card
+                            'EP': ep, //Estimativa prevista
+                            'OC': oc, // Ocioso
+                            'HF1': shf1, // Hora 1
+                            'HF2': shf2, // Hota 2
+                            'DF1': df1, // Data 1
+                            'DF2': df2 // Data 2
+                        };
+                        newfields.push(arraystemps);
+
+                        card1 = corg[a]['CARDID'];
+                        oc = corg[a]['OC'];
+
+                        ep = corg[a]['EP'];
+                        shf1 = corg[a]['HF1'];
+                        shf2 = corg[a]['HF2'];
+
+                        if (corg[a]['DF1'] != "") {
+                            df1 = corg[a]['DF1'];
+                        }
+                        if (corg[a]['DF2'] != "") {
+                            df2 = corg[a]['DF2'];
+                        }
+
+                    } else {
+                        ep = ep + corg[a]['EP'];
+                        shf1 = shf1 + corg[a]['HF1'];
+                        shf2 = shf2 + corg[a]['HF2'];
+
+                        if (corg[a]['DF1'] != "") {
+                            df1 = corg[a]['DF1'];
+                        }
+                        if (corg[a]['DF2'] != "") {
+                            df2 = corg[a]['DF2'];
+                        }
+                    }
+
+                    if (a == total) {
+
+                        var arraystemps = {
+                            'CARDID': corg[a]['CARDID'], // Id do card
+                            'EP': ep, //Estimativa prevista
+                            'OC': corg[a]['OC'], // Ocioso
+                            'HF1': shf1, // Hora 1
+                            'HF2': shf2, // Hota 2
+                            'DF1': df1, // Data 1
+                            'DF2': df2 // Data 2
+                        };
+                        newfields.push(arraystemps);
+
+                        console.group("NewCampos");
+                        console.log(newfields);
+                        console.groupEnd("NewCampos");
+                        montarTabela();
+                    }
+                }
+
+            }
 
 
             //Monta a tabela na tela
             function montarTabela() {
-               
-				
-				var arryscards = [];
-				
+                
+                var mesesano = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+
+                var arryscards = [];
+
                 for (var i = 0; i < cards.length; i++) {
-					for (var y = 0; y < newfields.length; y++) {
-						if(cards[i]['id'] == newfields[y]['CARDID']){
-							
-							var ar = {
-								'CHAM': cards[i]['name'],
-								'DESC': cards[i]['desc'], 
-								'DF1': newfields[y]['DF1'],
-								'HF1': newfields[y]['HF1'],
-								'TDT': 0
-							};
-							arryscards.push(ar);
-							
-						}
-					}
+                    for (var y = 0; y < newfields.length; y++) {
+                        if (cards[i]['id'] == newfields[y]['CARDID']) {
+
+                            var labelname = "";
+                            for (var la = 0; la < cards[i]['idLabels'].length; la++) {
+                                for (var lb = 0; lb < labels.length; lb++) {
+                                    if (cards[i]['idLabels'][la] == labels[lb]['ID']) {
+                                        labelname = labels[lb]['NAME'];
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+
+                            var listname = "";
+                            for (var l = 0; l < listas.length; l++) {
+                                if (cards[i]['idList'] == listas[l]['ID']) {
+                                    listname = listas[l]['NAME'];
+                                    break;
+                                }
+                            }
+
+                            var ar = {
+                                'CHAM': cards[i]['name'],
+                                'FREN': labelname,
+                                'FASE': listname,
+                                'DESC': cards[i]['desc'],
+                                'DF1': newfields[y]['DF1'],
+                                'HF1': newfields[y]['HF1'],
+                                'TDT': 0
+                            };
+                            arryscards.push(ar);
+
+                        }
+                    }
                 }
-				
-				for (var i = 0; i < arryscards.length; i++) {
-					
-					var datascr = arryscards[i]['DF1'];
-					var splitdt = datascr.split("-");
-					
-					var dtano = parseInt(splitdt[0]);
-					var dtmes = parseInt(splitdt[1]);
-					var dtdia = parseInt(splitdt[2]);
-					
-					var totl = 0;
-					
-					dtano = dtano - 2000;
-					
-					dtano = dtano * (12 * 30);
-					dtmes = dtmes * 30;
-					totl = dtano + dtmes + dtdia;
-					
-					arryscards[i]['TDT'] = totl;
-				}
-				
-				arryscards.sort(function(a, b) {
-					return b.TDT - a.TDT;
-				});
-				
-				var tb = document.getElementById("tb-cont");
+
+                for (var i = 0; i < arryscards.length; i++) {
+
+                    var datascr = arryscards[i]['DF1'];
+                    var splitdt = datascr.split("-");
+
+                    var dtano = parseInt(splitdt[0]);
+                    var dtmes = parseInt(splitdt[1]);
+                    var dtdia = parseInt(splitdt[2]);
+
+                    var totl = 0;
+
+                    dtano = dtano - 2000;
+
+                    dtano = dtano * (12 * 30);
+                    dtmes = dtmes * 30;
+                    totl = dtano + dtmes + dtdia;
+
+                    arryscards[i]['TDT'] = totl;
+                }
+
+                arryscards.sort(function (a, b) {
+                    return b.TDT - a.TDT;
+                });
+
+                var tb = document.getElementById("tb-cont");
                 var cnt = 0;
-				
-				for (var i = 0; i < arryscards.length; i++) {
-					cnt = i + 1;
-					
-					var datascr = arryscards[i]['DF1'];
-					var splitdt = datascr.split("-");
-							
-					var dtxt = splitdt[1] + "/" + splitdt[0];
-					
-					tb.innerHTML += "<tr>" +
-						"<th scope='row' width='1%'>" + cnt + "</th>" +
-						"<td width='10%'>" + arryscards[i]['CHAM'] + "</td>" +
-						"<td width='73%'>" + arryscards[i]['DESC'] + "</td>" +
-						"<td width='8%'>" + dtxt + "</td>" +
-						"<td width='8%'>" + arryscards[i]['HF1'] + " hrs</td>" +
-						"</tr>";
-				}
-				
+
+                var totalhrss = 0;
+                var dtproc = "";
+                var dtantig = "";
+                
+                for (var i = 0; i < arryscards.length; i++) {
+                    cnt = i + 1;
+
+                    var datascr = arryscards[i]['DF1'];
+                    var splitdt = datascr.split("-");
+
+                    dtproc = splitdt[1];
+                    
+                    if (dtantig != "") {
+                        if (dtantig != dtproc) {
+                            tb.innerHTML += "<tr>" +
+                                    //"<th scope='row' width='1%'>" + cnt + "</th>" +
+                                    "<td style='background-color: #fff600;'><b>Total</b></td>" +
+                                    "<td colspan='3' style='background-color: #fff600;'></td>" +
+                                    "<td style='background-color: #fff600;'><b>" + mesesano[parseInt(dtantig) - 1] + "</b></td>" +
+                                    "<td style='background-color: #fff600;'><b>" + totalhrss + " hrs</b></td>" +
+                                    "</tr>";
+                            totalhrss = 0;
+                        }
+                    }
+                    totalhrss = totalhrss + arryscards[i]['HF1'];
+                    
+                    dtantig = splitdt[1];
+
+                    var dtxt = splitdt[1] + "/" + splitdt[0];
+
+                    tb.innerHTML += "<tr>" +
+                            //"<th scope='row' width='1%'>" + cnt + "</th>" +
+                            "<td width='95px'><input style='float: left; width: 100%;' type='text' name='lname' value='" + arryscards[i]['CHAM'] + "'/></td>" +
+                            "<td width='48px'><input style='float: left; width: 100%;' type='text' name='lname' value='" + arryscards[i]['FREN'] + "'/></td>" +
+                            "<td width='176px'><input style='float: left; width: 100%;' type='text' name='lname' value='" + arryscards[i]['FASE'] + "'/></td>" +
+                            "<td ><input style='float: left; width: 100%;' type='text' name='lname' value='" + arryscards[i]['DESC'] + "'/></td>" +
+                            "<td width='85px'><input style='float: left; width: 100%;' type='text' name='lname' value='" + dtxt + "'/></td>" +
+                            "<td width='85px'><input style='float: left; width: 100%;' type='text' name='lname' value='" + arryscards[i]['HF1'] + " hrs'/></td>" +
+                            "</tr>";
+                }
+
             }
 
             //Rotinas para quando a tela carregar
@@ -714,10 +764,12 @@
                 <table class="table table-hover" id="table-chamados">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Chamado</th>
+                            <!-- <th scope="col">#</th> -->
+                            <th scope="col">ID</th>
+                            <th scope="col">Frente</th>
+                            <th scope="col">Fase</th>
                             <th scope="col">Descrição</th>
-                            <th scope="col">Fechamento</th>
+                            <th scope="col">Data</th>
                             <th scope="col">Horas</th>
                         </tr>
                     </thead>
