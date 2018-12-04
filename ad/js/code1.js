@@ -50,21 +50,21 @@ var configs = {
 var dadoprotj = {
     'NOME': 'Pool AD - BIOSEV', //Nome do projeto
     'IMG': 'http://www.dausina.com.br/imagens/uploads/conteudos/20140815174318KZkjFeRb.png', //Logo marca
-	'DATA' : '01/10/2017 00:00',
+    'DATA': '01/10/2017 00:00',
     'HRSCTR': 175, // Saldos em HORAS
 };
 protejos.push(dadoprotj);
 var dadoprotj = {
     'NOME': 'Pool AD - NLATAM', //Nome do projeto
     'IMG': 'https://s.rozee.pk/company_logos/44/37188375395233.png', //Logo marca
-	'DATA' : '01/10/2017 00:00',
+    'DATA': '01/10/2017 00:00',
     'HRSCTR': 175, // Saldos em HORAS
 };
 protejos.push(dadoprotj);
 var dadoprotj = {
     'NOME': 'Pool AD - SLATAM', //Nome do projeto
     'IMG': 'https://s.rozee.pk/company_logos/44/37188375395233.png', //Logo marca
-	'DATA' : '01/10/2017 00:00',
+    'DATA': '01/10/2017 00:00',
     'HRSCTR': 175, // Saldos em HORAS
 };
 protejos.push(dadoprotj);
@@ -108,22 +108,22 @@ var dmentrg = []; //Demandas entregas
 var arrrrs = {
     'NOME': 'Estimativa',
     'ATV': 0,
-	'HRS': 0,
-    'E.M': 0, 
+    'HRS': 0,
+    'E.M': 0,
 };
 dmentrg.push(arrrrs);
 var arrrrs = {
     'NOME': 'Construção',
     'ATV': 0,
-	'HRS': 0,
-    'E.M': 0, 
+    'HRS': 0,
+    'E.M': 0,
 };
 dmentrg.push(arrrrs);
 var arrrrs = {
     'NOME': 'Assessment',
     'ATV': 0,
-	'HRS': 0,
-    'E.M': 0, 
+    'HRS': 0,
+    'E.M': 0,
 };
 dmentrg.push(arrrrs);
 
@@ -144,23 +144,23 @@ var ajax1 = $.ajax({
                     'NAME': data[i]['name']
                 };
                 boards.push(array);
-				
-				if(data[i]['name'] == "Pool AD - BIOSEV"){
-					//abridireto(data[i]);
-				}
+
+                if (data[i]['name'] == "Pool AD - BIOSEV") {
+                    //abridireto(data[i]);
+                }
             }
             console.group("Boards");
             console.log(boards);
             console.groupEnd("Boards");
-			montarSelect();
+            montarSelect();
         })
         .fail(function (jqXHR, textStatus, data) {
             dump("", "A requisição AJAX para buscar os Boards falhou!.");
         });
-		
+
 //Se tiver board, montar na tela
 function montarSelect() {
-	
+
     if (boards.length > 0) {
         var vldags = false;
         var bodid = "";
@@ -172,16 +172,16 @@ function montarSelect() {
             }
             //Montar somente com os nomes AD
             if (boards[i]['NAME'].match(/AD/)) {
-				var nameptjs;
-				for (var y = 0; y < protejos.length; y++) {
-				nameptjs = new RegExp(protejos[y]['NOME']);
-					if (boards[i]['NAME'].match(nameptjs)) {
-						var option = document.createElement("option");
-						option.text = boards[i]['NAME'];
-						option.value = boards[i]['ID'];
-						document.getElementById("inputState").add(option);
-					}
-				}
+                var nameptjs;
+                for (var y = 0; y < protejos.length; y++) {
+                    nameptjs = new RegExp(protejos[y]['NOME']);
+                    if (boards[i]['NAME'].match(nameptjs)) {
+                        var option = document.createElement("option");
+                        option.text = boards[i]['NAME'];
+                        option.value = boards[i]['ID'];
+                        document.getElementById("inputState").add(option);
+                    }
+                }
             }
         }
     } else {
@@ -193,49 +193,49 @@ function gerarRelatorio() {
     var e = document.getElementById("inputState");
     var value = e.options[e.selectedIndex].value;
     var text = e.options[e.selectedIndex].text;
-	titulo = text;
+    titulo = text;
     console.log(value);
     console.log(text);
     document.getElementById("tela-01").style.opacity = 0.0;
     document.getElementById("tela-01").style.display = "none";
     document.getElementById("tela-02").style.opacity = 1.0;
-	for (var pj = 0; pj < protejos.length; pj++) {
-		if(protejos[pj]['NOME'] == titulo){
-			document.getElementById("titulo").innerHTML = protejos[pj]['NOME'];
-			if(protejos[pj]['IMG'] != ""){
-				document.getElementById("info-board").innerHTML += "<img id='prjt-img' class='prjt-img'>";
-				document.getElementById("prjt-img").src = protejos[pj]['IMG'];
-				document.getElementById("prjt-img").title = protejos[pj]['NOME'];
-			}
-		}
-	}
+    for (var pj = 0; pj < protejos.length; pj++) {
+        if (protejos[pj]['NOME'] == titulo) {
+            document.getElementById("titulo").innerHTML = protejos[pj]['NOME'];
+            if (protejos[pj]['IMG'] != "") {
+                document.getElementById("info-board").innerHTML += "<img id='prjt-img' class='prjt-img'>";
+                document.getElementById("prjt-img").src = protejos[pj]['IMG'];
+                document.getElementById("prjt-img").title = protejos[pj]['NOME'];
+            }
+        }
+    }
     carregarInfosAPI(value);
 }
 
-function abridireto(ar){
-	
-	titulo = ar['name'];
-	
-	for (var pj = 0; pj < protejos.length; pj++) {
-		if(protejos[pj]['NOME'] == ar['name']){
-			document.getElementById("titulo").innerHTML = protejos[pj]['NOME'];
-			if(protejos[pj]['IMG'] != ""){
-				document.getElementById("info-board").innerHTML += "<img id='prjt-img' class='prjt-img'>";
-				document.getElementById("prjt-img").src = protejos[pj]['IMG'];
-				document.getElementById("prjt-img").title = protejos[pj]['NOME'];
-			}
-		}
-	}
-	
-	document.getElementById("tela-01").style.opacity = 0.0;
+function abridireto(ar) {
+
+    titulo = ar['name'];
+
+    for (var pj = 0; pj < protejos.length; pj++) {
+        if (protejos[pj]['NOME'] == ar['name']) {
+            document.getElementById("titulo").innerHTML = protejos[pj]['NOME'];
+            if (protejos[pj]['IMG'] != "") {
+                document.getElementById("info-board").innerHTML += "<img id='prjt-img' class='prjt-img'>";
+                document.getElementById("prjt-img").src = protejos[pj]['IMG'];
+                document.getElementById("prjt-img").title = protejos[pj]['NOME'];
+            }
+        }
+    }
+
+    document.getElementById("tela-01").style.opacity = 0.0;
     document.getElementById("tela-01").style.display = "none";
     document.getElementById("tela-02").style.opacity = 1.0;
-	carregarInfosAPI(ar['id']);
+    carregarInfosAPI(ar['id']);
 }
 
-function ajax2(id){
-	
-	//Buscando todos os CARDS do BOARD
+function ajax2(id) {
+
+    //Buscando todos os CARDS do BOARD
     url = "https://api.trello.com/1/boards/" + id + "/cards/?key=" + key + "&token=" + token; //List CARDS
     var ajax2 = $.ajax({
         url: url,
@@ -250,18 +250,18 @@ function ajax2(id){
                 console.group("Cards");
                 console.log(cards);
                 console.groupEnd("Cards");
-				
-				setTimeout(function(){ 
-					ajax3(id);
-				}, 500);
+
+                setTimeout(function () {
+                    ajax3(id);
+                }, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI(); - 259", "A requisição AJAX para buscar todos os Cards falhou!.");
             });
 }
 
-function ajax3(id){
-	//Buscando todos os MEMBROS do BOARD
+function ajax3(id) {
+    //Buscando todos os MEMBROS do BOARD
     url = "https://api.trello.com/1/boards/" + id + "/memberships/?key=" + key + "&token=" + token + "&orgMemberType=true&member=true&member_fields=fullName&member_fields=avatarUrl";
     var ajax3 = $.ajax({
         url: url,
@@ -289,18 +289,18 @@ function ajax3(id){
                 console.group("Membros");
                 console.log(menbros);
                 console.groupEnd("Membros");
-				
-				setTimeout(function(){ 
-					ajax5(id);
-				}, 500);
+
+                setTimeout(function () {
+                    ajax5(id);
+                }, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI(); - 298", "A requisição AJAX para buscar todos membros falhou!.");
             });
 }
 
-function ajax5(id){
-	//Buscando todos os LABEL do BOARD
+function ajax5(id) {
+    //Buscando todos os LABEL do BOARD
     url = "https://api.trello.com/1/boards/" + id + "/labels?fields=all&key=" + key + "&token=" + token; //List Labels
     var ajax5 = $.ajax({
         url: url,
@@ -317,7 +317,7 @@ function ajax5(id){
                         'ID': data[i]['id'],
                         'NAME': data[i]['name'],
                         'COR': data[i]['color'],
-						'HRS': 0,
+                        'HRS': 0,
                         'QNT': 0
                     };
                     labels.push(lb);
@@ -325,18 +325,18 @@ function ajax5(id){
                 console.group("Labels");
                 console.log(labels);
                 console.groupEnd("Labels");
-				
-				setTimeout(function(){ 
-					ajax4(id);
-				}, 500);
+
+                setTimeout(function () {
+                    ajax4(id);
+                }, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI(); - 334", "A requisição AJAX para buscar todas as labels falhou!.");
             });
 }
 
-function ajax4(id){
-	//Buscando todos os LISTAS do BOARD
+function ajax4(id) {
+    //Buscando todos os LISTAS do BOARD
     url = "https://api.trello.com/1/boards/" + id + "/lists?cards=all&card_fields=all&filter=open&fields=all&key=" + key + "&token=" + token;
     var ajax4 = $.ajax({
         url: url,
@@ -358,18 +358,18 @@ function ajax4(id){
                 console.group("Listas");
                 console.log(listas);
                 console.groupEnd("Listas");
-				
-				setTimeout(function(){ 
-					ajax6(id);
-				}, 500);
+
+                setTimeout(function () {
+                    ajax6(id);
+                }, 500);
             })
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI(); - 367", "A requisição AJAX para buscar todas as Listas falhou!.");
             });
 }
 
-function ajax6(id){
-	//Buscando parametrizações Custom fields
+function ajax6(id) {
+    //Buscando parametrizações Custom fields
     url = "https://api.trello.com/1/boards/" + id + "/customFields?key=" + key + "&token=" + token; //List Labels
     var ajax6 = $.ajax({
         url: url,
@@ -383,7 +383,7 @@ function ajax6(id){
                 for (var y = 0; y < data.length; y++) {
                     custfields.push(data[y]);
                 }
-				processarDados();
+                processarDados();
             })
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI(); - 389", "A requisição AJAX para buscar todas os Custom fields falhou!.");
@@ -394,49 +394,49 @@ var cnts = 0;
 var refreshIntervalId;
 
 function inicLoad() {
-	
-	refreshIntervalId = setInterval(function(){
-		switch(cnts) {
-			case 0:
-				cnts = 1;
-				document.getElementById("load-txt").innerHTML = "Carregando";
-				break;
-			case 1:
-				cnts = 2;
-				document.getElementById("load-txt").innerHTML = "Carregando.";
-				break;
-			case 2:
-				cnts = 3;
-				document.getElementById("load-txt").innerHTML = "Carregando..";
-				break;
-			case 3:
-				cnts = 0;
-				document.getElementById("load-txt").innerHTML = "Carregando...";
-				break;
-		}
-	}, 300);
+
+    refreshIntervalId = setInterval(function () {
+        switch (cnts) {
+            case 0:
+                cnts = 1;
+                document.getElementById("load-txt").innerHTML = "Carregando";
+                break;
+            case 1:
+                cnts = 2;
+                document.getElementById("load-txt").innerHTML = "Carregando.";
+                break;
+            case 2:
+                cnts = 3;
+                document.getElementById("load-txt").innerHTML = "Carregando..";
+                break;
+            case 3:
+                cnts = 0;
+                document.getElementById("load-txt").innerHTML = "Carregando...";
+                break;
+        }
+    }, 300);
 }
 
 function stopLoad() {
-	
-	clearInterval(refreshIntervalId);
-	
-	document.getElementById("load").style.opacity = 0.0;	
-	setTimeout(function(){ 
-		document.getElementById("load").style.display = "none";
-	}, 500);
+
+    clearInterval(refreshIntervalId);
+
+    document.getElementById("load").style.opacity = 0.0;
+    setTimeout(function () {
+        document.getElementById("load").style.display = "none";
+    }, 500);
 }
 
 //Puxar infos do site
 function carregarInfosAPI(id) {
-	
-	inicLoad();
+
+    inicLoad();
 
     console.group("Board");
     console.log(id);
     console.groupEnd("Board");
-	
-	ajax2(id);
+
+    ajax2(id);
 
 }
 
@@ -475,9 +475,9 @@ function processarDados() {
                 calcArrRLTBar();
                 rltLine();
                 rltBar();
-				rltLinEst();
-				
-				stopLoad();
+                rltLinEst();
+
+                stopLoad();
             }, 1300);
         }
     }
@@ -487,18 +487,18 @@ function orgNewFields() {
 
     var arraystemps = {
         'CARDID': "", // Id do card
-		'EP': 0, //Estimativa prevista
-		'OC': false, // Ocioso
+        'EP': 0, //Estimativa prevista
+        'OC': false, // Ocioso
         'HF1': 0, // Hora 1
         'HF2': 0, // Hota 2
         'DF1': "", // Data 1
         'DF2': "" // Data 2
     };
-	
-	console.log(tempfield);
-	console.log(custfields);
+
+    console.log(tempfield);
+    console.log(custfields);
     for (var n = 0; n < tempfield.length; n++) {
-		
+
         arraystemps['CARDID'] = tempfield[n]['idModel'];
 
         for (var t = 0; t < custfields.length; t++) {
@@ -508,13 +508,13 @@ function orgNewFields() {
                     case "EP":
                         arraystemps['EP'] = parseInt(tempfield[n]['value']['number']);
                         break;
-						
-					case "IDLE":
-						if(tempfield[n]['value']['checked'] == "true"){
-							arraystemps['OC'] = true;
-						} else {
-							arraystemps['OC'] = false;
-						}
+
+                    case "IDLE":
+                        if (tempfield[n]['value']['checked'] == "true") {
+                            arraystemps['OC'] = true;
+                        } else {
+                            arraystemps['OC'] = false;
+                        }
                         break;
 
                     case "H.F.1":
@@ -545,14 +545,14 @@ function orgNewFields() {
         arraystemps = {
             'CARDID': "", // Id do card
             'EP': 0, //Estimativa prevista
-			'OC': false, // Ocioso
+            'OC': false, // Ocioso
             'HF1': 0, // Hora 1
             'HF2': 0, // Hota 2
             'DF1': "", // Data 1
             'DF2': "" // Data 2
         };
     }
-	
+
     var corg = newfields;
     newfields = [];
     var total = corg.length - 1;
@@ -560,8 +560,8 @@ function orgNewFields() {
     var card1 = "";
     var cardpr = "";
 
-	var ep = 0;
-	var oc = false;
+    var ep = 0;
+    var oc = false;
     var shf1 = 0;
     var shf2 = 0;
     var df1 = "";
@@ -580,7 +580,7 @@ function orgNewFields() {
             var arraystemps = {
                 'CARDID': card1, // Id do card
                 'EP': ep, //Estimativa prevista
-				'OC': oc, // Ocioso
+                'OC': oc, // Ocioso
                 'HF1': shf1, // Hora 1
                 'HF2': shf2, // Hota 2
                 'DF1': df1, // Data 1
@@ -589,9 +589,9 @@ function orgNewFields() {
             newfields.push(arraystemps);
 
             card1 = corg[a]['CARDID'];
-			oc = corg[a]['OC'];
-			
-			ep = corg[a]['EP'];
+            oc = corg[a]['OC'];
+
+            ep = corg[a]['EP'];
             shf1 = corg[a]['HF1'];
             shf2 = corg[a]['HF2'];
 
@@ -603,7 +603,7 @@ function orgNewFields() {
             }
 
         } else {
-			ep = ep + corg[a]['EP'];
+            ep = ep + corg[a]['EP'];
             shf1 = shf1 + corg[a]['HF1'];
             shf2 = shf2 + corg[a]['HF2'];
 
@@ -620,7 +620,7 @@ function orgNewFields() {
             var arraystemps = {
                 'CARDID': corg[a]['CARDID'], // Id do card
                 'EP': ep, //Estimativa prevista
-				'OC': corg[a]['OC'], // Ocioso
+                'OC': corg[a]['OC'], // Ocioso
                 'HF1': shf1, // Hora 1
                 'HF2': shf2, // Hota 2
                 'DF1': df1, // Data 1
@@ -1153,22 +1153,22 @@ function ListasXCards() {
     document.getElementById("implementado-thrs").innerHTML = implementado['THRS'] + "h";
     //PIPELINE
     console.log(pipeline);
-	tlpipeline = pipeline['TOTL'];
+    tlpipeline = pipeline['TOTL'];
     if (pipeline['TOTL'] == 0) {
         document.getElementById("pipeline-totl").style.color = "#ed0404";
         document.getElementById("pipeline-totl").style.fontWeight = "bold";
     } else {
-		document.getElementById("pipeline-totl").style.color = "#fff";
-	}
+        document.getElementById("pipeline-totl").style.color = "#fff";
+    }
     document.getElementById("pipeline-totl").innerHTML = pipeline['TOTL'];
-	document.getElementById("pipeline-thrs").innerHTML = pipeline['THRS'] + "h";
+    document.getElementById("pipeline-thrs").innerHTML = pipeline['THRS'] + "h";
 
     //Reprovs
     document.getElementById("reprovs-totl").innerHTML = reprovs['TOTL'] + " tarefa(s)";
     document.getElementById("reprovs-thrs").innerHTML = reprovs['THRS'] + "h";
 
     risco();
-	tableEntre();
+    tableEntre();
 }
 
 //AAAA-MM-DD
@@ -1205,32 +1205,32 @@ function mntListasLabels() {
     for (var i = 0; i < cards.length; i++) {
         for (var z = 0; z < cards[i]['idLabels'].length; z++) {
             for (var y = 0; y < labels.length; y++) {
-				for (var x = 0; x < listas.length; x++) {
-					for (var n = 0; n < newfields.length; n++) {
-						if (cards[i]['idLabels'][z] == labels[y]['ID'] &&
-							cards[i]['idList'] == listas[x]['ID'] &&
-							newfields[n]['CARDID'] == cards[i]['id']){
-							
-							if (listas[x]['NAME'] == "Estimativas - Aguardando Aprovação") {
-								labels[y]['HRS'] = labels[y]['HRS'] + newfields[n]['EP'];
-								labels[y]['QNT'] = labels[y]['QNT'] + 1;
-							}
-						}
-					}
-				}
+                for (var x = 0; x < listas.length; x++) {
+                    for (var n = 0; n < newfields.length; n++) {
+                        if (cards[i]['idLabels'][z] == labels[y]['ID'] &&
+                                cards[i]['idList'] == listas[x]['ID'] &&
+                                newfields[n]['CARDID'] == cards[i]['id']) {
+
+                            if (listas[x]['NAME'] == "Estimativas - Aguardando Aprovação") {
+                                labels[y]['HRS'] = labels[y]['HRS'] + newfields[n]['EP'];
+                                labels[y]['QNT'] = labels[y]['QNT'] + 1;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
 
-	for (var i = 0; i < labels.length; i++) {
-		if(labels[i]['QNT'] > 0){
-			var porc = (labels[i]['QNT'] / tlpipeline) * 100;
-			labels[i]['QNT'] = leftPad(labels[i]['QNT'], 2);
-			porc = porc.toFixed(0);
-			porc = leftPad(porc, 2);
-			var div = "<div class='etiq'><p>" + labels[i]['NAME'] + "</p><h4>" + labels[i]['QNT'] + " &nbsp; - &nbsp; " + labels[i]['HRS'] + "hrs</h4><div class='progress'><div class='progress-bar' role='progressbar' style='width:" + porc + "%; background-color: " + labels[i]['COR'] + ";' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'></div></div></div>";
-			document.getElementById("div-labels").innerHTML += div;
-		}
+    for (var i = 0; i < labels.length; i++) {
+        if (labels[i]['QNT'] > 0) {
+            var porc = (labels[i]['QNT'] / tlpipeline) * 100;
+            labels[i]['QNT'] = leftPad(labels[i]['QNT'], 2);
+            porc = porc.toFixed(0);
+            porc = leftPad(porc, 2);
+            var div = "<div class='etiq'><p>" + labels[i]['NAME'] + "</p><h4>" + labels[i]['QNT'] + " &nbsp; - &nbsp; " + labels[i]['HRS'] + "hrs</h4><div class='progress'><div class='progress-bar' role='progressbar' style='width:" + porc + "%; background-color: " + labels[i]['COR'] + ";' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'></div></div></div>";
+            document.getElementById("div-labels").innerHTML += div;
+        }
     }
 }
 
@@ -1295,114 +1295,115 @@ function risco() {
     }
 }
 
-function tableEntre(){
-		
-	for (var i = 0; i < cards.length; i++) {
-        for (var x = 0; x < listas.length; x++) {
-			for (var n = 0; n < newfields.length; n++) {
-				if (newfields[n]['CARDID'] == cards[i]['id'] &&
-					cards[i]['idList'] == listas[x]['ID']){
-							
-					if (listas[x]['NAME'] == "Estimativas Aprovadas" ||
-						listas[x]['NAME'] == "Estimativas Reprovadas/Canceladas" ||
-						listas[x]['NAME'] == "Estimativas - Aguardando Aprovação") {
-						
-						for (var y = 0; y < dmentrg.length; y++) {
-							if(dmentrg[y]['NOME'] == "Estimativa"){
-								dmentrg[y]['ATV'] = dmentrg[y]['ATV'] + 1;
-								dmentrg[y]['HRS'] = dmentrg[y]['HRS'] + newfields[n]['HF1'] + newfields[n]['HF2'];
-							}
-						}						
-					}
-					
-					if (listas[x]['NAME'] == "Impedimentos" ||
-						listas[x]['NAME'] == "Desenho" ||
-						listas[x]['NAME'] == "Aprovação da EF (BP/Usuário)" ||
-						listas[x]['NAME'] == "Construção Funcional" ||
-						listas[x]['NAME'] == "Construção Abap" ||
-						listas[x]['NAME'] == "Liberação de Acesso" ||
-						listas[x]['NAME'] == "Teste Funcional" ||
-						listas[x]['NAME'] == "Teste do Usuário" ||
-						listas[x]['NAME'] == "Preparação CAB" ||
-						listas[x]['NAME'] == "Pós Implantação" ||
-						listas[x]['NAME'] == "Done") {
-						
-						for (var y = 0; y < dmentrg.length; y++) {
-							if(dmentrg[y]['NOME'] == "Construção"){
-								dmentrg[y]['ATV'] = dmentrg[y]['ATV'] + 1;
-								dmentrg[y]['HRS'] = dmentrg[y]['HRS'] + newfields[n]['HF1'] + newfields[n]['HF2'];
-							}
-						}						
-					}
-					
-					if (listas[x]['NAME'] == "Assessment") {
-						
-						for (var y = 0; y < dmentrg.length; y++) {
-							if(dmentrg[y]['NOME'] == "Assessment"){
-								dmentrg[y]['ATV'] = dmentrg[y]['ATV'] + 1;
-								dmentrg[y]['HRS'] = dmentrg[y]['HRS'] + newfields[n]['HF1'] + newfields[n]['HF2'];
-							}
-						}						
-					}
-				}
-			}
-		}
-    }
-	
-	for (var d = 0; d < dmentrg.length; d++) {
-		var divsao = dmentrg[d]['HRS'] / dmentrg[d]['ATV'];
-		document.getElementById("row-entr").innerHTML += "<tr><th scope='row'>" + dmentrg[d]['NOME'] + "</th><td>" + dmentrg[d]['ATV'] + "</td><td>" + dmentrg[d]['HRS'] + "</td><td>" + divsao.toFixed(1); + "</td></tr>";
-	}
-	
-	var cardsars = [];
-	
-	for (var i = 0; i < cards.length; i++) {
-        for (var x = 0; x < listas.length; x++) {
-			for (var n = 0; n < newfields.length; n++) {
-				
-				if (newfields[n]['CARDID'] == cards[i]['id'] &&
-					cards[i]['idList'] == listas[x]['ID']){
-					
-					if (listas[x]['NAME'] == "Impedimentos" ||
-					listas[x]['NAME'] == "Desenho" ||
-					listas[x]['NAME'] == "Aprovação da EF (BP/Usuário)" ||
-					listas[x]['NAME'] == "Construção Funcional" ||
-					listas[x]['NAME'] == "Construção Abap" ||
-					listas[x]['NAME'] == "Liberação de Acesso" ||
-					listas[x]['NAME'] == "Teste Funcional" ||
-					listas[x]['NAME'] == "Teste do Usuário" ||
-					listas[x]['NAME'] == "Preparação CAB" ||
-					listas[x]['NAME'] == "Pós Implantação" ||
-					listas[x]['NAME'] == "Done") {
-						
-						var desc = cards[i]['desc'].substring(0,20);
-						desc = desc + "...";
-						var temps = {
-							'CRD': newfields[n]['CARDID'],
-							'NAM': cards[i]['name'],
-							//'DES': desc,
-							'DES': cards[i]['desc'],
-							'HF1': newfields[n]['HF1'],
-							'HF2': newfields[n]['HF2'],
-							'TOT': newfields[n]['HF1'] + newfields[n]['HF2']
-						};
-						cardsars.push(temps);					
-					}
-				}
-			}
-		}
-	}
-	
-	cardsars.sort(function(a, b) {
-		return b.TOT - a.TOT;
-	});
+function tableEntre() {
 
-	for (var i = 0; i < 5; i++) {
-		if(i < cardsars.length){
-			document.getElementById("row-top5").innerHTML += "<tr><td>" + cardsars[i]['NAM'] + "</td><td><input class='input-view' type='text' value='" + cardsars[i]['DES'] + "' disabled /></td><td>" + cardsars[i]['TOT'] + "</td></tr>";
-		}
-	}
-	
+    for (var i = 0; i < cards.length; i++) {
+        for (var x = 0; x < listas.length; x++) {
+            for (var n = 0; n < newfields.length; n++) {
+                if (newfields[n]['CARDID'] == cards[i]['id'] &&
+                        cards[i]['idList'] == listas[x]['ID']) {
+
+                    if (listas[x]['NAME'] == "Estimativas Aprovadas" ||
+                            listas[x]['NAME'] == "Estimativas Reprovadas/Canceladas" ||
+                            listas[x]['NAME'] == "Estimativas - Aguardando Aprovação") {
+
+                        for (var y = 0; y < dmentrg.length; y++) {
+                            if (dmentrg[y]['NOME'] == "Estimativa") {
+                                dmentrg[y]['ATV'] = dmentrg[y]['ATV'] + 1;
+                                dmentrg[y]['HRS'] = dmentrg[y]['HRS'] + newfields[n]['HF1'] + newfields[n]['HF2'];
+                            }
+                        }
+                    }
+
+                    if (listas[x]['NAME'] == "Impedimentos" ||
+                            listas[x]['NAME'] == "Desenho" ||
+                            listas[x]['NAME'] == "Aprovação da EF (BP/Usuário)" ||
+                            listas[x]['NAME'] == "Construção Funcional" ||
+                            listas[x]['NAME'] == "Construção Abap" ||
+                            listas[x]['NAME'] == "Liberação de Acesso" ||
+                            listas[x]['NAME'] == "Teste Funcional" ||
+                            listas[x]['NAME'] == "Teste do Usuário" ||
+                            listas[x]['NAME'] == "Preparação CAB" ||
+                            listas[x]['NAME'] == "Pós Implantação" ||
+                            listas[x]['NAME'] == "Done") {
+
+                        for (var y = 0; y < dmentrg.length; y++) {
+                            if (dmentrg[y]['NOME'] == "Construção") {
+                                dmentrg[y]['ATV'] = dmentrg[y]['ATV'] + 1;
+                                dmentrg[y]['HRS'] = dmentrg[y]['HRS'] + newfields[n]['HF1'] + newfields[n]['HF2'];
+                            }
+                        }
+                    }
+
+                    if (listas[x]['NAME'] == "Assessment") {
+
+                        for (var y = 0; y < dmentrg.length; y++) {
+                            if (dmentrg[y]['NOME'] == "Assessment") {
+                                dmentrg[y]['ATV'] = dmentrg[y]['ATV'] + 1;
+                                dmentrg[y]['HRS'] = dmentrg[y]['HRS'] + newfields[n]['HF1'] + newfields[n]['HF2'];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    for (var d = 0; d < dmentrg.length; d++) {
+        var divsao = dmentrg[d]['HRS'] / dmentrg[d]['ATV'];
+        document.getElementById("row-entr").innerHTML += "<tr><th scope='row'>" + dmentrg[d]['NOME'] + "</th><td>" + dmentrg[d]['ATV'] + "</td><td>" + dmentrg[d]['HRS'] + "</td><td>" + divsao.toFixed(1);
+        +"</td></tr>";
+    }
+
+    var cardsars = [];
+
+    for (var i = 0; i < cards.length; i++) {
+        for (var x = 0; x < listas.length; x++) {
+            for (var n = 0; n < newfields.length; n++) {
+
+                if (newfields[n]['CARDID'] == cards[i]['id'] &&
+                        cards[i]['idList'] == listas[x]['ID']) {
+
+                    if (listas[x]['NAME'] == "Impedimentos" ||
+                            listas[x]['NAME'] == "Desenho" ||
+                            listas[x]['NAME'] == "Aprovação da EF (BP/Usuário)" ||
+                            listas[x]['NAME'] == "Construção Funcional" ||
+                            listas[x]['NAME'] == "Construção Abap" ||
+                            listas[x]['NAME'] == "Liberação de Acesso" ||
+                            listas[x]['NAME'] == "Teste Funcional" ||
+                            listas[x]['NAME'] == "Teste do Usuário" ||
+                            listas[x]['NAME'] == "Preparação CAB" ||
+                            listas[x]['NAME'] == "Pós Implantação" ||
+                            listas[x]['NAME'] == "Done") {
+
+                        var desc = cards[i]['desc'].substring(0, 20);
+                        desc = desc + "...";
+                        var temps = {
+                            'CRD': newfields[n]['CARDID'],
+                            'NAM': cards[i]['name'],
+                            //'DES': desc,
+                            'DES': cards[i]['desc'],
+                            'HF1': newfields[n]['HF1'],
+                            'HF2': newfields[n]['HF2'],
+                            'TOT': newfields[n]['HF1'] + newfields[n]['HF2']
+                        };
+                        cardsars.push(temps);
+                    }
+                }
+            }
+        }
+    }
+
+    cardsars.sort(function (a, b) {
+        return b.TOT - a.TOT;
+    });
+
+    for (var i = 0; i < 5; i++) {
+        if (i < cardsars.length) {
+            document.getElementById("row-top5").innerHTML += "<tr><td>" + cardsars[i]['NAM'] + "</td><td><input class='input-view' type='text' value='" + cardsars[i]['DES'] + "' disabled /></td><td>" + cardsars[i]['TOT'] + "</td></tr>";
+        }
+    }
+
 }
 
 var satisfac = 0; //0-nao tem 1-ruim 2-bom 

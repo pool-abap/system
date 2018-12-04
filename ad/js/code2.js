@@ -216,21 +216,21 @@ function saldoMes() {
 }
 
 function calcArrRLT() {
-    
+
     var dtatt = new Date();
-    
+
     var ano_atual = dtatt.getFullYear();
     var mes_atual = dtatt.getMonth();
-    
+
     var anoproc = ano_atual;
     var mesproc = mes_atual;
-    
+
     //mesproc = mesproc - 1;
     //Não precisa diminuir pois o array já vem com 1 a menos
-    
-    if(mesproc < 1){
-       mesproc = 12;
-       anoproc = anoproc - 1;
+
+    if (mesproc < 1) {
+        mesproc = 12;
+        anoproc = anoproc - 1;
     }
 
     for (var i = 0; i < cards.length; i++) {
@@ -245,7 +245,7 @@ function calcArrRLT() {
                 var mescard = parseInt(datasplit[1]);
                 var anocard = parseInt(datasplit[0]);
 
-                
+
                 switch (mescard) {
                     case 1:
                         if (mescard < mesproc) {
@@ -464,7 +464,7 @@ function calcArrRLT() {
                         //rltline['DEZ'] = rltline['DEZ'] + newfields[z]['HF1'];
                         break;
                 }
-                
+
             }
 
         }
@@ -959,6 +959,7 @@ function rltBar() {
         }
     }
     );
+
 }
 
 
@@ -1141,6 +1142,8 @@ function rltLinEst() {
     var rlago = estmes['AGO'] / tlsmes['AGO'];
     var rlset = estmes['SET'] / tlsmes['SET'];
 
+
+
     var ctx1 = document.getElementById('myChart-est').getContext('2d');
     var chart = new Chart(ctx1, {
         // The type of chart we want to create
@@ -1168,20 +1171,188 @@ function rltLinEst() {
             }
         }
     });
+
+    montarInfohrs();
 }
 
+var infoshrs = [];
+var arrshrs = {'mes': 'Jan', 'real': 0};
+infoshrs.push(arrshrs);
+var arrshrs = {'mes': 'Fev', 'real': 0};
+infoshrs.push(arrshrs);
+var arrshrs = {'mes': 'Mar', 'real': 0};
+infoshrs.push(arrshrs);
+var arrshrs = {'mes': 'Abr', 'real': 0};
+infoshrs.push(arrshrs);
+var arrshrs = {'mes': 'Mai', 'real': 0};
+infoshrs.push(arrshrs);
+var arrshrs = {'mes': 'Jun', 'real': 0};
+infoshrs.push(arrshrs);
+var arrshrs = {'mes': 'Jul', 'real': 0};
+infoshrs.push(arrshrs);
+var arrshrs = {'mes': 'Ago', 'real': 0};
+infoshrs.push(arrshrs);
+var arrshrs = {'mes': 'Set', 'real': 0};
+infoshrs.push(arrshrs);
+var arrshrs = {'mes': 'Out', 'real': 0};
+infoshrs.push(arrshrs);
+var arrshrs = {'mes': 'Nov', 'real': 0};
+infoshrs.push(arrshrs);
+var arrshrs = {'mes': 'Dez', 'real': 0};
+infoshrs.push(arrshrs);
+
+//console.error(infoshrs);
+
+function montarInfohrs() {
+
+    var d = new Date();
+    var mn = d.getMonth();
+    var ma = d.getFullYear();
+    ma = parseInt(ma);
+    mn = parseInt(mn);
+
+    var conmenos = 0;
+
+    var mn = d.getMonth();
+    mn = parseInt(mn);
+
+    for (var i = 0; i < 2; i++) {
+        if (mn >= 11) {
+            mn = 0;
+        } else {
+            mn++;
+        }
+    }
+
+    for (var i = 0; i < cards.length; i++) {
+        for (var n = 0; n < newfields.length; n++) {
+
+            if (newfields[n]['CARDID'] == cards[i]['id'] &&
+                    cards[i]['dueComplete'] == true) {
+
+                if (newfields[n]['DF1'] != "") {
+                    var rltdata1 = newfields[n]['DF1'];
+                    var datasplit1 = rltdata1.split("-");
+                    var mesdf1 = parseInt(datasplit1[1]);
+                    var anodf1 = parseInt(datasplit1[2]);
+
+                    if (anodf1 = ma) {
+                        if (mesdf1 >= mn) {
+                            conmenos = mesdf1 - 1;
+                            infoshrs[conmenos]['real'] += newfields[n]['HF1'];
+                        }
+                    }
+                    if (anodf1 > ma) {
+                        if (mesdf1 < mn) {
+                            conmenos = mesdf1 - 1;
+                            infoshrs[conmenos]['real'] += newfields[n]['HF1'];
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    var hrprd = 0;
+
+    var projn = document.getElementById('titulo').innerHTML;
+
+    for (var i = 0; i < protejos.length; i++) {
+        if (protejos[i]['NOME'] == projn) {
+            hrprd = protejos[i]['HRSCTR'];
+        }
+    }
+
+    var projab = projn.split('-');
 
 
+    var mn = d.getMonth();
+    mn = parseInt(mn);
 
+    for (var i = 0; i < 2; i++) {
+        if (mn >= 11) {
+            mn = 0;
+        } else {
+            mn++;
+        }
+    }
 
+    document.getElementById('infos-hrs').innerHTML += "<tr>";
+    var containg = "<th scope='row'>Hrs Real.</th>";
+    containg = "<th style='border: 0px;' scope='col'>" + projab[1] + "</th>";
+    for (var i = 0; i <= 11; i++) {
 
+        if (mn >= 12) {
+            mn = 0;
+        }
+        containg += "<th style='border: 0px;' scope='col'>" + infoshrs[mn]['mes'] + "</th>";
+        mn++;
+    }
+    document.getElementById('infos-hrs').innerHTML += containg;
+    document.getElementById('infos-hrs').innerHTML += "</tr>";
 
+    document.getElementById('infos-hrs').innerHTML += "<tr>" +
+            "<th scope='row'>Hrs Pool</th><td>175</td>" +
+            "<td>" + hrprd + "</td>" +
+            "<td>" + hrprd + "</td>" +
+            "<td>" + hrprd + "</td>" +
+            "<td>" + hrprd + "</td>" +
+            "<td>" + hrprd + "</td>" +
+            "<td>" + hrprd + "</td>" +
+            "<td>" + hrprd + "</td>" +
+            "<td>" + hrprd + "</td>" +
+            "<td>" + hrprd + "</td>" +
+            "<td>" + hrprd + "</td>" +
+            "<td>" + hrprd + "</td>" +
+            "</tr>";
 
+    var mn = d.getMonth();
+    mn = parseInt(mn);
 
+    for (var i = 0; i < 2; i++) {
+        if (mn >= 11) {
+            mn = 0;
+        } else {
+            mn++;
+        }
+    }
+    document.getElementById('infos-hrs').innerHTML += "<tr>";
+    var containg = "<th scope='row'>Hrs Real.</th>";
+    for (var i = 0; i <= 11; i++) {
 
+        if (mn >= 12) {
+            mn = 0;
+        }
+        containg += "<td>" + infoshrs[mn]['real'] + "</td>";
+        mn++;
+    }
+    document.getElementById('infos-hrs').innerHTML += containg;
+    document.getElementById('infos-hrs').innerHTML += "</tr>";
 
+    var mn = d.getMonth();
+    mn = parseInt(mn);
 
+    for (var i = 0; i < 2; i++) {
+        if (mn >= 11) {
+            mn = 0;
+        } else {
+            mn++;
+        }
+    }
+    document.getElementById('infos-hrs').innerHTML += "<tr>";
+    var containg = "<th scope='row'>Hrs Saldo</th>";
+    for (var i = 0; i <= 11; i++) {
 
+        if (mn >= 12) {
+            mn = 0;
+        }
 
+        var cnt = infoshrs[mn]['real'] - hrprd;
 
+        containg += "<td>" + cnt + "</td>";
+        mn++;
+    }
+    document.getElementById('infos-hrs').innerHTML += containg;
+    document.getElementById('infos-hrs').innerHTML += "</tr>";
 
+}
