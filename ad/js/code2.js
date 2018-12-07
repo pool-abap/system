@@ -206,8 +206,7 @@ function saldoMes() {
 
                 for (var c = 0; c < cards.length; c++) {
                     for (var z = 0; z < newfields.length; z++) {
-                        if (newfields[z]['CARDID'] == cards[c]['id'] &&
-                                cards[c]['dueComplete'] == true) {
+                        if (newfields[z]['CARDID'] == cards[c]['id']) {
 
                             var carddata = newfields[z]['DF1'].split("-");
 
@@ -252,7 +251,7 @@ function saldoMes() {
                 histosaldo[h]['total'] = ttsld;
             }
 
-            //console.error(histosaldo);
+            console.error(histosaldo);
 
             //Debugue
             //console.error("Total Saldo - " + ttlms);
@@ -953,7 +952,7 @@ function rltLine() {
         type: 'line',
         // The data for our dataset
         data: {
-            labels: ["Nov", "Dez", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out"],
+            labels: [ "Dez", "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov"],
             datasets: [{
                     label: "Consumo Mensal (H%)",
                     backgroundColor: 'rgb(158, 158, 158)',
@@ -961,7 +960,7 @@ function rltLine() {
                     fill: false,
                     responsive: true,
                     maintainAspectRatio: true,
-                    data: [rltline['NOV'], rltline['DEZ'], rltline['JAN'], rltline['FEV'], rltline['MAR'], rltline['ABR'], rltline['MAI'], rltline['JUN'], rltline['JUL'], rltline['AGO'], rltline['SET'], rltline['OUT']],
+                    data: [ rltline['DEZ'], rltline['JAN'], rltline['FEV'], rltline['MAR'], rltline['ABR'], rltline['MAI'], rltline['JUN'], rltline['JUL'], rltline['AGO'], rltline['SET'], rltline['OUT'], rltline['NOV']],
                 }]
         },
         // Configuration options go here
@@ -1389,14 +1388,36 @@ function montarInfohrs() {
     }
     document.getElementById('infos-hrs').innerHTML += "<tr>";
     var containg = "<th scope='row'>Hrs Real.</th>";
+    
+    var anoproc = ma;
+    var mesproc = mn;
+    mesproc++;
     for (var i = 0; i <= 11; i++) {
-
-        if (mn >= 12) {
-            mn = 0;
+        
+        var escrv = 0;
+        
+        if (mesproc >= 13) {
+            mesproc = 1;
+            anoproc++;
         }
-        containg += "<td>" + infoshrs[mn]['real'] + "</td>";
-        mn++;
+        
+        for (var s = 0; s < histosaldo.length; s++) {
+            if (histosaldo[s]['mes'] == mesproc && histosaldo[s]['ano'] == anoproc) {
+                escrv = histosaldo[s]['consu'];
+            }
+        }
+        containg += "<td>" + escrv + "</td>";
+        mesproc++;
     }
+    
+//    for (var i = 0; i <= 11; i++) {
+//
+//        if (mn >= 12) {
+//            mn = 0;
+//        }
+//        containg += "<td>" + infoshrs[mn]['real'] + "</td>";
+//        mn++;
+//    }
     document.getElementById('infos-hrs').innerHTML += containg;
     document.getElementById('infos-hrs').innerHTML += "</tr>";
 
