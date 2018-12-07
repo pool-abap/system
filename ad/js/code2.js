@@ -2,6 +2,9 @@ var saldohrmes = 0;
 var saldohrprxmes = 0;
 var saldohrantmes = 0;
 
+
+var histosaldo = [];
+
 var rltline = {
     'OUT': 0,
     'NOV': 0,
@@ -89,6 +92,7 @@ var dezrlt = {
     'ASS': 0,
 };
 
+
 function saldoMes() {
     var data = new Date();
     var mes = data.getMonth(); //0-11
@@ -123,6 +127,7 @@ function saldoMes() {
         var anoproc = datemp2[0];
 
         if (newfields[z]['OC'] == false) {
+
             if (mesproc == mes && anolok == anoproc) {
                 saldohrmes = saldohrmes + newfields[z]['HF1'];
                 saldohrmes = saldohrmes + newfields[z]['HF2'];
@@ -182,6 +187,72 @@ function saldoMes() {
             dif++;
 
             ttlms = protejos[pj]['HRSCTR'] * dif;
+
+            var dahist = protejos[pj]['DATA'].split("/");
+            dahist[0] = parseInt(dahist[0]);
+            dahist[1] = parseInt(dahist[1]);
+            dahist[2] = parseInt(dahist[2]);
+            
+            var loopproc = dif + 4;
+            for (var i = 0; i < loopproc; i++) {
+
+                if (dahist[1] > 12) {
+                    dahist[1] = 1;
+                    dahist[2]++;
+                }
+
+                var salddohrs = protejos[pj]['HRSCTR'] * (i + 1);
+                var consum = 0;
+
+                for (var c = 0; c < cards.length; c++) {
+                    for (var z = 0; z < newfields.length; z++) {
+                        if (newfields[z]['CARDID'] == cards[c]['id'] &&
+                                cards[c]['dueComplete'] == true) {
+
+                            var carddata = newfields[z]['DF1'].split("-");
+
+                            carddata[0] = parseInt(carddata[0]);
+                            carddata[1] = parseInt(carddata[1]);
+                            carddata[2] = parseInt(carddata[2]);
+
+                            if (dahist[2] == carddata[0] && dahist[1] == carddata[1]) {
+                                consum = consum - newfields[z]['HF1'];
+                            }
+
+                            if (newfields[z]['DF2'] != "") {
+
+                                carddata = newfields[z]['DF2'].split("-");
+
+                                carddata[0] = parseInt(carddata[0]);
+                                carddata[1] = parseInt(carddata[1]);
+                                carddata[2] = parseInt(carddata[2]);
+
+                                if (dahist[2] == carddata[0] && dahist[1] == carddata[1]) {
+                                    consum = consum - newfields[z]['HF2'];
+                                }
+                            }
+                        }
+                    }
+                }
+
+                var saldarrs = {'mes': dahist[1], 'ano': dahist[2], 'saldo': salddohrs, 'consu': consum, 'total': 0};
+                histosaldo.push(saldarrs);
+
+                dahist[1]++;
+            }
+
+            var ttsld = 0;
+            for (var h = 0; h < histosaldo.length; h++) {
+                var saldoant = 0;
+                if (h > 0) {
+                    var indx = h - 1;
+                    saldoant = histosaldo[indx]['total'];
+                }
+                ttsld = protejos[pj]['HRSCTR'] + saldoant + histosaldo[h]['consu'];
+                histosaldo[h]['total'] = ttsld;
+            }
+
+            //console.error(histosaldo);
 
             //Debugue
             //console.error("Total Saldo - " + ttlms);
@@ -1176,29 +1247,29 @@ function rltLinEst() {
 }
 
 var infoshrs = [];
-var arrshrs = {'mes': 'Jan', 'real': 0};
+var arrshrs = {'mes': 'Jan', 'real': 0, 'saldo': 0};
 infoshrs.push(arrshrs);
-var arrshrs = {'mes': 'Fev', 'real': 0};
+var arrshrs = {'mes': 'Fev', 'real': 0, 'saldo': 0};
 infoshrs.push(arrshrs);
-var arrshrs = {'mes': 'Mar', 'real': 0};
+var arrshrs = {'mes': 'Mar', 'real': 0, 'saldo': 0};
 infoshrs.push(arrshrs);
-var arrshrs = {'mes': 'Abr', 'real': 0};
+var arrshrs = {'mes': 'Abr', 'real': 0, 'saldo': 0};
 infoshrs.push(arrshrs);
-var arrshrs = {'mes': 'Mai', 'real': 0};
+var arrshrs = {'mes': 'Mai', 'real': 0, 'saldo': 0};
 infoshrs.push(arrshrs);
-var arrshrs = {'mes': 'Jun', 'real': 0};
+var arrshrs = {'mes': 'Jun', 'real': 0, 'saldo': 0};
 infoshrs.push(arrshrs);
-var arrshrs = {'mes': 'Jul', 'real': 0};
+var arrshrs = {'mes': 'Jul', 'real': 0, 'saldo': 0};
 infoshrs.push(arrshrs);
-var arrshrs = {'mes': 'Ago', 'real': 0};
+var arrshrs = {'mes': 'Ago', 'real': 0, 'saldo': 0};
 infoshrs.push(arrshrs);
-var arrshrs = {'mes': 'Set', 'real': 0};
+var arrshrs = {'mes': 'Set', 'real': 0, 'saldo': 0};
 infoshrs.push(arrshrs);
-var arrshrs = {'mes': 'Out', 'real': 0};
+var arrshrs = {'mes': 'Out', 'real': 0, 'saldo': 0};
 infoshrs.push(arrshrs);
-var arrshrs = {'mes': 'Nov', 'real': 0};
+var arrshrs = {'mes': 'Nov', 'real': 0, 'saldo': 0};
 infoshrs.push(arrshrs);
-var arrshrs = {'mes': 'Dez', 'real': 0};
+var arrshrs = {'mes': 'Dez', 'real': 0, 'saldo': 0};
 infoshrs.push(arrshrs);
 
 //console.error(infoshrs);
@@ -1248,6 +1319,7 @@ function montarInfohrs() {
                             infoshrs[conmenos]['real'] += newfields[n]['HF1'];
                         }
                     }
+
                 }
             }
         }
@@ -1256,7 +1328,6 @@ function montarInfohrs() {
     var hrprd = 0;
 
     var projn = document.getElementById('titulo').innerHTML;
-
     for (var i = 0; i < protejos.length; i++) {
         if (protejos[i]['NOME'] == projn) {
             hrprd = protejos[i]['HRSCTR'];
@@ -1341,16 +1412,26 @@ function montarInfohrs() {
     }
     document.getElementById('infos-hrs').innerHTML += "<tr>";
     var containg = "<th scope='row'>Hrs Saldo</th>";
+    
+    var anoproc = ma;
+    var mesproc = mn;
+    mesproc++;
     for (var i = 0; i <= 11; i++) {
-
-        if (mn >= 12) {
-            mn = 0;
+        
+        var escrv = 0;
+        
+        if (mesproc >= 13) {
+            mesproc = 1;
+            anoproc++;
         }
-
-        var cnt = infoshrs[mn]['real'] - hrprd;
-
-        containg += "<td>" + cnt + "</td>";
-        mn++;
+        
+        for (var s = 0; s < histosaldo.length; s++) {
+            if (histosaldo[s]['mes'] == mesproc && histosaldo[s]['ano'] == anoproc) {
+                escrv = histosaldo[s]['total'];
+            }
+        }
+        containg += "<td>" + escrv + "</td>";
+        mesproc++;
     }
     document.getElementById('infos-hrs').innerHTML += containg;
     document.getElementById('infos-hrs').innerHTML += "</tr>";
