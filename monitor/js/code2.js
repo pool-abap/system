@@ -185,6 +185,9 @@ function rltLine() {
     
     var messs = dthj.getMonth();
     messs++;
+    if (messs < 10) {
+        messs = "0" + messs;
+    }
     var anomes = dthj.getFullYear() + "-" + messs;
     
     var ddt;
