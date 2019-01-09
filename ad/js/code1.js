@@ -36,7 +36,6 @@ console.group("Datas");
 console.log("Mes - " + strg_mes);
 console.groupEnd("Datas");
 var protejos = [];
-
 var riscos = false;
 //ALTERE SOMENTE AQUI ----------------------------------------------------------------------------------------------------------
 
@@ -93,7 +92,6 @@ var token = configs['CFG_TOK'];
 var url = ""; //Variavel onde vai receber todos os link AJAX
 
 var titulo = "";
-
 var boards = []; //Array que receberar todos os boards
 var cards = []; //Array que vai receber os cards
 var cards = []; //Dados completos dos cards
@@ -126,7 +124,6 @@ var arrrrs = {
     'E.M': 0,
 };
 dmentrg.push(arrrrs);
-
 url = "https://api.trello.com/1/members/me/boards?key=" + key + "&token=" + token; //List Boards
 var ajax1 = $.ajax({
     url: url,
@@ -144,7 +141,6 @@ var ajax1 = $.ajax({
                     'NAME': data[i]['name']
                 };
                 boards.push(array);
-
                 if (data[i]['name'] == "Pool AD - BIOSEV") {
                     //abridireto(data[i]);
                 }
@@ -157,7 +153,6 @@ var ajax1 = $.ajax({
         .fail(function (jqXHR, textStatus, data) {
             dump("", "A requisição AJAX para buscar os Boards falhou!.");
         });
-
 //Se tiver board, montar na tela
 function montarSelect() {
 
@@ -215,7 +210,6 @@ function gerarRelatorio() {
 function abridireto(ar) {
 
     titulo = ar['name'];
-
     for (var pj = 0; pj < protejos.length; pj++) {
         if (protejos[pj]['NOME'] == ar['name']) {
             document.getElementById("titulo").innerHTML = protejos[pj]['NOME'];
@@ -235,7 +229,7 @@ function abridireto(ar) {
 
 function ajax2(id) {
 
-    //Buscando todos os CARDS do BOARD
+//Buscando todos os CARDS do BOARD
     url = "https://api.trello.com/1/boards/" + id + "/cards/?key=" + key + "&token=" + token; //List CARDS
     var ajax2 = $.ajax({
         url: url,
@@ -250,10 +244,9 @@ function ajax2(id) {
                 console.group("Cards");
                 console.log(cards);
                 console.groupEnd("Cards");
-
                 setTimeout(function () {
                     ajax3(id);
-                }, 500);
+                }, 2000);
             })
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI(); - 259", "A requisição AJAX para buscar todos os Cards falhou!.");
@@ -261,7 +254,7 @@ function ajax2(id) {
 }
 
 function ajax3(id) {
-    //Buscando todos os MEMBROS do BOARD
+//Buscando todos os MEMBROS do BOARD
     url = "https://api.trello.com/1/boards/" + id + "/memberships/?key=" + key + "&token=" + token + "&orgMemberType=true&member=true&member_fields=fullName&member_fields=avatarUrl";
     var ajax3 = $.ajax({
         url: url,
@@ -289,10 +282,9 @@ function ajax3(id) {
                 console.group("Membros");
                 console.log(menbros);
                 console.groupEnd("Membros");
-
                 setTimeout(function () {
                     ajax5(id);
-                }, 500);
+                }, 2000);
             })
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI(); - 298", "A requisição AJAX para buscar todos membros falhou!.");
@@ -300,7 +292,7 @@ function ajax3(id) {
 }
 
 function ajax5(id) {
-    //Buscando todos os LABEL do BOARD
+//Buscando todos os LABEL do BOARD
     url = "https://api.trello.com/1/boards/" + id + "/labels?fields=all&key=" + key + "&token=" + token; //List Labels
     var ajax5 = $.ajax({
         url: url,
@@ -325,10 +317,9 @@ function ajax5(id) {
                 console.group("Labels");
                 console.log(labels);
                 console.groupEnd("Labels");
-
                 setTimeout(function () {
                     ajax4(id);
-                }, 500);
+                }, 2000);
             })
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI(); - 334", "A requisição AJAX para buscar todas as labels falhou!.");
@@ -336,7 +327,7 @@ function ajax5(id) {
 }
 
 function ajax4(id) {
-    //Buscando todos os LISTAS do BOARD
+//Buscando todos os LISTAS do BOARD
     url = "https://api.trello.com/1/boards/" + id + "/lists?cards=all&card_fields=all&filter=open&fields=all&key=" + key + "&token=" + token;
     var ajax4 = $.ajax({
         url: url,
@@ -358,10 +349,9 @@ function ajax4(id) {
                 console.group("Listas");
                 console.log(listas);
                 console.groupEnd("Listas");
-
                 setTimeout(function () {
                     ajax6(id);
-                }, 500);
+                }, 2000);
             })
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI(); - 367", "A requisição AJAX para buscar todas as Listas falhou!.");
@@ -369,7 +359,7 @@ function ajax4(id) {
 }
 
 function ajax6(id) {
-    //Buscando parametrizações Custom fields
+//Buscando parametrizações Custom fields
     url = "https://api.trello.com/1/boards/" + id + "/customFields?key=" + key + "&token=" + token; //List Labels
     var ajax6 = $.ajax({
         url: url,
@@ -383,7 +373,9 @@ function ajax6(id) {
                 for (var y = 0; y < data.length; y++) {
                     custfields.push(data[y]);
                 }
-                processarDados();
+                setTimeout(function () {
+                    processarDados();
+                }, 2000);
             })
             .fail(function (jqXHR, textStatus, data) {
                 dump("carregarInfosAPI(); - 389", "A requisição AJAX para buscar todas os Custom fields falhou!.");
@@ -392,7 +384,6 @@ function ajax6(id) {
 
 var cnts = 0;
 var refreshIntervalId;
-
 function inicLoad() {
 
     refreshIntervalId = setInterval(function () {
@@ -420,7 +411,6 @@ function inicLoad() {
 function stopLoad() {
 
     clearInterval(refreshIntervalId);
-
     document.getElementById("load").style.opacity = 0.0;
     setTimeout(function () {
         document.getElementById("load").style.display = "none";
@@ -431,56 +421,102 @@ function stopLoad() {
 function carregarInfosAPI(id) {
 
     inicLoad();
-
     console.group("Board");
     console.log(id);
     console.groupEnd("Board");
-
     ajax2(id);
+}
 
+function requisc(id) {
+//Buscando todos os campos adicionais individual
+    url = "https://api.trello.com/1/cards/" + id + "/customFieldItems?key=" + key + "&token=" + token;
+    ajaxnewcamp = $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'json',
+        beforeSend: function () {
+            //console.log("Buscando New Field - " + cards[i][﻿'id']);
+        }
+    })
+            .done(function (data) {
+                for (var y = 0; y < data.length; y++) {
+                    tempfield.push(data[y]);
+                }
+            })
+            .fail(function (jqXHR, textStatus, data) {
+                dump("processarDados(); - 465", "A requisição AJAX para buscar todos os campos adicionais falhou!.");
+            });
 }
 
 function processarDados() {
     var ajaxdic = "";
     var ajaxnewcamp = "";
     var total = cards.length - 1;
-    for (var i = 0; i < cards.length; i++) {
-
-        //Buscando todos os campos adicionais individual
-        url = "https://api.trello.com/1/cards/" + cards[i][﻿'id'] + "/customFieldItems?key=" + key + "&token=" + token;
-        ajaxnewcamp = $.ajax({
-            url: url,
-            type: 'GET',
-            dataType: 'json',
-            beforeSend: function () {
-                //console.log("Buscando New Field - " + cards[i][﻿'id']);
-            }
-        })
-                .done(function (data) {
-                    for (var y = 0; y < data.length; y++) {
-                        tempfield.push(data[y]);
-                    }
-                })
-                .fail(function (jqXHR, textStatus, data) {
-                    dump("processarDados(); - 465", "A requisição AJAX para buscar todos os campos adicionais falhou!.");
-                });
-        if (i == total) {
-            setTimeout(function () {
-                //Funções de exibição
-                orgNewFields();
-                ListasXCards();
-                mntListasLabels();
-                saldoMes();
-                calcArrRLT();
-                calcArrRLTBar();
-                rltLine();
-                rltBar();
-                rltLinEst();
-
-                stopLoad();
-            }, 1300);
+    var temp = 2000;
+    var idexec;
+    
+    var cardtotal = cards.length;
+    var cardproc = 0;
+    var loadcustom = setInterval(function () {
+        if (cardproc < cardtotal) {
+            console.log(cards);
+            requisc(cards[cardproc]['id']);
+            console.warn("Calculando " + cardproc);
+        } else {
+            clearInterval(loadcustom);
+            orgNewFields();
+            ListasXCards();
+            mntListasLabels();
+            saldoMes();
+            calcArrRLT();
+            calcArrRLTBar();
+            rltLine();
+            rltBar();
+            rltLinEst();
+            stopLoad();
         }
-    }
+        cardproc++;
+    }, 3000);
+    //for (var i = 0; i < cards.length; i++) {
+
+    //Buscando todos os campos adicionais individual
+//        url = "https://api.trello.com/1/cards/" + cards[i][﻿'id'] + "/customFieldItems?key=" + key + "&token=" + token;
+//        ajaxnewcamp = $.ajax({
+//            url: url,
+//            type: 'GET',
+//            dataType: 'json',
+//            beforeSend: function () {
+//                //console.log("Buscando New Field - " + cards[i][﻿'id']);
+//            }
+//        })
+//                .done(function (data) {
+//                    for (var y = 0; y < data.length; y++) {
+//                        tempfield.push(data[y]);
+//                    }
+//                })
+//                .fail(function (jqXHR, textStatus, data) {
+//                    dump("processarDados(); - 465", "A requisição AJAX para buscar todos os campos adicionais falhou!.");
+//                });
+
+
+    //if (i == total) {
+    //    setTimeout(function () {
+    //        //Funções de exibição
+    //        orgNewFields();
+    //        ListasXCards();
+    //       mntListasLabels();
+    //        saldoMes();
+    //        calcArrRLT();
+    //        calcArrRLTBar();
+    //        rltLine();
+    //        rltBar();
+    //        rltLinEst();
+
+    //        stopLoad();
+    //}, 1300);
+    //    }, temp);
+//}
+//}
 }
 
 function orgNewFields() {
@@ -494,13 +530,11 @@ function orgNewFields() {
         'DF1': "", // Data 1
         'DF2': "" // Data 2
     };
-
     console.log(tempfield);
     console.log(custfields);
     for (var n = 0; n < tempfield.length; n++) {
 
         arraystemps['CARDID'] = tempfield[n]['idModel'];
-
         for (var t = 0; t < custfields.length; t++) {
 
             if (tempfield[n]['idCustomField'] == custfields[t]['id']) {
@@ -508,7 +542,6 @@ function orgNewFields() {
                     case "EP":
                         arraystemps['EP'] = parseInt(tempfield[n]['value']['number']);
                         break;
-
                     case "IDLE":
                         if (tempfield[n]['value']['checked'] == "true") {
                             arraystemps['OC'] = true;
@@ -516,21 +549,17 @@ function orgNewFields() {
                             arraystemps['OC'] = false;
                         }
                         break;
-
                     case "H.F.1":
                         arraystemps['HF1'] = parseInt(tempfield[n]['value']['number']);
                         break;
-
                     case "H.F.2":
                         arraystemps['HF2'] = parseInt(tempfield[n]['value']['number']);
                         break;
-
                     case "D.F.1":
                         var ddf = tempfield[n]['value']['date'];
                         ddf = ddf.split("T");
                         arraystemps['DF1'] = ddf[0];
                         break;
-
                     case "D.F.2":
                         var ddf = tempfield[n]['value']['date'];
                         ddf = ddf.split("T");
@@ -541,7 +570,6 @@ function orgNewFields() {
         }
 
         newfields.push(arraystemps);
-
         arraystemps = {
             'CARDID': "", // Id do card
             'EP': 0, //Estimativa prevista
@@ -556,21 +584,17 @@ function orgNewFields() {
     var corg = newfields;
     newfields = [];
     var total = corg.length - 1;
-
     var card1 = "";
     var cardpr = "";
-
     var ep = 0;
     var oc = false;
     var shf1 = 0;
     var shf2 = 0;
     var df1 = "";
     var df2 = "";
-
     for (var a = 0; a < corg.length; a++) {
 
         cardpr = corg[a]['CARDID'];
-
         if (card1 == "") {
             card1 = corg[a]['CARDID'];
         }
@@ -587,14 +611,11 @@ function orgNewFields() {
                 'DF2': df2 // Data 2
             };
             newfields.push(arraystemps);
-
             card1 = corg[a]['CARDID'];
             oc = corg[a]['OC'];
-
             ep = corg[a]['EP'];
             shf1 = corg[a]['HF1'];
             shf2 = corg[a]['HF2'];
-
             if (corg[a]['DF1'] != "") {
                 df1 = corg[a]['DF1'];
             }
@@ -606,7 +627,6 @@ function orgNewFields() {
             ep = ep + corg[a]['EP'];
             shf1 = shf1 + corg[a]['HF1'];
             shf2 = shf2 + corg[a]['HF2'];
-
             if (corg[a]['DF1'] != "") {
                 df1 = corg[a]['DF1'];
             }
@@ -627,7 +647,6 @@ function orgNewFields() {
                 'DF2': df2 // Data 2
             };
             newfields.push(arraystemps);
-
             console.group("NewCampos");
             console.log(newfields);
             console.groupEnd("NewCampos");
@@ -711,7 +730,6 @@ function ListasXCards() {
         'FPRZ': 0, // Dentro Prazo
         'THRS': 0, // Total horas
     };
-
     var reprovs = {
         'DONE': 0, // Card Feito
         'NDON': 0, // Card Não Feito
@@ -720,7 +738,6 @@ function ListasXCards() {
         'FPRZ': 0, // Dentro Prazo
         'THRS': 0, // Total horas
     };
-
     for (var i = 0; i < cards.length; i++) {
         for (var y = 0; y < listas.length; y++) {
             if (cards[i]['idList'] == listas[y]['ID']) {
@@ -735,7 +752,6 @@ function ListasXCards() {
                             impedimentos['DONE'] = impedimentos['DONE'] + 1;
                         } else {
                             impedimentos['NDON'] = impedimentos['NDON'] + 1;
-
                             if (dataNoPrazo(cards[i]['due'])) {
                                 impedimentos['DPRZ'] = impedimentos['DPRZ'] + 1;
                             } else {
@@ -744,7 +760,6 @@ function ListasXCards() {
                             }
                         }
                         impedimentos['TOTL'] = impedimentos['TOTL'] + 1;
-
                         for (var n = 0; n < newfields.length; n++) {
                             if (newfields[n]['CARDID'] == cards[i]['id']) {
                                 impedimentos['THRS'] = impedimentos['THRS'] + newfields[n]['HF1'];
@@ -752,13 +767,11 @@ function ListasXCards() {
                             }
                         }
                         break;
-
                     case "Desenho":
                         if (cards[i]['dueComplete']) {
                             desenho['DONE'] = desenho['DONE'] + 1;
                         } else {
                             desenho['NDON'] = desenho['NDON'] + 1;
-
                             if (dataNoPrazo(cards[i]['due'])) {
                                 desenho['DPRZ'] = desenho['DPRZ'] + 1;
                             } else {
@@ -767,7 +780,6 @@ function ListasXCards() {
                             }
                         }
                         desenho['TOTL'] = desenho['TOTL'] + 1;
-
                         for (var n = 0; n < newfields.length; n++) {
                             if (newfields[n]['CARDID'] == cards[i]['id']) {
                                 desenho['THRS'] = desenho['THRS'] + newfields[n]['HF1'];
@@ -775,13 +787,11 @@ function ListasXCards() {
                             }
                         }
                         break;
-
                     case "Aprovação da EF (BP/Usuário)":
                         if (cards[i]['dueComplete']) {
                             aprovdesenho['DONE'] = aprovdesenho['DONE'] + 1;
                         } else {
                             aprovdesenho['NDON'] = aprovdesenho['NDON'] + 1;
-
                             if (dataNoPrazo(cards[i]['due'])) {
                                 aprovdesenho['DPRZ'] = aprovdesenho['DPRZ'] + 1;
                             } else {
@@ -790,7 +800,6 @@ function ListasXCards() {
                             }
                         }
                         aprovdesenho['TOTL'] = aprovdesenho['TOTL'] + 1;
-
                         for (var n = 0; n < newfields.length; n++) {
                             if (newfields[n]['CARDID'] == cards[i]['id']) {
                                 aprovdesenho['THRS'] = aprovdesenho['THRS'] + newfields[n]['HF1'];
@@ -798,13 +807,11 @@ function ListasXCards() {
                             }
                         }
                         break;
-
                     case "Construção Funcional":
                         if (cards[i]['dueComplete']) {
                             construcao['DONE'] = construcao['DONE'] + 1;
                         } else {
                             construcao['NDON'] = construcao['NDON'] + 1;
-
                             if (dataNoPrazo(cards[i]['due'])) {
                                 construcao['DPRZ'] = construcao['DPRZ'] + 1;
                             } else {
@@ -813,7 +820,6 @@ function ListasXCards() {
                             }
                         }
                         construcao['TOTL'] = construcao['TOTL'] + 1;
-
                         for (var n = 0; n < newfields.length; n++) {
                             if (newfields[n]['CARDID'] == cards[i]['id']) {
                                 construcao['THRS'] = construcao['THRS'] + newfields[n]['HF1'];
@@ -821,13 +827,11 @@ function ListasXCards() {
                             }
                         }
                         break;
-
                     case "Construção Abap":
                         if (cards[i]['dueComplete']) {
                             construcao['DONE'] = construcao['DONE'] + 1;
                         } else {
                             construcao['NDON'] = construcao['NDON'] + 1;
-
                             if (dataNoPrazo(cards[i]['due'])) {
                                 construcao['DPRZ'] = construcao['DPRZ'] + 1;
                             } else {
@@ -836,7 +840,6 @@ function ListasXCards() {
                             }
                         }
                         construcao['TOTL'] = construcao['TOTL'] + 1;
-
                         for (var n = 0; n < newfields.length; n++) {
                             if (newfields[n]['CARDID'] == cards[i]['id']) {
                                 construcao['THRS'] = construcao['THRS'] + newfields[n]['HF1'];
@@ -844,13 +847,11 @@ function ListasXCards() {
                             }
                         }
                         break;
-
                     case "Teste Funcional":
                         if (cards[i]['dueComplete']) {
                             construcao['DONE'] = construcao['DONE'] + 1;
                         } else {
                             construcao['NDON'] = construcao['NDON'] + 1;
-
                             if (dataNoPrazo(cards[i]['due'])) {
                                 construcao['DPRZ'] = construcao['DPRZ'] + 1;
                             } else {
@@ -859,7 +860,6 @@ function ListasXCards() {
                             }
                         }
                         construcao['TOTL'] = construcao['TOTL'] + 1;
-
                         for (var n = 0; n < newfields.length; n++) {
                             if (newfields[n]['CARDID'] == cards[i]['id']) {
                                 construcao['THRS'] = construcao['THRS'] + newfields[n]['HF1'];
@@ -867,13 +867,11 @@ function ListasXCards() {
                             }
                         }
                         break;
-
                     case "Liberação de Acesso":
                         if (cards[i]['dueComplete']) {
                             construcao['DONE'] = construcao['DONE'] + 1;
                         } else {
                             construcao['NDON'] = construcao['NDON'] + 1;
-
                             if (dataNoPrazo(cards[i]['due'])) {
                                 construcao['DPRZ'] = construcao['DPRZ'] + 1;
                             } else {
@@ -882,7 +880,6 @@ function ListasXCards() {
                             }
                         }
                         construcao['TOTL'] = construcao['TOTL'] + 1;
-
                         for (var n = 0; n < newfields.length; n++) {
                             if (newfields[n]['CARDID'] == cards[i]['id']) {
                                 construcao['THRS'] = construcao['THRS'] + newfields[n]['HF1'];
@@ -890,13 +887,11 @@ function ListasXCards() {
                             }
                         }
                         break;
-
                     case "Teste do Usuário":
                         if (cards[i]['dueComplete']) {
                             testuser['DONE'] = testuser['DONE'] + 1;
                         } else {
                             testuser['NDON'] = testuser['NDON'] + 1;
-
                             if (dataNoPrazo(cards[i]['due'])) {
                                 testuser['DPRZ'] = testuser['DPRZ'] + 1;
                             } else {
@@ -905,7 +900,6 @@ function ListasXCards() {
                             }
                         }
                         testuser['TOTL'] = testuser['TOTL'] + 1;
-
                         for (var n = 0; n < newfields.length; n++) {
                             if (newfields[n]['CARDID'] == cards[i]['id']) {
                                 testuser['THRS'] = testuser['THRS'] + newfields[n]['HF1'];
@@ -913,13 +907,11 @@ function ListasXCards() {
                             }
                         }
                         break;
-
                     case "Preparação CAB":
                         if (cards[i]['dueComplete']) {
                             precab['DONE'] = precab['DONE'] + 1;
                         } else {
                             precab['NDON'] = precab['NDON'] + 1;
-
                             if (dataNoPrazo(cards[i]['due'])) {
                                 precab['DPRZ'] = precab['DPRZ'] + 1;
                             } else {
@@ -928,7 +920,6 @@ function ListasXCards() {
                             }
                         }
                         precab['TOTL'] = precab['TOTL'] + 1;
-
                         for (var n = 0; n < newfields.length; n++) {
                             if (newfields[n]['CARDID'] == cards[i]['id']) {
                                 precab['THRS'] = precab['THRS'] + newfields[n]['HF1'];
@@ -936,13 +927,11 @@ function ListasXCards() {
                             }
                         }
                         break;
-
                     case "Pós Implantação":
                         if (cards[i]['dueComplete']) {
                             suportgolive['DONE'] = suportgolive['DONE'] + 1;
                         } else {
                             suportgolive['NDON'] = suportgolive['NDON'] + 1;
-
                             if (dataNoPrazo(cards[i]['due'])) {
                                 suportgolive['DPRZ'] = suportgolive['DPRZ'] + 1;
                             } else {
@@ -951,7 +940,6 @@ function ListasXCards() {
                             }
                         }
                         suportgolive['TOTL'] = suportgolive['TOTL'] + 1;
-
                         for (var n = 0; n < newfields.length; n++) {
                             if (newfields[n]['CARDID'] == cards[i]['id']) {
                                 suportgolive['THRS'] = suportgolive['THRS'] + newfields[n]['HF1'];
@@ -959,13 +947,11 @@ function ListasXCards() {
                             }
                         }
                         break;
-
                     case "Done":
                         if (cards[i]['dueComplete']) {
                             implementado['DONE'] = implementado['DONE'] + 1;
                         } else {
                             implementado['NDON'] = implementado['NDON'] + 1;
-
                             if (dataNoPrazo(cards[i]['due'])) {
                                 implementado['DPRZ'] = implementado['DPRZ'] + 1;
                             } else {
@@ -974,7 +960,6 @@ function ListasXCards() {
                             }
                         }
                         implementado['TOTL'] = implementado['TOTL'] + 1;
-
                         for (var n = 0; n < newfields.length; n++) {
                             if (newfields[n]['CARDID'] == cards[i]['id']) {
                                 implementado['THRS'] = implementado['THRS'] + newfields[n]['HF1'];
@@ -982,7 +967,6 @@ function ListasXCards() {
                             }
                         }
                         break;
-
                     case "Estimativas Em execução":
                         /*if (cards[i]['dueComplete']) {
                          pipeline['DONE'] = pipeline['DONE'] + 1;
@@ -1005,13 +989,11 @@ function ListasXCards() {
                          }
                          }*/
                         break;
-
                     case "Estimativas - Aguardando Aprovação":
                         if (cards[i]['dueComplete']) {
                             pipeline['DONE'] = pipeline['DONE'] + 1;
                         } else {
                             pipeline['NDON'] = pipeline['NDON'] + 1;
-
                             if (dataNoPrazo(cards[i]['due'])) {
                                 pipeline['DPRZ'] = pipeline['DPRZ'] + 1;
                             } else {
@@ -1020,7 +1002,6 @@ function ListasXCards() {
                             }
                         }
                         pipeline['TOTL'] = pipeline['TOTL'] + 1;
-
                         for (var n = 0; n < newfields.length; n++) {
                             if (newfields[n]['CARDID'] == cards[i]['id']) {
                                 pipeline['THRS'] = pipeline['THRS'] + newfields[n]['EP'];
@@ -1028,7 +1009,6 @@ function ListasXCards() {
                             }
                         }
                         break;
-
                     case "Estimativas Aprovadas":
                         /*if (cards[i]['dueComplete']) {
                          pipeline['DONE'] = pipeline['DONE'] + 1;
@@ -1051,13 +1031,11 @@ function ListasXCards() {
                          }
                          }*/
                         break;
-
                     case "Estimativas Reprovadas/Canceladas":
                         if (cards[i]['dueComplete']) {
                             reprovs['DONE'] = reprovs['DONE'] + 1;
                         } else {
                             reprovs['NDON'] = reprovs['NDON'] + 1;
-
                             if (dataNoPrazo(cards[i]['due'])) {
                                 reprovs['DPRZ'] = reprovs['DPRZ'] + 1;
                             } else {
@@ -1066,7 +1044,6 @@ function ListasXCards() {
                             }
                         }
                         reprovs['TOTL'] = reprovs['TOTL'] + 1;
-
                         for (var n = 0; n < newfields.length; n++) {
                             if (newfields[n]['CARDID'] == cards[i]['id']) {
                                 reprovs['THRS'] = reprovs['THRS'] + newfields[n]['HF1'];
@@ -1074,10 +1051,8 @@ function ListasXCards() {
                             }
                         }
                         break;
-
                     case "Assessment":
                         break;
-
                     default:
                         dump("ListasXCards(); - 1067", "A lista " + listas[y]['NAME'] + " não foi mapeada na função.");
                         break;
@@ -1162,11 +1137,9 @@ function ListasXCards() {
     }
     document.getElementById("pipeline-totl").innerHTML = pipeline['TOTL'];
     document.getElementById("pipeline-thrs").innerHTML = pipeline['THRS'] + "h";
-
     //Reprovs
     document.getElementById("reprovs-totl").innerHTML = reprovs['TOTL'] + " tarefa(s)";
     document.getElementById("reprovs-thrs").innerHTML = reprovs['THRS'] + "h";
-
     risco();
     tableEntre();
 }
@@ -1181,21 +1154,17 @@ function dataNoPrazo(dt1) {
     var anoatual = dataatual.getFullYear(); //4 dígitos
 
     var datahoje = diaatual + '/' + mesatual + '/' + anoatual;
-
     var ddt1 = dt1.split("-");
-
     var newdt1 = ddt1[2] + "/" + ddt1[1] + "/" + ddt1[0] + " 00:00";
     var ddthjoe = datahoje + " 00:00";
-
     var data1 = moment(newdt1, "DD/MM/YYYY hh:mm");
     var data2 = moment(ddthjoe, "DD/MM/YYYY hh:mm");
     var diferenca = data1.diff(data2, 'days');
-
     if (diferenca < 0) {
-        //Se a data 1 for menor que a data de hoje
+//Se a data 1 for menor que a data de hoje
         return false;
     } else {
-        //Se a data 1 for maior que a data de hoje
+//Se a data 1 for maior que a data de hoje
         return true;
     }
 }
@@ -1252,7 +1221,7 @@ function dump(func, txt) {
 }
 
 function montarData() {
-    // Obtém a data/hora atual
+// Obtém a data/hora atual
     var data = new Date();
     var meses = new Array("Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro");
     var semana = new Array("Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado");
@@ -1356,7 +1325,6 @@ function tableEntre() {
     }
 
     var cardsars = [];
-
     for (var i = 0; i < cards.length; i++) {
         for (var x = 0; x < listas.length; x++) {
             for (var n = 0; n < newfields.length; n++) {
@@ -1397,7 +1365,6 @@ function tableEntre() {
     cardsars.sort(function (a, b) {
         return b.TOT - a.TOT;
     });
-
     for (var i = 0; i < 5; i++) {
         if (i < cardsars.length) {
             document.getElementById("row-top5").innerHTML += "<tr><td>" + cardsars[i]['NAM'] + "</td><td><input class='input-view' type='text' value='" + cardsars[i]['DES'] + "' disabled /></td><td>" + cardsars[i]['TOT'] + "</td></tr>";
