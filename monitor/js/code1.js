@@ -147,11 +147,14 @@ function gerarRelatorio() {
 
     buscarCards(value);
     buscarLabel(value);
+
 }
 
 //Puxar infos do site
 function buscarCards(id) {
+    //https://api.trello.com/1/boards/" + id + "?actions=all&boardStars=mine&cards=all&card_pluginData=true&checklists=all&customFields=true&fields=all&labels=all&lists=all&members=all&memberships=all&membersInvited=all&membersInvited_fields=all&pluginData=true&organization=true&organization_pluginData=true&myPrefs=true&tags=true&key=" + key + "&token=" + token;
     url = "https://api.trello.com/1/boards/" + id + "/cards/?key=" + key + "&token=" + token; //List CARDS
+    //url = "https://api.trello.com/1/boards/" + id + "?actions=all&boardStars=mine&cards=all&card_pluginData=true&checklists=all&customFields=true&fields=all&labels=all&lists=all&members=all&memberships=all&membersInvited=all&membersInvited_fields=all&pluginData=true&organization=true&organization_pluginData=true&myPrefs=true&tags=true&key=" + key + "&token=" + token; //List CARDS
     var ajax2 = $.ajax({
         url: url,
         type: 'GET',
