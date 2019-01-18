@@ -244,7 +244,7 @@ function contagem(data) {
         try {
             sp1 = data[i]['name'].split(" ");
         } catch (e) {
-            console.error("Erro SLIPT");
+            console.error("Erro SPLIT - " + data[i]['name']);
             continue;
         }
 
@@ -675,11 +675,11 @@ function montarDoing() {
                         dtabr = cards[i]['due'];
                         try {
                             dtabr = dtabr.split("T");
+                            dtabr = dtabr[0].split("-");
                         } catch (e) {
-                            console.error("Erro SLIPT");
+                            console.error("Erro SPLIT - " + cards[i]['name']);
                             continue;
                         }
-                        dtabr = dtabr[0].split("-");
                         dtd = dtabr[2];
                         dtm = dtabr[1];
                         dta = dtabr[0];

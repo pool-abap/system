@@ -71,7 +71,7 @@ function rltBar() {
             desc = desc[0].split("[");
             desc = desc[1].split("]");
         } catch (e) {
-            console.error("Erro SLIPT");
+            console.error("Erro SPLIT - " + cards[i]['name']);
             continue;
         }
         desc = desc[0];
@@ -172,7 +172,7 @@ function RpValorByDay(dma) {
         try {
             dtsc = cards[a]['due'].split("T");
         } catch (e) {
-            console.error("Erro SLIPT");
+            console.error("Erro SPLIT - " + cards[a]['name']);
             continue;
         }
 
