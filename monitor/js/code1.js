@@ -240,7 +240,14 @@ function contagem(data) {
     for (var i = 0; i < data.length; i++) {
 
         //Tratar projeto
-        var sp1 = data[i]['name'].split(" ");
+        var sp1;
+        try {
+            sp1 = data[i]['name'].split(" ");
+        } catch (e) {
+            console.error("Erro SLIPT");
+            continue;
+        }
+
         var rp = sp1[0].replace("[", "");
         rp = rp.replace("]", "");
         rp = rp.toUpperCase();
@@ -666,7 +673,12 @@ function montarDoing() {
 
                     if (cards[i]['due'] != null) {
                         dtabr = cards[i]['due'];
-                        dtabr = dtabr.split("T");
+                        try {
+                            dtabr = dtabr.split("T");
+                        } catch (e) {
+                            console.error("Erro SLIPT");
+                            continue;
+                        }
                         dtabr = dtabr[0].split("-");
                         dtd = dtabr[2];
                         dtm = dtabr[1];

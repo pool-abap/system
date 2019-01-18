@@ -66,9 +66,14 @@ function rltBar() {
 
     for (var i = 0; i < cards.length; i++) {
         var desc = cards[i]['name'];
-        desc = desc.split(" ");
-        desc = desc[0].split("[");
-        desc = desc[1].split("]");
+        try {
+            desc = desc.split(" ");
+            desc = desc[0].split("[");
+            desc = desc[1].split("]");
+        } catch (e) {
+            console.error("Erro SLIPT");
+            continue;
+        }
         desc = desc[0];
 
         desc = desc.toUpperCase();
@@ -92,14 +97,14 @@ function rltBar() {
     for (var h = 0; h < projsts.length; h++) {
         var stak = 'Stack ' + contcor;
         var corss = corarrs[h];
-        
+
         for (var g = 0; g < projscors.length; g++) {
-            if(projsts[h] == projscors[g][0]){
+            if (projsts[h] == projscors[g][0]) {
                 corss = projscors[g][1];
             }
         }
-        
-        
+
+
         var arystemp = {
             label: projsts[h],
             backgroundColor: corss,
@@ -162,10 +167,17 @@ function RpValorByDay(dma) {
     var vlrr = 0;
 
     for (a = 0; a < cards.length; a++) {
-        
-        var dtsc = cards[a]['due'].split("T");
-        
-        if(dma == dtsc[0]){
+
+        var dtsc;
+        try {
+            dtsc = cards[a]['due'].split("T");
+        } catch (e) {
+            console.error("Erro SLIPT");
+            continue;
+        }
+
+
+        if (dma == dtsc[0]) {
             vlrr++;
         }
     }
@@ -179,47 +191,47 @@ function rltLine() {
     //var ttds = diasNoMes(dthj.getMonth(), dthj.getFullYear());
     var ttds = dthj.getDate();
     var dma;
-    
+
     var rllabels = [];
     var rldata = [];
-    
+
     var messs = dthj.getMonth();
     messs++;
     if (messs < 10) {
         messs = "0" + messs;
     }
     var anomes = dthj.getFullYear() + "-" + messs;
-    
+
     var ddt;
-    
+
     if (ttds <= 15) {
-        
+
         for (i = 1; i <= 15; i++) {
-            
-            if(i <= 9){
+
+            if (i <= 9) {
                 ddt = "0" + i;
             } else {
                 ddt = i;
             }
             dma = anomes + "-" + ddt;
-            
+
             var itxt = "" + i + "";
             rllabels.push(itxt);
 
             var vint = RpValorByDay(dma);
             rldata.push(vint);
         }
-        
+
     } else {
         for (i = 1; i <= ttds; i++) {
-            
-            if(i < 9){
+
+            if (i < 9) {
                 ddt = "0" + i;
             } else {
                 ddt = i;
             }
             dma = anomes + "-" + ddt;
-            
+
             var itxt = "" + i + "";
             rllabels.push(itxt);
 
