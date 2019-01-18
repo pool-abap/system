@@ -7,36 +7,41 @@ and open the template in the editor.
 <html>
     <head>
         <title>TODO supply a title</title>
-        <meta charset='UTF-8'>
-        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <script src='https://smtpjs.com/v3/smtp.js'></script>
-        <script type='text/javascript'>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://smtpjs.com/v3/smtp.js"></script>
+        <script type="text/javascript">
+
             var email;
+            var txt;
+
             window.onload = function (e) {
+
+                txt = document.getElementById("txt");
+
                 var url = window.location.href;
-                url = url.split('?');
+                url = url.split("?");
                 if (url.length <= 1) {
-                    throw 'Sem variavel';
+                    throw "Sem variavel";
                 }
 
                 email = url[1];
                 console.log(email);
                 Email.send({
-                    Host: 'smtp.elasticemail.com',
-                    Username: 'felipe.lm@hotmail.com.br',
-                    Password: 'bb7e1ce8-6ead-451b-8d95-537c2778c4ea',
+                    Host: "smtp.elasticemail.com",
+                    Username: "felipe.lm@hotmail.com.br",
+                    Password: "bb7e1ce8-6ead-451b-8d95-537c2778c4ea",
                     To: email,
-                    From: 'noreplythisemail@gmail.com',
-                    Subject: 'This is the subject',
+                    From: "controle_abap@accenture.com",
+                    Subject: "This is the subject",
                     Body: "<h3>000000</h3><br><p>descr</p>"
                 }).then(
-                        message => console.log(message)
+                        message => txt.innerHTML = message
                 );
-
             }
-</script>
-</head>
-<body>
-    <div id="txt"></div>
-</body>
+        </script>
+    </head>
+    <body>
+        <div id="txt"></div>
+    </body>
 </html>
