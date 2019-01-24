@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Criar card no quadro Pool ABAP</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://trello.com/1/client.js?key=0fa63ab5014f860756dcb239e5b03c96"></script>
+
+        <script type="text/javascript">
+            var idcard;
+            var url = window.location.href;
+            try {
+                url = url.split("?");
+                idcard = url[1].split("id=");
+                console.log(idcard);
+                idcard = idcard[1];
+            } catch (e) {
+                throw new Error("Url sem parametrização");
+            }
+
+            if (idcard == "" || idcard == null) {
+                throw new Error("Url sem parametrização");
+            }
+
+            window.onload = function (e) {
+                window.Trello.authorize({
+                    type: 'redirect',
+                    name: 'Sistema Pool AD',
+                    scope: {
+                        read: 'true',
+                        write: 'true',
+                        account: true},
+                    expiration: 'never',
+                    success: authenticationSuccess,
+                    error: authenticationFailure
+                });
+            }
+
+            function authenticationFailure() {
+                console.log("%cErro na Autenticação.", "font-family: 'Arial'; font-weight: bold; color: red; font-size: 15px");
+            }
+
+            function authenticationSuccess() {
+                console.log("%cAutenticado com sucesso.", "font-family: 'Arial'; font-weight: bold; color: green; font-size: 15px");
+            }
+
+        </script>
+
+    </head>
+    <body>
+        <h1 id="retorno"></h1>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    </body>
+</body>
+</html>
