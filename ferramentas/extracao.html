@@ -16,12 +16,31 @@ and open the template in the editor.
         <title>Extração de Dados Completa - Trello</title>
 
         <link rel="shortcut icon" href="https://rentadrone.cl/wp-content/uploads/2016/12/pie-chart-1.png" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+        <style type="text/css">
+            .menuboards {
+                float: left;
+                position: absolute;
+                top: 30px;
+                left: calc(50% - 200px);
+                width: 400px;
+                height: 136px;
+                padding: 20px;
+                box-shadow: 2px 2px 4px #888888;
+            }
+            .menuboards button {
+                margin-top: 20px;
+                width: 70px;
+                margin-left: calc(50% - 35px);
+                margin-right: calc(50% - 35px);
+            }
+        </style>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
         <script src="https://trello.com/1/client.js?key=0fa63ab5014f860756dcb239e5b03c96"></script>
-
         <script type="text/javascript">
+            var me;
 
             window.Trello.authorize({
                 type: 'redirect',
@@ -46,35 +65,42 @@ and open the template in the editor.
             }
 
             window.onload = function (e) {
-                
+
                 Trello.members.get("me", function (data) {
-                    console.log("OK");
-                    console.log(data);
+                    me = data;
+                    console.log(me);
+                    menuboard();
                 }, function (err) {
                     console.log("Erro");
                     console.log(err);
                 });
-                
-//                Trello.boards.get('https://api.trello.com/1/members/me/boards', function (data) {
-//                    console.log("OK");
-//                    console.log(data);
-//                }, function (err) {
-//                    console.log("Erro");
-//                    console.log(err);
-//                });
-                
-//                Trello.cards.get('5c2fa0897d5ebb3b42d18a70', function (data) {
-//                    console.log("OK");
-//                    console.log(data);
-//                }, function (err) {
-//                    console.log("Erro");
-//                    console.log(err);
-//                });
+
+            }
+
+            function menuboard() {
+                var listboards = document.getElementById("listboards");
+
+                for (var a = 0; a < me['idBoards'].length; a++) {
+
+                    Trello.boards.get(me['idBoards'][a], function (data) {
+                        var option = document.createElement("option");
+                        option.value = data['id'];
+                        option.text = data['name'];
+                        listboards.add(option);
+                    }, function (err) {
+                        console.log('Erro - Buscando o card - ' + me['idBoards'][a]);
+                    });
+                }
+
             }
         </script>
     </head>
     <body>
-
+        <div class="menuboards">
+            <select id="listboards" class="form-control">
+            </select>
+            <button type="button" class="btn btn-success">Extrair</button>
+        </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
