@@ -19,7 +19,6 @@ and open the template in the editor.
             try {
                 url = url.split("?");
                 idcard = url[1].split("id=");
-                console.log(idcard);
                 idcard = idcard[1];
             } catch (e) {
                 throw new Error("Url sem parametrização");
@@ -28,6 +27,10 @@ and open the template in the editor.
             if (idcard == "" || idcard == null) {
                 throw new Error("Url sem parametrização");
             }
+            
+            idcard = idcard.replace("#", "");
+            
+            
 
             window.onload = function (e) {
                 window.Trello.authorize({
