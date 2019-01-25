@@ -35,12 +35,39 @@ and open the template in the editor.
                 margin-left: calc(50% - 35px);
                 margin-right: calc(50% - 35px);
             }
+            .load {
+                float: left;
+                width: 100%;
+                display: block;
+            }
+            .site {
+                float: left;
+                width: 100%;
+                display: none;
+            }
+            .load img {
+                float: left;
+                position: absolute;
+                top: calc(50% - 50px);
+                left: calc(50% - 50px);
+                width: 100px;
+                height: 100px;
+            }
         </style>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://trello.com/1/client.js?key=0fa63ab5014f860756dcb239e5b03c96"></script>
         <script type="text/javascript">
             var me;
+            
+            function inicload(){
+                document.getElementById('load').style.display = "block";
+                document.getElementById('site').style.display = "none";
+            }
+            function stopload(){
+                document.getElementById('load').style.display = "none";
+                document.getElementById('site').style.display = "block";
+            }
 
             window.Trello.authorize({
                 type: 'redirect',
@@ -91,16 +118,23 @@ and open the template in the editor.
                         console.log('Erro - Buscando o card - ' + me['idBoards'][a]);
                     });
                 }
-
+                
+                stopload();
             }
         </script>
     </head>
     <body>
+        <div class="load" id="load">
+            <img src="imgs/load.gif" />
+        </div>
+        
+        <div class="site" id="site">
         <div class="menuboards">
             <select id="listboards" class="form-control">
             </select>
             <button type="button" class="btn btn-success">Extrair</button>
         </div>
+            </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
