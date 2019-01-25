@@ -46,7 +46,30 @@ and open the template in the editor.
             }
 
             window.onload = function (e) {
-
+                
+                Trello.members.get("me", function (data) {
+                    console.log("OK");
+                    console.log(data);
+                }, function (err) {
+                    console.log("Erro");
+                    console.log(err);
+                });
+                
+//                Trello.boards.get('https://api.trello.com/1/members/me/boards', function (data) {
+//                    console.log("OK");
+//                    console.log(data);
+//                }, function (err) {
+//                    console.log("Erro");
+//                    console.log(err);
+//                });
+                
+//                Trello.cards.get('5c2fa0897d5ebb3b42d18a70', function (data) {
+//                    console.log("OK");
+//                    console.log(data);
+//                }, function (err) {
+//                    console.log("Erro");
+//                    console.log(err);
+//                });
             }
         </script>
     </head>
