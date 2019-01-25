@@ -1,6 +1,6 @@
 /* Configs TRELLO */
 var key = '0fa63ab5014f860756dcb239e5b03c96';
-var token = '8325824adff62c2db66bfd6ab8ee51cff7ceea5f4248c586c7d013a481fe9b7a';
+var token = '57162016542950c3004c4535b970a94e02761e6bf09673320924af5ce2f063a6';
 
 /*Delações de variaveis*/
 var url = ""; //Variavel onde vai receber todos os link AJAX

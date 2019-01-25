@@ -25,7 +25,7 @@
             var configs = {
                 'CFG_NOME': 0, // 0 - Primeiro Nome  1 - Nome Completo
                 'CFG_KEY': '0fa63ab5014f860756dcb239e5b03c96', // Key gerada pelo trello para ixibir boards
-                'CFG_TOK': '8325824adff62c2db66bfd6ab8ee51cff7ceea5f4248c586c7d013a481fe9b7a', //Token gerado pelo trello para acessar a API
+                'CFG_TOK': '57162016542950c3004c4535b970a94e02761e6bf09673320924af5ce2f063a6', //Token gerado pelo trello para acessar a API
                 'CFG_MDC': 10, //Quantidade media IDEAL de chamado por mes - Será usado para os relatorios
                 'CFG_ABR': false //Carrega o mes atual sem escolhe em tela
             };
@@ -56,7 +56,7 @@
             var listas = []; //Array que vai receber as listas
 			var cards = []; //Array cards
             var rltable = []; //Montar tabela relatorio
-            var labels = []; //Array que vai receber os labels https://api.trello.com/1/boards/5b3a5ee83bec5319085e12fc/labels?fields=all&key=0fa63ab5014f860756dcb239e5b03c96&token=8325824adff62c2db66bfd6ab8ee51cff7ceea5f4248c586c7d013a481fe9b7a
+            var labels = []; //Array que vai receber os labels https://api.trello.com/1/boards/5b3a5ee83bec5319085e12fc/labels?fields=all&key=0fa63ab5014f860756dcb239e5b03c96&token=57162016542950c3004c4535b970a94e02761e6bf09673320924af5ce2f063a6
 
             //Relatorio Rosquinha
             var rlrosca = [];
