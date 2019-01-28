@@ -59,12 +59,18 @@ and open the template in the editor.
         <script src="https://trello.com/1/client.js?key=0fa63ab5014f860756dcb239e5b03c96"></script>
         <script type="text/javascript">
             var me;
-            
-            function inicload(){
+            var board;
+            var lists;
+            var cards;
+            var label;
+            var customf;
+            var membros;
+
+            function inicload() {
                 document.getElementById('load').style.display = "block";
                 document.getElementById('site').style.display = "none";
             }
-            function stopload(){
+            function stopload() {
                 document.getElementById('load').style.display = "none";
                 document.getElementById('site').style.display = "block";
             }
@@ -95,7 +101,7 @@ and open the template in the editor.
 
                 Trello.members.get("me", function (data) {
                     me = data;
-                    console.log(me);
+                    //console.log(me);
                     menuboard();
                 }, function (err) {
                     console.log("Erro");
@@ -118,8 +124,31 @@ and open the template in the editor.
                         console.log('Erro - Buscando o card - ' + me['idBoards'][a]);
                     });
                 }
-                
+
                 stopload();
+            }
+
+            function extrair() {
+                
+                document.getElementById('menuboards').style.display = "none";
+                inicload();
+                
+                var idboard = document.getElementById('listboards').value;
+                var boardget = '/boards/' + idboard + '?actions=all&boardStars=mine&cards=all&card_pluginData=true&checklists=all&customFields=true&fields=all&labels=all&lists=all&members=all&memberships=all&membersInvited=all&membersInvited_fields=all&pluginData=true&organization=true&organization_pluginData=true&myPrefs=true&tags=true';
+
+                Trello.get(boardget, function (data) {
+                    board = data;
+                    lists = board['lists'];
+                    cards = board['cards'];
+                    label = board['labels'];
+                    customf = board['customFields'];
+                    membros = board['memberships'];
+
+                    //console.log(board);
+                    stopload();
+                }, function (err) {
+                    console.log('Erro - Acessar board - ' + idboard);
+                });
             }
         </script>
     </head>
@@ -127,14 +156,14 @@ and open the template in the editor.
         <div class="load" id="load">
             <img src="imgs/load.gif" />
         </div>
-        
+
         <div class="site" id="site">
-        <div class="menuboards">
-            <select id="listboards" class="form-control">
-            </select>
-            <button type="button" class="btn btn-success">Extrair</button>
-        </div>
+            <div class="menuboards" id="menuboards">
+                <select id="listboards" class="form-control">
+                </select>
+                <a onclick="extrair();"><button type="button" class="btn btn-success">Extrair</button></a>
             </div>
+        </div>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
