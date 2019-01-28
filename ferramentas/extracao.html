@@ -138,6 +138,9 @@ and open the template in the editor.
 
                 Trello.get(boardget, function (data) {
                     board = data;
+                    console.group("Dados");
+                    console.log(data);
+                    console.groupEnd();
                     lists = board['lists'];
                     cards = board['cards'];
                     label = board['labels'];
