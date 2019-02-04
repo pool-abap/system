@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Language" content="pt-br">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="copyright" content="Accenture Brasil">
+        <meta name="author" content="felipe.lopes.melo@accenture.com">
+        <meta name="robots" content="noindex, nofollow">
+
+        <title>Check Cards AD - Trello</title>
+
+        <link rel="shortcut icon" href="https://rentadrone.cl/wp-content/uploads/2016/12/pie-chart-1.png" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+        <style type="text/css">
+            .load {
+                float: left;
+                width: 100%;
+                display: block;
+            }
+            .site {
+                float: left;
+                width: 100%;
+                display: none;
+            }
+            .load img {
+                float: left;
+                position: absolute;
+                top: calc(50% - 50px);
+                left: calc(50% - 50px);
+                width: 100px;
+                height: 100px;
+            }
+        </style>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://trello.com/1/client.js?key=0fa63ab5014f860756dcb239e5b03c96"></script>
+        <script type="text/javascript">
+            var me;
+            var board;
+            var lists;
+            var cards;
+            var label;
+            var customf;
+            var membros;
+            function inicload() {
+                document.getElementById('load').style.display = "block";
+                document.getElementById('site').style.display = "none";
+            }
+            function stopload() {
+                document.getElementById('load').style.display = "none";
+                document.getElementById('site').style.display = "block";
+            }
+
+            window.Trello.authorize({
+                type: 'redirect',
+                name: 'Sistema Pool ABAP',
+                persist: false,
+                scope: {
+                    read: true,
+                    write: true,
+                    account: true},
+                expiration: 'never',
+                success: authenticationSuccess,
+                error: authenticationFailure
+            });
+            function authenticationFailure() {
+                console.log("%cErro na Autenticação.", "font-family: 'Arial'; font-weight: bold; color: red; font-size: 15px");
+                throw new Error("Erro na Autenticação.");
+            }
+
+            function authenticationSuccess() {
+                console.log("%cAutenticado com sucesso.", "font-family: 'Arial'; font-weight: bold; color: green; font-size: 15px");
+            }
+
+            window.onload = function (e) {
+
+                Trello.members.get("me", function (data) {
+                    me = data;
+                    //console.log(me);
+                    menuboard();
+                }, function (err) {
+                    console.log("Erro");
+                    console.log(err);
+                });
+            }
+
+            function menuboard() {
+                var tem;
+                var listboards = document.getElementById("listboards");
+                tem = false;
+                for (var a = 0; a < me['idBoards'].length; a++) {
+                    if (me['idBoards'][a] == '5c2cd1cc35bc060aa9fcd0fc') {
+                        tem = true;
+                    }
+                }
+
+                if (tem) {
+                    extrair();
+                } else {
+                    stopload();
+                    alert("[!] - Você não possui esse quadro");
+                    throw new Error("[!] - Você não possui esse quadro");
+                }
+            }
+
+            function extrair() {
+
+                var boardget = '/boards/5c2cd1cc35bc060aa9fcd0fc?actions=all&boardStars=mine&cards=all&card_pluginData=true&checklists=all&customFields=true&fields=all&labels=all&lists=all&members=all&memberships=all&membersInvited=all&membersInvited_fields=all&pluginData=true&organization=true&organization_pluginData=true&myPrefs=true&tags=true';
+                Trello.get(boardget, function (data) {
+                    board = data;
+                    console.group("Dados");
+                    console.log(data);
+                    console.groupEnd();
+                    lists = board['lists'];
+                    cards = board['cards'];
+                    label = board['labels'];
+                    customf = board['customFields'];
+                    membros = board['memberships'];
+                    validar();
+                }, function (err) {
+                    console.log('Erro - Acessar board - ' + idboard);
+                });
+            }
+
+            function validar() {
+                var txt;
+                var url;
+                console.log(customf);
+                txt = "";
+                for (var c = 0; c < cards.length; c++) {
+
+                    if (cards[c]['desc'] == "") {
+                        txt += " Sem texto descritivo;"
+                    }
+                    if (cards[c]['due'] == "") {
+                        txt += " Sem data de entrega;"
+                    }
+                    if (cards[c]['idLabels'].length == 0) {
+                        txt += " Sem etiqueta;"
+                    }
+                    if (cards[c]['idMembers'].length == 0) {
+                        txt += " Sem ABAP definido;"
+                    }
+
+                    url = "/cards/" + cards[c]['id'] + "/customFieldItems";
+                    Trello.get(url, function (data) {
+                        
+                    }, function (err) {
+                        txt += ' Erro - Acessar campos personalizados';
+                    });
+                    if (txt != "") {
+                        console.log(cards[c]['name'] + " - " + txt);
+                        document.getElementById('site').innerHTML += "<p>" + cards[c]['name'] + " - " + txt + "</p>";
+                    }
+                    txt = "";
+                }
+                stopload();
+            }
+        </script>
+    </head>
+    <body>
+        <div class="load" id="load">
+            <img src="imgs/load.gif" />
+        </div>
+
+        <div class="site" id="site">
+
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    </body>
+</html>
