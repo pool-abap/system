@@ -146,12 +146,20 @@ and open the template in the editor.
                     label = board['labels'];
                     customf = board['customFields'];
                     membros = board['memberships'];
+                    
+                    montarDados();
 
-                    //console.log(board);
-                    stopload();
                 }, function (err) {
                     console.log('Erro - Acessar board - ' + idboard);
                 });
+            }
+            
+            function montarDados(){
+                escreverTela();
+            }
+            
+            function escreverTela(){
+                stopload();
             }
         </script>
     </head>
