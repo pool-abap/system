@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="Content-Language" content="pt-br">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="copyright" content="Felipe Lopes">
+        <meta name="author" content="felipe.lm@hotmail.com.br">
+        <meta name="robots" content="noindex, nofollow">
+
+        <title>Listas de Chamados</title>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="https://rentadrone.cl/wp-content/uploads/2016/12/pie-chart-1.png" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <style type="text/css">
+            * {
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+            }
+            body {
+                float: left;
+                width: 100%;
+                min-width: 900px;
+                padding: 20px;
+                background-color: #284c77;
+                opacity: 0.0;
+                -webkit-transition: all 0.5s linear;
+                -moz-transition: all 0.5s linear;
+                -ms-transition: all 0.5s linear;
+                -o-transition: all 0.5s linear;
+                transition: all 0.5s linear;
+            }
+            .load {
+                float: left;
+                width: 100%;
+                display: block;
+            }
+            .site {
+                float: left;
+                width: 100%;
+                display: none;
+            }
+            .load img {
+                float: left;
+                position: absolute;
+                top: calc(50% - 50px);
+                left: calc(50% - 50px);
+                width: 100px;
+                height: 100px;
+            }
+            .div-sp {
+                float: left;
+                margin: 0px;
+                padding: 0px;
+                border: 0px;
+            }
+
+            .tela-01 {
+                float: left;
+                width: 482px;
+                height: 182px;
+                top: calc(50% - 101px);
+                left: calc(50% - 251px);
+                position: absolute;
+                background-color: #fff;
+                padding: 20px;
+                opacity: 1.0;
+                z-index: 99;
+            }
+            .tela-01 h1 {
+                float: left;
+                width: 100%;
+                color: #284c77;
+                font-size: 1.5em;
+                text-align: center;
+            }
+            .tela-01 select {
+                float: left;
+                width: 100%;
+                margin-top: 10px;
+                text-align: center;
+            }
+            .tela-01 button {
+                float: left;
+                width: 100%;
+                margin-top: 20px;
+                text-align: center;
+            }
+
+            .tela-02 {
+                float: left;
+                width: 100%;
+                height: 800px;
+                opacity: 0.0;
+            }
+            .tela-02 h1 {
+                float: left;
+                width: 800px;
+                margin-left: calc(50% - 400px);
+                margin-right: calc(50% - 400px);
+                font-size: 1.5em;
+                text-align: center;
+                color: #fff;
+            }
+            .content {
+                float: left;
+                width: 100%;
+                padding: 0px ;
+                background-color: #fff;
+            }
+            #table-chamados {
+                float: left;
+                width: 100%;
+            }
+            #table-chamados thead tr th {
+                padding: 5px 10px 5px 10px;
+            }
+            #table-chamados tbody tr td {
+                padding: 3px 8px 3px 8px;
+            }
+            .rodape {
+                float: left;
+                width: 100%;
+                margin-top: 30px;
+                margin-bottom: 20px;
+            }
+            .rodape a {
+                text-decoration: none;
+                color: #fff;
+            }
+            .rodape p {
+                float: left;
+                width: 100%;
+                opacity: 0.2;
+                font-size: 0.8em;
+                cursor: default;
+                margin: 0px;
+                padding: 0px;
+                text-align: center;
+                color: #fff;
+            }
+        </style>
+
+        <script src="https://trello.com/1/client.js?key=0fa63ab5014f860756dcb239e5b03c96"></script>
+        <script type="text/javascript">
+            var me;
+            var board;
+            var lists;
+            var cards;
+            var label;
+            var customf;
+            var cardscustom = [];
+            var membros;
+
+            window.Trello.authorize({
+                type: 'redirect',
+                name: 'Sistema Pool ABAP',
+                persist: false,
+                scope: {
+                    read: true,
+                    write: true,
+                    account: true},
+                expiration: 'never',
+                success: authenticationSuccess,
+                error: authenticationFailure
+            });
+
+            function authenticationFailure() {
+                console.log("%cErro na Autenticação.", "font-family: 'Arial'; font-weight: bold; color: red; font-size: 15px");
+                throw new Error("Erro na Autenticação.");
+            }
+
+            function authenticationSuccess() {
+                console.log("%cAutenticado com sucesso.", "font-family: 'Arial'; font-weight: bold; color: green; font-size: 15px");
+            }
+
+            function inicload() {
+                document.getElementById('load').style.display = "block";
+                document.getElementById('site').style.display = "none";
+            }
+            function stopload() {
+                document.getElementById('load').style.display = "none";
+                document.getElementById('site').style.display = "block";
+            }
+
+            Trello.members.get("me", function (data) {
+                me = data;
+                menuboard();
+            }, function (err) {
+                console.log("Erro");
+                console.log(err);
+            });
+
+            function menuboard() {
+                var listboards = document.getElementById("inputState");
+
+                for (var a = 0; a < me['idBoards'].length; a++) {
+
+                    Trello.boards.get(me['idBoards'][a], function (data) {
+                        var option = document.createElement("option");
+                        option.value = data['id'];
+                        option.text = data['name'];
+                        listboards.add(option);
+                    }, function (err) {
+                        console.log('Erro - Buscando o card - ' + me['idBoards'][a]);
+                    });
+                }
+
+                stopload();
+                document.body.style.opacity = "1.0";
+            }
+
+            function gerarRelatorio() {
+                var e = document.getElementById("inputState");
+                var value = e.options[e.selectedIndex].value;
+                var text = e.options[e.selectedIndex].text;
+                //console.log(value);
+                if (value != "5b5150e32a76ba278f97037e" && value != "5b64bfac80e0773834e49be8" && value != "5b64ba62e71e4c36bd73f3a5") {
+                    return alert("[!] Quadro não suportado");
+                }
+                carregarInfosAPI(value);
+                return console.log(text + " - " + value);
+            }
+
+            function carregarInfosAPI(id) {
+
+                inicload();
+                var boardget = '/boards/' + id + '?actions=all&boardStars=mine&cards=all&card_pluginData=true&checklists=all&customFields=true&customField=true&fields=all&labels=all&lists=all&members=all&memberships=all&membersInvited=all&membersInvited_fields=all&pluginData=true&organization=true&organization_pluginData=true&myPrefs=true&tags=true';
+
+                Trello.get(boardget, function (data) {
+                    board = data;
+                    console.group("Dados");
+                    console.log(data);
+                    console.groupEnd();
+                    lists = board['lists'];
+                    cards = board['cards'];
+                    label = board['labels'];
+                    customf = board['customFields'];
+                    membros = board['memberships'];
+
+                    montarCustonsFields();
+
+                }, function (err) {
+                    console.log('Erro - Acessar board - ' + idboard);
+                });
+            }
+
+            var indxcard = 0;
+            function montarCustonsFields() {
+                //cardscustom;
+                //console.log(customf);
+
+                if (indxcard < cards.length) {
+
+                    //console.log(cards[indxcard]['name'] + " - Processando...");
+
+                    var boardget = '/cards/' + cards[indxcard]['id'] + '/customFieldItems';
+                    Trello.get(boardget, function (data) {
+
+//                        console.group("Card - " + cards[indxcard]['name']);
+//                        console.log(data);
+//                        console.groupEnd("Card - " + cards[indxcard]['name']);
+
+                        var array = {
+                            'CARD': "",
+                            'FIELD': "",
+                            'DF1': "",
+                            'HF1': 0,
+                            'DF2': "",
+                            'HF2': 0
+                        };
+
+                        for (var i = 0; i < data.length; i++) {
+                            array['CARD'] = data[i]['idModel'];
+                            array['FIELD'] = data[i]['idCustomField'];
+
+                            for (var a = 0; a < customf.length; a++) {
+                                if (data[i]['idCustomField'] == customf[a]['id']) {
+                                    switch (customf[a]['name']) {
+                                        case "D.F.1":
+                                            var df = data[i]['value']['date'];
+                                            df = df.split("T");
+                                            array['DF1'] = df[0];
+                                            break;
+
+                                        case "D.F.2":
+                                            var df = data[i]['value']['date'];
+                                            df = df.split("T");
+                                            array['DF2'] = df[0];
+                                            break;
+
+                                        case "H.F.1":
+                                            array['HF1'] = data[i]['value']['number'];
+                                            break;
+
+                                        case "H.F.2":
+                                            array['HF2'] = data[i]['value']['number'];
+                                            break;
+                                    }
+                                }
+                            }
+                        }
+                        cardscustom.push(array);
+
+                        indxcard++;
+                        montarCustonsFields();
+
+                    }, function (err) {
+                        console.log('Erro - Custom Field - ' + cards[indxcard]);
+                    });
+
+                } else {
+                    viewtable();
+                    document.getElementById("tela-01").style.display = 'none';
+                    document.getElementById("tela-02").style.opacity = 1.0;
+                }
+            }
+
+            function viewtable() {
+                var table = [];
+
+                for (var c = 0; c < cards.length; c++) {
+                    var ar = {
+                        'CHAM': "",
+                        'FREN': "",
+                        'FASE': "",
+                        'DESC': "",
+                        'DF1': "",
+                        'HF1': 0,
+                        'TDT': 0
+                    };
+                    for (var f = 0; f < cardscustom.length; f++) {
+                        if (cards[c]['id'] == cardscustom[f]['CARD']) {
+
+                            ar['CHAM'] = cards[c]['name'];
+
+                            for (var la = 0; la < cards[c]['idLabels'].length; la++) {
+                                for (var lb = 0; lb < label.length; lb++) {
+                                    if (cards[c]['idLabels'][la] == label[lb]['id']) {
+                                        ar['FREN'] = label[lb]['name'];
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+
+                            for (var li = 0; li < lists.length; li++) {
+                                if (cards[c]['idList'] == lists[li]['id']) {
+                                    ar['FASE'] = lists[li]['name'];
+                                    break;
+                                }
+                            }
+
+                            ar['DESC'] = cards[c]['desc'];
+                            ar['DF1'] = cardscustom[f]['DF1'];
+                            ar['HF1'] = cardscustom[f]['HF1'];
+                            ar['TDT'] = parseInt(cardscustom[f]['DF1'].replace("-", ""));
+
+                        }
+                    }
+                    table.push(ar);
+                }
+
+                console.warn(cardscustom);
+
+                table.sort(function (a, b) {
+                    return b.TDT - a.TDT;
+                });
+
+                var tb = document.getElementById("tb-cont");
+                var totalhrss = 0;
+                var mesproc;
+                var anoproc;
+                for (var z = 0; z < table.length; z++) {
+
+                    var data = table[z]['DF1'];
+                    data = data.split("-");
+
+                    if (z == 0) {
+                        mesproc = data[1];
+                        anoproc = data[0];
+                    }
+
+                    if (mesproc == data[1] && anoproc == data[0]) {
+                        var wrdt = table[z]['DF1'];
+                        wrdt = wrdt.split("-");
+                        tb.innerHTML += "<tr>" +
+                                //"<th scope='row' width='1%'>" + cnt + "</th>" +
+                                "<td width='95px'><input style='float: left; width: 100%;' type='text' name='lname' value='" + table[z]['CHAM'] + "'/></td>" +
+                                "<td width='48px'><input style='float: left; width: 100%;' type='text' name='lname' value='" + table[z]['FREN'] + "'/></td>" +
+                                "<td width='176px'><input style='float: left; width: 100%;' type='text' name='lname' value='" + table[z]['FASE'] + "'/></td>" +
+                                "<td ><input style='float: left; width: 100%;' type='text' name='lname' value='" + table[z]['DESC'] + "'/></td>" +
+                                "<td width='85px'><input style='float: left; width: 100%;' type='text' name='lname' value='" + wrdt[2] + "/" + wrdt[1] + "'/></td>" +
+                                "<td width='85px'><input style='float: left; width: 100%;' type='text' name='lname' value='" + table[z]['HF1'] + " hrs'/></td>" +
+                                "</tr>";
+                        totalhrss = parseInt(totalhrss) + parseInt(table[z]['HF1']);
+                    } else {
+                        tb.innerHTML += "<tr>" +
+                                //"<th scope='row' width='1%'>" + cnt + "</th>" +
+                                "<td style='background-color: #fff600;'><b>Total</b></td>" +
+                                "<td colspan='3' style='background-color: #fff600;'></td>" +
+                                "<td style='background-color: #fff600;'><b>" + mesproc + "/" + anoproc + "</b></td>" +
+                                "<td style='background-color: #fff600;'><b>" + totalhrss + " hrs</b></td>" +
+                                "</tr>";
+                        totalhrss = 0;
+
+                        var wrdt = table[z]['DF1'];
+                        wrdt = wrdt.split("-");
+                        tb.innerHTML += "<tr>" +
+                                //"<th scope='row' width='1%'>" + cnt + "</th>" +
+                                "<td width='95px'><input style='float: left; width: 100%;' type='text' name='lname' value='" + table[z]['CHAM'] + "'/></td>" +
+                                "<td width='48px'><input style='float: left; width: 100%;' type='text' name='lname' value='" + table[z]['FREN'] + "'/></td>" +
+                                "<td width='176px'><input style='float: left; width: 100%;' type='text' name='lname' value='" + table[z]['FASE'] + "'/></td>" +
+                                "<td ><input style='float: left; width: 100%;' type='text' name='lname' value='" + table[z]['DESC'] + "'/></td>" +
+                                "<td width='85px'><input style='float: left; width: 100%;' type='text' name='lname' value='" + wrdt[2] + "/" + wrdt[1] + "'/></td>" +
+                                "<td width='85px'><input style='float: left; width: 100%;' type='text' name='lname' value='" + table[z]['HF1'] + " hrs'/></td>" +
+                                "</tr>";
+                        totalhrss = parseInt(totalhrss) + parseInt(table[z]['HF1']);
+                    }
+
+                    mesproc = data[1];
+                    anoproc = data[0];
+                }
+
+                console.log(table);
+                stopload();
+            }
+
+            window.onload = function () {
+
+            };
+        </script>
+    </head>
+
+    <body>
+        <!-- Tela de inicio -->
+        <div class="load" id="load">
+            <img src="imgs/load.gif" />
+        </div>
+
+        <div class="site" id="site">
+            <div class="tela-01" id="tela-01">
+                <h1>Selecione a board</h1>
+                <select id="inputState" class="form-control">
+                </select>
+                <button type="button" onclick="gerarRelatorio();" class="btn btn-primary">Gerar Relatório</button>
+            </div>
+
+            <div class="tela-02" id="tela-02">
+                <h1 id="titulo"></h1>
+                <div class="content">
+                    <table class="table table-hover" id="table-chamados">
+                        <thead>
+                            <tr>
+                                <!-- <th scope="col">#</th> -->
+                                <th scope="col">ID</th>
+                                <th scope="col">Frente</th>
+                                <th scope="col">Fase</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Data</th>
+                                <th scope="col">Horas</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tb-cont">
+                        </tbody>
+                    </table>
+                </div>
+                <footer class="rodape">
+                    <p>© 2018 felipelopes.eti.br - All Rights Reserved</p>
+                    <p>v1.0.0</p>
+                </footer>
+            </div>
+        </div>
+    </body>
+</html>
