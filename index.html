@@ -9,56 +9,138 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
         <title>Menu - Pool AD</title>
+
+        <link rel="shortcut icon" href="https://rentadrone.cl/wp-content/uploads/2016/12/pie-chart-1.png" />
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://trello.com/1/client.js?key=0fa63ab5014f860756dcb239e5b03c96"></script>
+        <script type="text/javascript">
+
+            var me;
+
+            window.Trello.authorize({
+                type: 'redirect',
+                name: 'Sistema Pool ABAP',
+                persist: false,
+                scope: {
+                    read: true,
+                    write: true,
+                    account: true},
+                expiration: 'never',
+                success: authenticationSuccess,
+                error: authenticationFailure
+            });
+
+            function authenticationFailure() {
+                console.log("%cErro na Autenticação.", "font-family: 'Arial'; font-weight: bold; color: red; font-size: 15px");
+                throw new Error("Erro na Autenticação.");
+            }
+
+            function authenticationSuccess() {
+                console.log("%cAutenticado com sucesso.", "font-family: 'Arial'; font-weight: bold; color: green; font-size: 15px");
+            }
+
+            window.onload = function (e) {
+
+                Trello.members.get("me", function (data) {
+                    me = data;
+                    console.log(me);
+                    document.getElementById('img-perfil').src = me['avatarUrl'] + "/170.png";
+                }, function (err) {
+                    console.log("Erro");
+                    console.log(err);
+                });
+
+            }
+        </script>
     </head>
     <body>
-        <table style="float: left; width : 100%; padding: 10px; border-collapse: separate; text-align: center;">
-            <tr>
-                <td width="25%">
-                    <a href="https://pool-abap.github.io/system/ad/index.html">
-                        <div style="height: 296px; background-color: #eaeaea;">
-                            <h4 style="line-height: 296px;">Dashboard AD</h4>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#"><b>Pool AD</b></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <!--                    <li class="nav-item active">
+                                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Link</a>
+                                        </li>-->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Relatórios
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="https://pool-abap.github.io/system/ams/index.html" target="_blank">AMS</a>
+                            <a class="dropdown-item" href="https://pool-abap.github.io/system/ad/index.html" target="_blank">AD Funcional - LDC</a>
+                            <a class="dropdown-item" href="#" target="_blank">AD ABAPC</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="https://pool-abap.github.io/system/monitor/index.html" target="_blank">Dashboard TV</a>
                         </div>
-                    </a>
-                </td>
-                <td width="25%">
-                    <a href="https://pool-abap.github.io/system/ams/index.html">
-                        <div style="height: 296px; background-color: #eaeaea;">
-                            <h4 style="line-height: 296px;">Dashboard AMS</h4>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Extrações
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="https://pool-abap.github.io/system/ferramentas/extracao_bip.html" target="_blank">Hrs BIP</a>
+                            <a class="dropdown-item" href="https://pool-abap.github.io/system/ferramentas/extracao_excel/index.html" target="_blank">Excel</a>
+                            <a class="dropdown-item" href="https://pool-abap.github.io/system/ferramentas/extracao_ad_1.html" target="_blank">AD LDC</a>
                         </div>
-                    </a>
-                </td>
-                <td width="25%">
-                    <a href="https://pool-abap.github.io/system/monitor/index.html">
-                        <div style="height: 296px; background-color: #eaeaea;">
-                            <h4 style="line-height: 296px;">Monitor</h4>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Quadros ABAP
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="https://trello.com/b/LppBLvga/pool-ams-fevereiro-2019" target="_blank">AMS Fevereiro 2019</a>
+                            <a class="dropdown-item" href="https://trello.com/b/6gGOacKN/pool-ad-2019-abap" target="_blank">AD 2019</a>
                         </div>
-                    </a>
-                </td>
-                <td width="25%">
-                    <a href="https://pool-abap.github.io/system/ferramentas/extracao_bip.html">
-                        <div style="height: 296px; background-color: #eaeaea;">
-                            <h4 style="line-height: 296px;">Hrs BIP</h4>
-                        </div>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <a href="https://pool-abap.github.io/system/ferramentas/extracao_ad_1.html">
-                        <div style="height: 296px; background-color: #eaeaea;">
-                            <h4 style="line-height: 296px;">Extração AD</h4>
-                        </div>
-                    </a>
-                </td>
-                <td>
-                    <a href="https://pool-abap.github.io/system/ferramentas/extracao_excel/index.html">
-                        <div style="height: 296px; background-color: #eaeaea;">
-                            <h4 style="line-height: 296px;">Extração Excel</h4>
-                        </div>
-                    </a>
-                </td>
-            </tr>
-        </table>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Painel de controle</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Digite aqui..." aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="button">Procurar</button>
+                </form>
+            </div>
+            <img id="img-perfil" width="38" height="38" style="margin: 5px 8px 5px 15px; border-radius: 3px;" />
+        </nav>
+
+<!--        <div style="float: left; width: calc(100% - 20px); margin: 15px 10px 5px 10px;">
+            <div class="card text-center">
+                <div class="card-header">
+                    Notificações
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" class="btn btn-primary">Ver mais</a>
+                </div>
+                <div class="card-footer text-muted">
+                    21 Fev 2019
+                </div>
+            </div>
+        </div>-->
+
+        <main style="float: left; width: calc(100% - 20px); margin: 10px;">
+            <div class="card" style="float: left; width: 320px; margin: 4px;">
+                <img class="card-img-top" height="230" src="https://static1.squarespace.com/static/56ffac8ae707eb5e3e89d16b/57168cb9ab48deb6e53d5b08/59e0cbbd8dd0414274526d73/1507904756391/Accenture-Marquee.jpg?format=2500w" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Information Security</h5>
+                    <p class="card-text" style="text-align: justify; font-size: 12px;">Lembrem de realizar o treinamento.<br>
+                    Até dia 28/02/2019 para completar o Bronze e Silver. </p>
+                    <a href="https://in.accenture.com/protectingaccenture/dashboard/" target="_blank" class="btn btn-secondary btn-sm">Ver mais</a>
+                </div>
+            </div>
+        </main>
+
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
