@@ -80,6 +80,21 @@
 			
 			function Extrair() {
 			
+				try {
+					console.log(me + teer);
+				}
+				catch(err) {
+					document.body.innerHTML = document.body.innerHTML + "<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
+								"<strong>Erro!</strong> Tivemos um erro interno para ultilizar a API Trello, aperte F5, se o erro persistir por favor entrar em contado com os desenvolvedores." +
+								"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+								"<span aria-hidden='true'>&times;</span>" +
+								"</button>" +
+								"</div>";
+					document.getElementById("progressbar").innerHTML = "";
+					document.getElementById("btnext").style.display = "block";
+					return;
+				}
+			
 				console.log('Iniciando extração...');
 				document.getElementById("btnext").style.display = "none";
 				document.getElementById("progressbar").innerHTML = "<div class='progress-bar' role='progressbar' style='width: 0%' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'></div>";
