@@ -43,6 +43,9 @@
         <script type="text/javascript">
 
             var me;
+			var url = ""; //Variavel onde vai receber todos os link AJAX
+			var cards = []; //Array que vai receber os cards do board selecionado
+			var labels = []; //Array que vai receber os labels do board selecionado
 
             window.Trello.authorize({
                 type: 'redirect',
@@ -81,7 +84,24 @@
 			function Extrair() {
 			
 				try {
-					console.log(me + teer);
+					
+					/* Inicio Logica */
+					url = "https://api.trello.com/1/boards/" + me['idBoards'][0];
+					var ajax1 = $.ajax({
+						url: url,
+						type: 'GET',
+						dataType: 'json',
+						beforeSend: function () {
+							console.log("Buscando Board...");
+						}
+					})
+						.done(function (data) {
+							console.log(data);
+						})
+						.fail(function (jqXHR, textStatus, data) {
+							throw "A requisição AJAX para buscar os Boards falhou!.";
+						});
+		
 				}
 				catch(err) {
 					document.body.innerHTML = document.body.innerHTML + "<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
