@@ -1,434 +1,199 @@
-/* Configs TRELLO */
-var key = '0fa63ab5014f860756dcb239e5b03c96';
-var token = '57162016542950c3004c4535b970a94e02761e6bf09673320924af5ce2f063a6';
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-/*Delações de variaveis*/
-var url = ""; //Variavel onde vai receber todos os link AJAX
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-var boards = []; //Array que receberar todos os boards
-var listas = []; //Array que vai receber as listas
-var cards = []; //Array que vai receber os cards
+        <title>Extração Trello Excel</title>
 
-var labels = []; //Array que vai receber os labels
-var menbros = []; //Array qye receberar os membros
-var custfields = []; //Parametrizações dos custons
-var newsc = []; //Campos custom de todos os cards
-
-
-/* Inicio Logica */
-url = "https://api.trello.com/1/members/me/boards?key=" + key + "&token=" + token; //List Boards
-var ajax1 = $.ajax({
-    url: url,
-    type: 'GET',
-    dataType: 'json',
-    beforeSend: function () {
-        console.log("Buscando Boards...");
-    }
-})
-        .done(function (data) {
-            //Montar Array de boards
-            for (var i = 0; i < data.length; i++) {
-                var array = {
-                    'ID': data[i]['id'],
-                    'NAME': data[i]['name']
-                };
-                boards.push(array);
-				
-				if(data[i]['name'] == "Pool AD - BIOSEV"){
-					//abridireto(data[i]);
-				}
-            }
-            console.group("Boards");
-            console.log(boards);
-            console.groupEnd("Boards");
-			montarSelect();
-        })
-        .fail(function (jqXHR, textStatus, data) {
-            throw "A requisição AJAX para buscar os Boards falhou!.";
-        });
+        <link rel="shortcut icon" href="https://rentadrone.cl/wp-content/uploads/2016/12/pie-chart-1.png" />
 		
-//Se tiver board, montar na tela
-function montarSelect() {
-	
-	document.getElementById("tela02").style.display = "none";
-	
-    for (var i = 0; i < boards.length; i++) {
-        var option = document.createElement("option");
-		option.text = boards[i]['NAME'];
-		option.value = boards[i]['ID'];
-		document.getElementById("inputState").add(option);
-    }
-}
+		<style type="text/css">
+			.principal {
+				float: left;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0px;
+				left: 0px;
+				bottom: 0px;
+				right: 0px;
+				background-color: rgba(0, 0, 0, 0.1);
+			}
+			#btnext {
+				float: left;
+				position: absolute;
+				width: 118px;
+				height: 38px;
+				margin-left: calc(50% - 59px);
+				margin-right: calc(50% - 59px);
+				top: calc(50% - 19px);
+				left: 0px;
+				bottom: 0px;
+				right: 0px;
+			}
+		</style>
+	    
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://api.trello.com/1/client.js?key=dfb54d90bc0945c459d85ea11fda3e49"></script>
+        <script type="text/javascript">
 
-function gerarRelatorio() {
-	document.getElementById("tela01").style.display = "none";
-	document.getElementById("tela02").style.display = "block";
-	
-	var e = document.getElementById("inputState");
-    var value = e.options[e.selectedIndex].value;
-	
-	ajax2(value);
-}
+            var me;
+			var url = ""; //Variavel onde vai receber todos os link AJAX
+			var cards = []; //Array que vai receber os cards do board selecionado
+			var labels = []; //Array que vai receber os labels do board selecionado
 
-function ajax2(id){
-	
-	//Buscando todos os CARDS do BOARD
-    url = "https://api.trello.com/1/boards/" + id + "/cards/?key=" + key + "&token=" + token; //List CARDS
-    var ajax2 = $.ajax({
-        url: url,
-        type: 'get',
-        dataType: 'json',
-        beforeSend: function () {
-            console.log("Buscando Cards...");
-        }
-    })
-            .done(function (data) {
-                cards = data;
-                console.group("Cards");
-                console.log(cards);
-                console.groupEnd("Cards");
-				
-				setTimeout(function(){ 
-					ajax3(id);
-				}, 500);
-            })
-            .fail(function (jqXHR, textStatus, data) {
-                throw "A requisição AJAX para buscar todos os Cards falhou!.";
+            window.Trello.authorize({
+                type: 'redirect',
+                name: 'Sistema ABAP Softtek',
+                persist: false,
+                scope: {
+                    read: true,
+                    write: true,
+                    account: true},
+                expiration: '1hour',
+                success: authenticationSuccess,
+                error: authenticationFailure
             });
-}
 
-function ajax3(id){
-	//Buscando todos os MEMBROS do BOARD
-    url = "https://api.trello.com/1/boards/" + id + "/memberships/?key=" + key + "&token=" + token + "&orgMemberType=true&member=true&member_fields=fullName&member_fields=avatarUrl";
-    var ajax3 = $.ajax({
-        url: url,
-        type: 'GET',
-        dataType: 'json',
-        beforeSend: function () {
-            console.log("Buscando Membros...");
-        }
-    })
-            .done(function (data) {
-				menbros = data;
-                console.group("Membros");
-                console.log(menbros);
-                console.groupEnd("Membros");
-				
-				setTimeout(function(){ 
-					ajax5(id);
-				}, 500);
-            })
-            .fail(function (jqXHR, textStatus, data) {
-                throw "A requisição AJAX para buscar todos membros falhou!.";
-            });
-}
-
-function ajax4(id){
-	//Buscando todos os LISTAS do BOARD
-    url = "https://api.trello.com/1/boards/" + id + "/lists?cards=all&card_fields=all&filter=open&fields=all&key=" + key + "&token=" + token;
-    var ajax4 = $.ajax({
-        url: url,
-        type: 'GET',
-        dataType: 'json',
-        beforeSend: function () {
-            console.log("Buscando Listas...");
-        }
-    })
-            .done(function (data) {
-                listas = data;
-                console.group("Listas");
-                console.log(listas);
-                console.groupEnd("Listas");
-				
-				setTimeout(function(){ 
-					ajax6(id);
-				}, 500);
-            })
-            .fail(function (jqXHR, textStatus, data) {
-                throw "A requisição AJAX para buscar todas as Listas falhou!.";
-            });
-}
-
-function ajax5(id){
-	//Buscando todos os LABEL do BOARD
-    url = "https://api.trello.com/1/boards/" + id + "/labels?fields=all&key=" + key + "&token=" + token; //List Labels
-    var ajax5 = $.ajax({
-        url: url,
-        type: 'GET',
-        dataType: 'json',
-        beforeSend: function () {
-            console.log("Buscando Labels...");
-        }
-    })
-            .done(function (data) {
-                //Montar Labels
-                labels = data;
-                console.group("Labels");
-                console.log(labels);
-                console.groupEnd("Labels");
-				
-				setTimeout(function(){ 
-					ajax4(id);
-				}, 500);
-            })
-            .fail(function (jqXHR, textStatus, data) {
-                throw "A requisição AJAX para buscar todas as labels falhou!.";
-            });
-}
-
-function ajax6(id){
-	//Buscando parametrizações Custom fields
-    url = "https://api.trello.com/1/boards/" + id + "/customFields?key=" + key + "&token=" + token; //List Labels
-    var ajax6 = $.ajax({
-        url: url,
-        type: 'GET',
-        dataType: 'json',
-        beforeSend: function () {
-            console.log("Buscando custom fields...");
-        }
-    })
-            .done(function (data) {
-                custfields = data;
-				console.group("Custons");
-                console.log(custfields);
-                console.groupEnd("Custons");
-				
-				setTimeout(function(){ 
-					customFidels();
-				}, 500);
-            })
-            .fail(function (jqXHR, textStatus, data) {
-                throw "A requisição AJAX para buscar todas os Custom fields falhou!.";
-            });
-}
-
-function customFidels(){
-	
-	var ajaxdic = "";
-    var ajaxnewcamp = "";
-    var total = cards.length - 1;
-	
-    for (var i = 0; i < cards.length; i++) {
-		
-        //Buscando todos os campos adicionais individual
-        url = "https://api.trello.com/1/cards/" + cards[i][﻿'id'] + "/customFieldItems?key=" + key + "&token=" + token;
-        ajaxnewcamp = $.ajax({
-            url: url,
-            type: 'GET',
-            dataType: 'json',
-            beforeSend: function () {
-                //console.log("Buscando New Field - " + cards[i][﻿'id']);
+            function authenticationFailure() {
+                console.log("%cErro na Autenticação.", "font-family: 'Arial'; font-weight: bold; color: red; font-size: 15px");
+                throw new Error("Erro na Autenticação.");
             }
-        })
-                .done(function (data) {
-					newsc.push(data);
-                })
-                .fail(function (jqXHR, textStatus, data) {
-                    throw "A requisição AJAX para buscar todos os campos adicionais falhou!.";
+
+            function authenticationSuccess() {
+                console.log("%cAutenticado com sucesso.", "font-family: 'Arial'; font-weight: bold; color: green; font-size: 15px");
+            }
+
+            window.onload = function (e) {
+
+                Trello.members.get("me", function (data) {
+                    me = data;
+                    console.log(me);
+                }, function (err) {
+                    console.log("Erro");
+                    console.log(err);
                 });
-        if (i == total) {
-            setTimeout(function () {
-				
-				console.group("News Custons");
-                console.log(newsc);
-				console.groupEnd();
-				
-				orgFields();
-				
-            }, 1500);
-        }
-    }
-}
 
-function orgFields() {
-	var arrys = newsc;
-	newsc = [];
-	
-	var said = [];
-	
-	var type = "";
-	
-	var id = "";
-	var card = "";
-	var value = "";
-	
-	for (n = 0; n < arrys.length; n++) {
-		for (z = 0; z < arrys[n].length; z++) {
+            }
 			
-			id = arrys[n][z]['idCustomField'];
-			card = arrys[n][z]['idModel'];
+			function Extrair() {
 			
-			for (c = 0; c < custfields.length; c++) {
-				if(arrys[n][z]['idCustomField'] == custfields[c]['id']){
-					type = custfields[c]['type'];
-				}
-			}
-			
-			switch(type){
-			
-				case "number":
-				value = arrys[n][z]['value']['number'];
-					break;
+				try {
 					
-				case "date":
-				var dtemp = arrys[n][z]['value']['date'];
-				dtemp = dtemp.split("T");
-				value = dtemp[0];
-					break;
-				
-				case "text":
-				value = arrys[n][z]['value']['text'];
-					break;
-					
-				case "checkbox":
-				if(arrys[n][z]['value']['checked'] == true){
-					value = "X";
-				} else {
-					value = "";
-				}
-					break;
-				
-				case "list":
-				for (c = 0; c < custfields.length; c++) {
-					if(arrys[n][z]['idCustomField'] == custfields[c]['id']){
-						for (d = 0; d < custfields[c]['options'].length; d++) {
-							if(arrys[n][z]['idValue'] == custfields[c]['options'][d]['id']){
-								value = custfields[c]['options'][d]['value']['text'];
-							}
+					/* Inicio Logica */
+					url = "https://api.trello.com/1/boards/" + me['idBoards'][0];
+					var ajax1 = $.ajax({
+						url: url,
+						type: 'GET',
+						dataType: 'json',
+						beforeSend: function () {
+							console.log("Buscando Board...");
 						}
-					}
+					})
+						.done(function (data) {
+							console.log(data);
+						})
+						.fail(function (jqXHR, textStatus, data) {
+							throw "A requisição AJAX para buscar os Boards falhou!.";
+						});
+		
 				}
-					break;
-			}
-
-			var arr = {
-				'ID': id,
-				'CARD': card,
-				'VALUE': value
-			};
-			said.push(arr);
+				catch(err) {
+					document.body.innerHTML = document.body.innerHTML + "<div class='alert alert-danger alert-dismissible fade show' role='alert'>" +
+								"<strong>Erro!</strong> Tivemos um erro interno para ultilizar a API Trello, aperte F5, se o erro persistir por favor entrar em contado com os desenvolvedores." +
+								"<button type='button' class='close' data-dismiss='alert' aria-label='Close'>" +
+								"<span aria-hidden='true'>&times;</span>" +
+								"</button>" +
+								"</div>";
+					document.getElementById("progressbar").innerHTML = "";
+					document.getElementById("btnext").style.display = "block";
+					return;
+				}
 			
-			id = "";
-			card = "";
-			value = "";
-		}
-	}
-	
-	
-	newsc = said;
-	
-	excel();
-}
-
-function excel(){
-	
-	var chmd = "";
-	var titl = "";
-	var desc = "";
-	var list = "";
-	var dten = "";
-	var done = "";
-	var etiq = "";
-	var cust = "";
-	
-	for (i = 0; i < cards.length; i++) {
-		if(i == 0){
-			document.getElementById("tela02").innerHTML += "Chamado;Titulo;Descrição;Lista;Data de Entrega;Concluido;Etiqueta";
-			
-			for (c = 0; c < custfields.length; c++) {
-				document.getElementById("tela02").innerHTML += ";" + custfields[c]['name'];
-			}
-			
-			document.getElementById("tela02").innerHTML += "<br>";
-		}
-		
-		var txt = cards[i]['name'];
-		txt = txt.replace("–", "-");
-		txt = txt.split("-");
-		
-		//Montando CHAMADO
-		if(txt[0] != undefined){
-			chmd = txt[0];
-		} else {
-			chmd = "";
-		}
-		
-		//Montando TITULO
-		if(txt[1] != undefined){
-			titl = txt[1];
-		} else {
-			titl = "";
-		}
-		
-		//Montando Descrição
-		if(cards[i]['desc'] != undefined || cards[i]['desc'] != null){
-			desc = cards[i]['desc'];
-		} else {
-			desc = "";
-		}
-		
-		//Montando Lista
-		for (l = 0; l < listas.length; l++) {
-			if(cards[i]['idList'] == listas[l]['id']){
-				list = listas[l]['name'];
-			}
-		}
-
-		//Montando Data de entrega
-		if(cards[i]['due'] != undefined || cards[i]['due'] != null){
-			var dats = cards[i]['due'];
-			dats = dats.split("T");
-			dten = dats[0];
-		} else {
-			dten = "";
-		}
-		
-		//Montando Concluido
-		if(cards[i]['dueComplete'] != false){
-			done = "X";
-		} else {
-			done = "";
-		}
-		
-		//Montando Etiquetas
-		for (e = 0; e < labels.length; e++) {
-			if(cards[i]['idLabels'] == labels[e]['id']){
+				console.log('Iniciando extração...');
+				document.getElementById("btnext").style.display = "none";
+				document.getElementById("progressbar").innerHTML = "<div class='progress-bar' role='progressbar' style='width: 0%' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'></div>";
 				
-				if(etiq == ""){
-					etiq = labels[e]['name'];
-				} else {
-					etiq += ",";
-					etiq += labels[e]['name'];
-				}
+				setTimeout(function(){
+					document.getElementById("progressbar").innerHTML = "<div class='progress-bar' role='progressbar' style='width: 25%' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'></div>";
+				}, 1000);
+				
+				setTimeout(function(){
+					document.getElementById("progressbar").innerHTML = "<div class='progress-bar' role='progressbar' style='width: 50%' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100'></div>";
+				}, 2000);
+				
+				setTimeout(function(){
+					document.getElementById("progressbar").innerHTML = "<div class='progress-bar' role='progressbar' style='width: 75%' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div>";
+				}, 3000);
+				
+				
+				setTimeout(function(){
+					document.getElementById("progressbar").innerHTML = "<div class='progress-bar' role='progressbar' style='width: 100%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'></div>";
+				}, 4000);
+				
+				setTimeout(function(){
+					console.log('Escolha a pasta para salvar...');
+					
+					//window.open('data:application/vnd.ms-excel,' + $('#dvData').html());
+					
+					var excel = document.createElement('a');
+					var data_type = 'data:application/vnd.ms-excel';
+					var table_div = document.getElementById('dvData');
+					var table_html = table_div.outerHTML.replace(/ /g, '%20');
+					excel.href = data_type + ', ' + table_html;
+					excel.download = 'Extracao_Trello.xls';
+					excel.click();
+					
+					console.log('Extração completa...');
+					document.getElementById("progressbar").innerHTML = "";
+					document.getElementById("btnext").style.display = "block";
+				}, 4500);
+				
 				
 			}
-		}
+        </script>
+    </head>
+    <body>
+		<main class="principal">
+			<div class="progress" id="progressbar">
+			</div>
+			<button type="button" id="btnext" onclick="Extrair();" class="btn btn-success"><b>Extrair Excel</b></button>
+		</main>
 		
-		document.getElementById("tela02").innerHTML += chmd + ";" + titl + ";" + desc + ";" + list + ";" + dten + ";" + done + ";" + etiq ;
-		
-				
-		for (c = 0; c < custfields.length; c++) {
-			
-			for (y = 0; y < newsc.length; y++) {
-				if(custfields[c]['id'] == newsc[y]['ID'] &&
-				cards[i]['id'] == newsc[y]['CARD']){
-					cust = newsc[y]['VALUE'];
-				}
-			}
-			
-			document.getElementById("tela02").innerHTML += ";" + cust;
-			cust = "";
-		}
-		
-		document.getElementById("tela02").innerHTML += "<br>";
-		
-		chmd = "";
-		titl = "";
-		desc = "";
-		list = "";
-		dten = "";
-		done = "";
-		etiq = "";
-		cust = "";
-	}
-}
+		<div id="dvData" style="display: none;">
+			<table>
+				<tr>
+					<th>Column One</th>
+					<th>Column Two</th>
+					<th>Column Three</th>
+				</tr>
+				<tr>
+					<td>row1 Col1</td>
+					<td>row1 Col2</td>
+					<td>row1 Col3</td>
+				</tr>
+				<tr>
+					<td>row2 Col1</td>
+					<td>row2 Col2</td>
+					<td>row2 Col3</td>
+				</tr>
+				<tr>
+					<td>row3 Col1</td>
+					<td>row3 Col2</td>
+					<td><a href="http://www.jquery2dotnet.com/">http://www.jquery2dotnet.com/</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>
