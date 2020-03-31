@@ -11,8 +11,34 @@
         <title>Extração Trello Excel</title>
 
         <link rel="shortcut icon" href="https://rentadrone.cl/wp-content/uploads/2016/12/pie-chart-1.png" />
+		
+		<style type="text/css">
+			.principal {
+				float: left;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0px;
+				left: 0px;
+				bottom: 0px;
+				right: 0px;
+				background-color: rgba(0, 0, 0, 0.1);
+			}
+			#btnext {
+				float: left;
+				position: absolute;
+				width: 118px;
+				height: 38px;
+				margin-left: calc(50% - 59px);
+				margin-right: calc(50% - 59px);
+				top: calc(50% - 19px);
+				left: 0px;
+				bottom: 0px;
+				right: 0px;
+			}
+		</style>
 	    
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://api.trello.com/1/client.js?key=dfb54d90bc0945c459d85ea11fda3e49"></script>
         <script type="text/javascript">
 
@@ -51,9 +77,84 @@
                 });
 
             }
+			
+			function Extrair() {
+			
+				console.log('Iniciando extração...');
+				document.getElementById("btnext").style.display = "none";
+				document.getElementById("progressbar").innerHTML = "<div class='progress-bar' role='progressbar' style='width: 0%' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'></div>";
+				
+				setTimeout(function(){
+					document.getElementById("progressbar").innerHTML = "<div class='progress-bar' role='progressbar' style='width: 25%' aria-valuenow='25' aria-valuemin='0' aria-valuemax='100'></div>";
+				}, 1000);
+				
+				setTimeout(function(){
+					document.getElementById("progressbar").innerHTML = "<div class='progress-bar' role='progressbar' style='width: 50%' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100'></div>";
+				}, 2000);
+				
+				setTimeout(function(){
+					document.getElementById("progressbar").innerHTML = "<div class='progress-bar' role='progressbar' style='width: 75%' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div>";
+				}, 3000);
+				
+				
+				setTimeout(function(){
+					document.getElementById("progressbar").innerHTML = "<div class='progress-bar' role='progressbar' style='width: 100%' aria-valuenow='100' aria-valuemin='0' aria-valuemax='100'></div>";
+				}, 4000);
+				
+				setTimeout(function(){
+					console.log('Escolha a pasta para salvar...');
+					
+					//window.open('data:application/vnd.ms-excel,' + $('#dvData').html());
+					
+					var excel = document.createElement('a');
+					var data_type = 'data:application/vnd.ms-excel';
+					var table_div = document.getElementById('dvData');
+					var table_html = table_div.outerHTML.replace(/ /g, '%20');
+					excel.href = data_type + ', ' + table_html;
+					excel.download = 'Extracao_Trello.xls';
+					excel.click();
+					
+					console.log('Extração completa...');
+					document.getElementById("progressbar").innerHTML = "";
+					document.getElementById("btnext").style.display = "block";
+				}, 4500);
+				
+				
+			}
         </script>
     </head>
     <body>
+		<main class="principal">
+			<div class="progress" id="progressbar">
+			</div>
+			<button type="button" id="btnext" onclick="Extrair();" class="btn btn-success"><b>Extrair Excel</b></button>
+		</main>
+		
+		<div id="dvData" style="display: none;">
+			<table>
+				<tr>
+					<th>Column One</th>
+					<th>Column Two</th>
+					<th>Column Three</th>
+				</tr>
+				<tr>
+					<td>row1 Col1</td>
+					<td>row1 Col2</td>
+					<td>row1 Col3</td>
+				</tr>
+				<tr>
+					<td>row2 Col1</td>
+					<td>row2 Col2</td>
+					<td>row2 Col3</td>
+				</tr>
+				<tr>
+					<td>row3 Col1</td>
+					<td>row3 Col2</td>
+					<td><a href="http://www.jquery2dotnet.com/">http://www.jquery2dotnet.com/</a>
+					</td>
+				</tr>
+			</table>
+		</div>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
